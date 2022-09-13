@@ -1,0 +1,13 @@
+#spring:
+#  profiles:
+#    active: local
+#---
+spring:
+  config:
+    activate:
+      on-profile: local
+---
+spring:
+  config:
+    activate:
+      on-profile: server
