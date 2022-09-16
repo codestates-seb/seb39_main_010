@@ -49,7 +49,7 @@ public class SecurityConfig {
     }
 
     @Autowired
-    private PrincipalOauth2UserService principalOauth2UserService; // 추가
+    private PrincipalOauth2UserService principalOauth2UserService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -80,7 +80,7 @@ public class SecurityConfig {
                 .anyRequest().permitAll()
                 .and()
                 .oauth2Login()
-                .userInfoEndpoint() // 추가
+                .userInfoEndpoint()
                 .userService(principalOauth2UserService);
         return http.build();
     }
