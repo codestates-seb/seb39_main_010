@@ -36,8 +36,8 @@ public class SecurityConfig {
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
 
-        mailSender.setUsername("${{ secrets.MAIL-SENDER-USERNAME }}");
-        mailSender.setPassword("${{ secrets.MAIL-SENDER-PASSWORD }}");
+        mailSender.setUsername("${{ secrets.MAIL_SENDER_USERNAME }}");
+        mailSender.setPassword("${{ secrets.MAIL_SENDER_PASSWORD }}");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
