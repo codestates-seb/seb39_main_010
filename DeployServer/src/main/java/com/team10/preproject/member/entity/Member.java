@@ -1,9 +1,7 @@
 package com.team10.preproject.member.entity;
 
 import com.team10.preproject.audit.Auditable;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,11 +9,10 @@ import java.util.Arrays;
 import java.util.List;
 
 @NoArgsConstructor
-@Getter
-@Setter
 @Entity
-//@Data
-public class Member extends Auditable {
+@Data
+@EqualsAndHashCode(callSuper=true)
+public class Member extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long memberId;
@@ -38,15 +35,20 @@ public class Member extends Auditable {
 
     private boolean enabled;
 
+    private String provider;
+    private String providerId;
+
 //    @Enumerated(value = EnumType.STRING)
 //    @Column(length = 20, nullable = false)
 //    private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
-    public  Member(String email) { this.email = email; }
-
-    public  Member(String username, String email, String nickname, String password) {
+    @Builder
+    public Member(String username, String email, String role, String provider, String providerId, String nickname, String password) {
         this.username = username;
         this.email = email;
+        this.roles = roles;
+        this.provider = provider;
+        this.providerId = providerId;
         this.nickname = nickname;
         this.password = password;
     }

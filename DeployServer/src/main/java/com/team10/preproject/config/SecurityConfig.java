@@ -1,5 +1,6 @@
 package com.team10.preproject.config;
 
+import com.team10.preproject.config.oauth.PrincipalOauth2UserService;
 import com.team10.preproject.filter.JwtAuthenticationFilter;
 import com.team10.preproject.filter.JwtAuthorizationFilter;
 import com.team10.preproject.member.repository.MemberRepository;
@@ -35,8 +36,8 @@ public class SecurityConfig {
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
 
-        mailSender.setUsername("email address");
-        mailSender.setPassword("email password");
+        mailSender.setUsername("${{ secrets.MAIL-SENDER-USERNAME }}");
+        mailSender.setPassword("${{ secrets.MAIL-SENDER-PASSWORD }}");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
@@ -47,7 +48,8 @@ public class SecurityConfig {
         return mailSender;
     }
 
-
+    @Autowired
+    private PrincipalOauth2UserService principalOauth2UserService; // 추가
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -75,7 +77,11 @@ public class SecurityConfig {
                 .access("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
                 .antMatchers("/api/v1/admin/**")
                 .access("hasRole('ROLE_ADMIN')")
-                .anyRequest().permitAll();
+                .anyRequest().permitAll()
+                .and()
+                .oauth2Login()
+                .userInfoEndpoint() // 추가
+                .userService(principalOauth2UserService);
         return http.build();
     }
 
