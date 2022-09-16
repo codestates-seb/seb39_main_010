@@ -2,19 +2,25 @@ package com.team10.preproject.member.controller;
 
 import com.team10.preproject.dto.SingleResponseDto;
 import com.team10.preproject.member.dto.MemberDto;
+import com.team10.preproject.member.dto.PasswordForgotDto;
 import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.member.mapper.MemberMapper;
 import com.team10.preproject.member.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import java.io.UnsupportedEncodingException;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -27,11 +33,6 @@ public class MemberController {
     public MemberController(MemberService memberService, MemberMapper mapper) {
         this.memberService = memberService;
         this.mapper = mapper;
-    }
-
-    @GetMapping("/")
-    public String user() {
-        return "user";
     }
 
     @GetMapping("/{member-id}")
@@ -52,15 +53,35 @@ public class MemberController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
+    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         Member member = mapper.memberPostToMember(requestBody);
 
-        Member createMember = memberService.createMember(member);
+        Member createMember = memberService.createMember(member, getSiteURL(request));
         MemberDto.Response response = mapper.memberToMemberResponse(createMember);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(response),
                 HttpStatus.CREATED);
+    }
+
+    private String getSiteURL (HttpServletRequest request) {
+        String siteURL = request.getRequestURL().toString();
+        return siteURL.replace(request.getServletPath(), "");
+    }
+
+    @GetMapping("/verify")
+    public String verifyUser(@Param("code") String code) {
+        if (memberService.verify(code)) {
+            return "verify_success";
+        } else {
+            return "verify_fail";
+        }
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity findPassword(@RequestBody @Valid PasswordForgotDto requestBody) throws Exception {
+        memberService.recoveryPassword(requestBody.getEmail());
+        return ResponseEntity.ok().body(("Please check your email"));
     }
 
     @PatchMapping("/{member-id}")

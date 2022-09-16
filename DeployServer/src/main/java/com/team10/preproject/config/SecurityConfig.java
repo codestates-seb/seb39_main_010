@@ -6,6 +6,8 @@ import com.team10.preproject.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,6 +15,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.Properties;
 
 @Configuration
 @EnableWebSecurity
@@ -25,6 +29,24 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public JavaMailSender getJavaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+
+        mailSender.setUsername("x2d7751347m@gmail.com");
+        mailSender.setPassword("mkrywzssffdauuof");
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.debug", "true");
+
+        return mailSender;
+    }
+
 
 
     @Bean
@@ -32,10 +54,6 @@ public class SecurityConfig {
         http.csrf().disable();
         http.cors();
         http.headers().frameOptions().disable();
-        http
-                .authorizeRequests()
-                .antMatchers("/api/v1/questions/**")
-                .permitAll();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
@@ -44,9 +62,12 @@ public class SecurityConfig {
                 .apply(new CustomDsl())
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/v1/users/login")
-                .permitAll()
-                .antMatchers("/api/v1/users/signup")
+                .antMatchers("/api/v1/users/login",
+                        "/api/v1/users/logout",
+                        "/api/v1/users/signup",
+                        "/api/v1/users/verify",
+                        "/api/v1/users/forgot-password",
+                        "/api/v1/questions/**")
                 .permitAll()
                 .antMatchers("/api/v1/users/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")

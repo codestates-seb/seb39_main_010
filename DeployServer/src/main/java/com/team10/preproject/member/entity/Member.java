@@ -33,6 +33,11 @@ public class Member extends Auditable {
     @Column(nullable = false)
     private  String password;
 
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+
+    private boolean enabled;
+
 //    @Enumerated(value = EnumType.STRING)
 //    @Column(length = 20, nullable = false)
 //    private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
