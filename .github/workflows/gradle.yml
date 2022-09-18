@@ -9,6 +9,7 @@ name: Java CI with Gradle
 
 on:
   push:
+    paths: seb39_main_010/DeployServer/
     branches: [ "main" ]
 
 permissions:
@@ -36,7 +37,7 @@ jobs:
     
     # build한 후 프로젝트를 압축
     - name: Make zip file
-      run: zip -r ./practice-deploy.zip .
+      run: zip -r ./main-deploy.zip .
       shell: bash
     
     # Access Key와 Secret Access Key를 통해 권한을 확인
@@ -49,4 +50,4 @@ jobs:
     
     # 압축한 프로젝트를 S3로 전송
     - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./practice-deploy.zip s3://$S3_BUCKET_NAME/practice-deploy.zip
+      run: aws s3 cp --region ap-northeast-2 ./main-deploy.zip s3://$S3_BUCKET_NAME/practice-deploy.zip
