@@ -1,10 +1,8 @@
-# Team10 : codestates-project
+# Team10 : main-project
 
-##  main-project
+## otiv-면접 정보 공유 사이트
 
-### motiv-면접 정보 공유 사이트
-
-#### 기능
+### 기능
 
 - 회원가입, 로그인, 로그아웃을 할 수 있습니다.
 - 전체 게시글 목록 조회, 개별 게시글 상세 내용 조회를 할 수 있습니다.
