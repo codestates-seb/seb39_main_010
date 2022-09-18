@@ -9,8 +9,8 @@ name: Java CI with Gradle
 
 on:
   push:
-    paths: seb39_main_010/DeployServer/
     branches: [ "main" ]
+    paths: "seb39_main_010/DeployServer**"
 
 permissions:
   contents: read
