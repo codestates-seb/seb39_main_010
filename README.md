@@ -1,6 +1,6 @@
 # Team10 : main-project
 
-## otiv-면접 정보 공유 사이트
+## Motiv-면접 정보 공유 사이트
 
 ### 기능
 
