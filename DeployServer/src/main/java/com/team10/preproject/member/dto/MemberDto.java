@@ -19,7 +19,12 @@ public class MemberDto {
         @Email
         private String email;
 
-        @NotBlank(message = "Name cannot be null")
+        @NotBlank(message = "ID cannot be null")
+        @Length(max = 20)
+        private String username;
+
+
+        @NotBlank(message = "NickName cannot be null")
         @Length(max = 20)
         private String nickname;
 
@@ -36,6 +41,10 @@ public class MemberDto {
         @NotSpace(message = "Nickname cannot be null")
         @Length(max = 20)
         private String nickname;
+
+        @NotSpace
+        @Email
+        private String email;
 
         @NotSpace(message = "Password cannot be null")
         @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$",

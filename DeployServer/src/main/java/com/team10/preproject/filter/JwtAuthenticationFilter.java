@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team10.preproject.member.entity.Member;
-import com.team10.preproject.oauth.PrincipalDetails;
+import com.team10.preproject.config.oauth.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -60,7 +60,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String jwtToken = JWT.create()
                 .withSubject("cos jwt token")
-                .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 10)))
+                .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 100)))
                 .withClaim("id", memberId)
                 .withClaim("username", username)
                 .sign(Algorithm.HMAC512("cos_jwt_token"));

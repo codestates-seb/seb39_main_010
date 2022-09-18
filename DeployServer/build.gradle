@@ -38,6 +38,8 @@ dependencies {
 	implementation 'com.google.code.gson:gson'
 	implementation 'mysql:mysql-connector-java'
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 }
 
 tasks.named('test') {
