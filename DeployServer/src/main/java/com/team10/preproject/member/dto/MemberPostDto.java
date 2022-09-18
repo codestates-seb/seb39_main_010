@@ -24,6 +24,6 @@ public class MemberPostDto {
 
     @NotBlank(message = "Password cannot be null")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$",
-            message = "Password Must be 8 to 20 Characters and a Combination of UpperCase/LowerCase Letters and Special Characters")
+            message = "Password Must be 8 to 20 Characters and a Combination of UpperCase Letters and LowerCase Letters and Special Characters.")
     private String password;
 }
