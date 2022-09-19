@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Main } from 'pages/Main';
 import { Signup } from 'pages/Signup';
 import { Study, StudyDetail } from 'pages/Study';
+import Reivew from 'pages/Interveiw/Review/Review';
 
 const Router = () => {
 	return (
@@ -14,6 +15,7 @@ const Router = () => {
 					<Route path="" element={<Study />} />
 					<Route path=":id" element={<StudyDetail />} />
 				</Route>
+				<Route path="/review" element={<Reivew />} />
 			</Routes>
 		</React.Fragment>
 	);
