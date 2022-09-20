@@ -15,23 +15,29 @@ import java.util.List;
 public class Member extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long memberId;
+    private Long memberId;
     private String roles;
 
     @Column(nullable = false, updatable = false, unique = true)
-    private  String email;
+    private String email;
 
     @Column(nullable = false, updatable = false, unique = true)
-    private  String username;
+    private String username;
 
     @Column(length = 20, nullable = false)
-    private  String nickname;
+    private String nickname;
 
     @Column(nullable = false)
-    private  String password;
+    private String password;
 
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
+
+    @Column
+    private String favoriteCompany;
+
+    @Lob
+    private String selfIntroductions;
 
     private boolean enabled;
 
@@ -43,7 +49,7 @@ public class Member extends Auditable{
 //    private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
     @Builder
-    public Member(String username, String email, String role, String provider, String providerId, String nickname, String password) {
+    public Member(String username, String email, String roles, String provider, String providerId, String nickname, String password) {
         this.username = username;
         this.email = email;
         this.roles = roles;
@@ -51,6 +57,8 @@ public class Member extends Auditable{
         this.providerId = providerId;
         this.nickname = nickname;
         this.password = password;
+        this.favoriteCompany = favoriteCompany;
+        this.selfIntroductions = selfIntroductions;
     }
 
     public List<String> getRoleList() {
