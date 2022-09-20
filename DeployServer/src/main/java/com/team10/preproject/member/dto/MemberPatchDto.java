@@ -22,8 +22,12 @@ public class MemberPatchDto {
 
     @NotSpace(message = "Password cannot be null")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$",
-            message = "password must be 8-20 characters long and contain one uppercase and one lowercase and one special character.")
+            message = "Password Must be 8 to 20 Characters and a Combination of UpperCase Letters and LowerCase Letters and Special Characters.")
     private String password;
+
+    private String favoriteCompany;
+
+    private String selfIntroductions;
 
 //    private Member.MemberStatus memberStatus;
 
