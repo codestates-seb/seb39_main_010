@@ -140,13 +140,13 @@ public class MemberService {
             throws MessagingException, UnsupportedEncodingException {
         String toAddress = member.getEmail();
         String fromAddress = "x2d7751347m@gmail.com";
-        String senderName = "Motiv";
+        String senderName = "Weply";
         String subject = "Please verify your registration";
         String content = "Dear [[name]],<br>"
                 + "Please click the link below to verify your registration:<br>"
                 + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
                 + "Thank you,<br>"
-                + "Motiv.";
+                + "Weply.";
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
