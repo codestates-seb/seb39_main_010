@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Signup } from 'pages/Signup';
 import { Study, StudyDetail } from 'pages/Study';
-import { Question, QuestionDetail, Review } from 'pages/Interveiw';
+import { Question, Review } from 'pages/Interveiw';
 
 const Router = () => {
 	return (
@@ -13,7 +13,7 @@ const Router = () => {
 				<Route path="/mypage" element={<div>Mypage</div>} />
 				<Route path="/profile/:id" element={<div>Profile</div>} />
 				<Route path="/interview">
-					<Route path="question" element={<div>Question</div>} />
+					<Route path="question" element={<Question />} />
 					<Route path="question/:id" element={<div>QuestionDetail</div>} />
 					<Route path="review" element={<Review />} />
 					<Route path="review/:id" element={<div>ReviewDetail</div>} />
