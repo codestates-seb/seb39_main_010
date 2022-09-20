@@ -1,6 +1,6 @@
 # Team10 : main-project
 
-## Motiv-면접 정보 공유 사이트
+## Weply-면접 정보 공유 사이트
 
 배포 링크
 
