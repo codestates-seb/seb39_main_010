@@ -25,6 +25,10 @@ public class MemberPatchDto {
             message = "Password Must be 8 to 20 Characters and a Combination of UpperCase Letters and LowerCase Letters and Special Characters.")
     private String password;
 
+    private String favoriteCompany;
+
+    private String selfIntroductions;
+
 //    private Member.MemberStatus memberStatus;
 
     public void setMemberId(long memberId) { this.memberId = memberId; }

@@ -31,6 +31,10 @@ public class MemberDto {
         @NotBlank(message = "Password cannot be null")
         @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$", message = "Password Must be 8 to 20 Characters and a Combination of UpperCase Letters and LowerCase Letters and Special Characters.")
         private String password;
+
+        private String favoriteCompany;
+
+        private String selfIntroductions;
     }
 
     @Getter
@@ -51,6 +55,10 @@ public class MemberDto {
                 message = "Password Must be 8 to 20 Characters and a Combination of UpperCase Letters and LowerCase Letters and Special Characters.")
         private String password;
 
+        private String favoriteCompany;
+
+        private String selfIntroductions;
+
 //        private Member.MemberStatus memberStatus;
 
         public void setMemberId(long memberId) { this.memberId = memberId; }
@@ -64,6 +72,8 @@ public class MemberDto {
         private String email;
         private String nickname;
         private String password;
+        private String favoriteCompany;
+        private String selfIntroductions;
 //        private Member.MemberStatus memberStatus;
 
 //        public String getMemberStatus() { return memberStatus.getStatus(); }
