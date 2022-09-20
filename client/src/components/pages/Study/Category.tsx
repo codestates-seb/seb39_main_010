@@ -13,26 +13,15 @@ export const CategoryContainer = styled.div`
 
 	background-color: lightcyan;
 
-	ul {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		padding: 0px;
-		gap: 30px;
-
-		/* Inside auto layout */
-
-		flex: none;
-		order: 1;
-		flex-grow: 0;
-		li {
-			&:hover {
-				height: 52px;
-				padding-top: 18px;
-				font-weight: bold;
-				cursor: pointer;
-				border-bottom: solid 2px #000000;
-			}
+	div {
+		height: 52px;
+		line-height: 52px;
+		padding: 0 10px;
+		&:hover {
+			border-bottom: 3px solid #000000;
+		}
+		span {
+			cursor: pointer;
 		}
 	}
 `;
@@ -40,11 +29,15 @@ export const CategoryContainer = styled.div`
 const Category = () => {
 	return (
 		<CategoryContainer>
-			<ul>
-				<li>전체</li>
-				<li>모집중</li>
-				<li>모집완료</li>
-			</ul>
+			<div>
+				<span>전체</span>
+			</div>
+			<div>
+				<span>모집중</span>
+			</div>
+			<div>
+				<span>모집완료</span>
+			</div>
 		</CategoryContainer>
 	);
 };

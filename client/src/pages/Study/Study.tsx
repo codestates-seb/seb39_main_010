@@ -1,6 +1,6 @@
 import Intro from 'components/common/Intro/Intro';
 import SearchBox from 'components/common/SearchBox/SearchBox';
-import Sorting from 'components/common/Sorting/Sorting';
+import Sorting from 'components/common/Filtering/Filtering';
 import Category from 'components/pages/Study/Category';
 import React from 'react';
 import styled from 'styled-components';
@@ -49,7 +49,10 @@ export const WriteButton = styled.button`
 const Study = () => {
 	return (
 		<StudyContainer>
-			<Intro />
+			<Intro
+				title={`스터디 모집`}
+				content={`함께 성장할 스터디를 모집해 보세요.`}
+			/>
 			<Category />
 			<SearchBar>
 				<div>

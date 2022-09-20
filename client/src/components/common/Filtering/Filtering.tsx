@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { RiArrowDropDownLine } from 'react-icons/ri';
 
 export const SortingContainer = styled.div`
 	display: flex;
@@ -34,7 +33,6 @@ const Sorting = () => {
 				{/* <RiArrowDropDownLine size={20} /> */}
 				<select name="color">
 					<option value="red">최신순</option>
-					<option value="blue">오래된순</option>
 					<option value="black">인기순</option>
 				</select>
 			</form>

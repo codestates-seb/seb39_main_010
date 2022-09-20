@@ -31,12 +31,12 @@ export const IntroContainer = styled.div`
 	}
 `;
 
-const Intro = () => {
+const Intro: React.FC<{ title: string; content: string }> = (props) => {
 	return (
 		<IntroContainer>
 			<div>
-				<h2>스터디 모집</h2>
-				<p>함께 성장할 스터디를 모집해보세요</p>
+				<h2>{props.title}</h2>
+				<p>{props.content}</p>
 			</div>
 		</IntroContainer>
 	);
