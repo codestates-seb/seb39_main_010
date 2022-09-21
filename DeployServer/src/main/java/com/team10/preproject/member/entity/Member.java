@@ -1,6 +1,6 @@
 package com.team10.preproject.member.entity;
 
-import com.team10.preproject.audit.Auditable;
+import com.team10.preproject.global.audit.Auditable;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,23 +15,29 @@ import java.util.List;
 public class Member extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long memberId;
-    private String roles;
+    private Long memberId;
+    private String role;
 
     @Column(nullable = false, updatable = false, unique = true)
-    private  String email;
+    private String email;
 
     @Column(nullable = false, updatable = false, unique = true)
-    private  String username;
+    private String username;
 
     @Column(length = 20, nullable = false)
-    private  String nickname;
+    private String nickname;
 
     @Column(nullable = false)
-    private  String password;
+    private String password;
 
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
+
+    @Column
+    private String favoriteCompany;
+
+    @Lob
+    private String selfIntroductions;
 
     private boolean enabled;
 
@@ -46,16 +52,18 @@ public class Member extends Auditable{
     public Member(String username, String email, String role, String provider, String providerId, String nickname, String password) {
         this.username = username;
         this.email = email;
-        this.roles = roles;
+        this.role = role;
         this.provider = provider;
         this.providerId = providerId;
         this.nickname = nickname;
         this.password = password;
+        this.favoriteCompany = favoriteCompany;
+        this.selfIntroductions = selfIntroductions;
     }
 
     public List<String> getRoleList() {
-        if(this.roles.length() > 0) {
-            return Arrays.asList(this.roles.split(","));
+        if(this.role.length() > 0) {
+            return Arrays.asList(this.role.split(","));
         }
         return new ArrayList<>();
     }

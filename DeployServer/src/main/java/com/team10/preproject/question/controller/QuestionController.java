@@ -1,8 +1,8 @@
 package com.team10.preproject.question.controller;
 
 
-import com.team10.preproject.dto.SingleResponseDto;
-import com.team10.preproject.config.oauth.PrincipalDetails;
+import com.team10.preproject.global.dto.SingleResponseDto;
+import com.team10.preproject.global.oauth.PrincipalDetails;
 import com.team10.preproject.question.dto.QuestionDto;
 import com.team10.preproject.question.dto.QuestionResponseDto;
 import com.team10.preproject.question.entity.Question;

@@ -1,11 +1,10 @@
 package com.team10.preproject.member.dto;
 
-import com.team10.preproject.validator.NotSpace;
+import com.team10.preproject.global.validator.NotSpace;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Getter
@@ -22,8 +21,12 @@ public class MemberPatchDto {
 
     @NotSpace(message = "Password cannot be null")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$",
-            message = "password must be 8-20 characters long and contain one uppercase and one lowercase and one special character.")
+            message = "Password Must be 8 to 20 Characters and a Combination of UpperCase Letters and LowerCase Letters and Special Characters.")
     private String password;
+
+    private String favoriteCompany;
+
+    private String selfIntroductions;
 
 //    private Member.MemberStatus memberStatus;
 

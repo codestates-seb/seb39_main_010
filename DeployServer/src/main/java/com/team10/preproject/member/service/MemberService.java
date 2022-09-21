@@ -1,10 +1,8 @@
 package com.team10.preproject.member.service;
 
-import com.team10.preproject.exception.BusinessLogicException;
-import com.team10.preproject.exception.ExceptionCode;
-import com.team10.preproject.helper.email.EmailSendable;
-import com.team10.preproject.helper.email.EmailSender;
-import com.team10.preproject.helper.event.MemberRegistrationApplicationEvent;
+import com.team10.preproject.global.exception.BusinessLogicException;
+import com.team10.preproject.global.exception.ExceptionCode;
+import com.team10.preproject.global.helper.event.MemberRegistrationApplicationEvent;
 import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.member.repository.MemberRepository;
 import net.bytebuddy.utility.RandomString;
@@ -16,7 +14,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -27,10 +24,8 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.Email;
 import java.io.UnsupportedEncodingException;
 import java.util.Optional;
-import java.util.UUID;
 
 @Transactional
 @Service
@@ -122,7 +117,7 @@ public class MemberService {
     public Member createMember(Member member, String siteURL) throws UnsupportedEncodingException, MessagingException {
         verifyExistsEmail(member.getEmail());
         member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
-        member.setRoles("ROLE_USER");
+        member.setRole("ROLE_USER");
 
         String randomCode = RandomString.make(64);
         member.setVerificationCode(randomCode);
@@ -140,13 +135,13 @@ public class MemberService {
             throws MessagingException, UnsupportedEncodingException {
         String toAddress = member.getEmail();
         String fromAddress = "x2d7751347m@gmail.com";
-        String senderName = "Motiv";
+        String senderName = "Weply";
         String subject = "Please verify your registration";
         String content = "Dear [[name]],<br>"
                 + "Please click the link below to verify your registration:<br>"
                 + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
                 + "Thank you,<br>"
-                + "Motiv.";
+                + "Weply.";
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);

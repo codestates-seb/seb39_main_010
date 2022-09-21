@@ -12,6 +12,8 @@ public class MemberResponseDto {
     private String email;
     private String nickname;
     private String password;
+    private String favoriteCompany;
+    private String selfIntroductions;
 //    private Member.MemberStatus memberStatus;
 //
 //    public String getMemberStatus() { return memberStatus.getStatus(); }
