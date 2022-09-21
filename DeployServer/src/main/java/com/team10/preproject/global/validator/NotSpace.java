@@ -11,6 +11,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {NotSpaceValidator.class})
 public @interface NotSpace {
+
     String message() default "공백이 아니어야 합니다";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};

@@ -18,6 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     @Autowired
     private MemberRepository memberRepository;
 
@@ -31,6 +32,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http.csrf().disable();
         http.cors();
         http.headers().frameOptions().disable();
@@ -60,6 +62,7 @@ public class SecurityConfig {
                 .oauth2Login()
                 .userInfoEndpoint()
                 .userService(principalOauth2UserService);
+
         return http.build();
     }
 
@@ -67,6 +70,7 @@ public class SecurityConfig {
 
         @Override
         public void configure(HttpSecurity builder) throws Exception {
+
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager);
             jwtAuthenticationFilter.setFilterProcessesUrl("/api/v1/users/login");
@@ -74,6 +78,5 @@ public class SecurityConfig {
                     .addFilter(jwtAuthenticationFilter)
                     .addFilter(new JwtAuthorizationFilter(authenticationManager, memberRepository));
         }
-
     }
 }

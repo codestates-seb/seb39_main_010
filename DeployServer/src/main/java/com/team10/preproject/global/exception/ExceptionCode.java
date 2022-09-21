@@ -3,6 +3,7 @@ package com.team10.preproject.global.exception;
 import lombok.Getter;
 
 public enum ExceptionCode {
+
     MEMBER_NOT_FOUND(404, "Member not found"),
     MEMBER_EXISTS(409, "Member exists"),
     NOT_IMPLEMENTATION(501, "Not Implementation"),
@@ -16,6 +17,7 @@ public enum ExceptionCode {
     private  String message;
 
     ExceptionCode(int code, String message) {
+
         this.status = code;
         this.message = message;
     }

@@ -11,10 +11,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 public class MemberDto {
+
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
     public static class  Post {
+
         @NotBlank
         @Email
         private String email;
@@ -22,7 +24,6 @@ public class MemberDto {
         @NotBlank(message = "ID cannot be null")
         @Length(max = 20)
         private String username;
-
 
         @NotBlank(message = "NickName cannot be null")
         @Length(max = 20)
@@ -33,13 +34,13 @@ public class MemberDto {
         private String password;
 
         private String favoriteCompany;
-
         private String selfIntroductions;
     }
 
     @Getter
     @AllArgsConstructor
     public static class Patch {
+
         private long memberId;
 
         @NotSpace(message = "Nickname cannot be null")
@@ -56,17 +57,19 @@ public class MemberDto {
         private String password;
 
         private String favoriteCompany;
-
         private String selfIntroductions;
-
 //        private Member.MemberStatus memberStatus;
 
-        public void setMemberId(long memberId) { this.memberId = memberId; }
+        public void setMemberId(long memberId) {
+
+            this.memberId = memberId;
+        }
     }
 
     @AllArgsConstructor
     @Getter
     public static class Response {
+
         private long memberId;
         private String username;
         private String email;
@@ -75,7 +78,6 @@ public class MemberDto {
         private String favoriteCompany;
         private String selfIntroductions;
 //        private Member.MemberStatus memberStatus;
-
 //        public String getMemberStatus() { return memberStatus.getStatus(); }
     }
 }

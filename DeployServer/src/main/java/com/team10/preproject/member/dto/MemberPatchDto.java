@@ -25,10 +25,11 @@ public class MemberPatchDto {
     private String password;
 
     private String favoriteCompany;
-
     private String selfIntroductions;
-
 //    private Member.MemberStatus memberStatus;
 
-    public void setMemberId(long memberId) { this.memberId = memberId; }
+    public void setMemberId(long memberId) {
+
+        this.memberId = memberId;
+    }
 }

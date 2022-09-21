@@ -16,10 +16,12 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class MemberRegistrationEventListener {
+
     private final EmailSender emailSender;
     private final MemberService memberService;
 
     public MemberRegistrationEventListener(EmailSender emailSender, MemberService memberService) {
+
         this.emailSender = emailSender;
         this.memberService = memberService;
     }
@@ -27,6 +29,7 @@ public class MemberRegistrationEventListener {
     @Async
     @EventListener
     public void listen(MemberRegistrationApplicationEvent event) throws Exception {
+
         try {
             // 전송할 메시지를 생성했다고 가정.
             String message = "any email message";
