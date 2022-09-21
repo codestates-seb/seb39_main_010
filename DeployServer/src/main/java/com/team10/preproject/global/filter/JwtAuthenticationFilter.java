@@ -26,19 +26,19 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+
         try {
             ObjectMapper om = new ObjectMapper();
             Member member = om.readValue(request.getInputStream(), Member.class);
-
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(member.getUsername(), member.getPassword());
-
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
-
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+
             return authentication;
         } catch (IOException e) {
             e.printStackTrace();;
         }
+
         return null;
     }
 
@@ -47,17 +47,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         System.out.println("successfulAuthentication");
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
-
 //        ObjectMapper objectMapper = new ObjectMapper();
 //        objectMapper.findAndRegisterModules();
-
         Long memberId = principalDetails.getMember().getMemberId();
         String username = principalDetails.getMember().getUsername();
         String nickname = principalDetails.getMember().getNickname();
-
         String json =
                 "{\"memberId\":" + memberId + ",\n\"email\":\"" + username + "\",\n\"nickname\":\"" + nickname + "\"}";
-
         String jwtToken = JWT.create()
                 .withSubject("cos jwt token")
                 .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 100)))

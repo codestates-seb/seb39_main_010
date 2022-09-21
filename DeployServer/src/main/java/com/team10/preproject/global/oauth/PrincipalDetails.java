@@ -17,20 +17,24 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     private Map<String, Object> attributes;
 
     public PrincipalDetails(Member member) {
+
         this.member = member;
     }
 
     public PrincipalDetails(Member member, Map<String, Object> attributes) {
+
         this.member = member;
         this.attributes = attributes;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         member.getRoleList().forEach(n -> {
             authorities.add(() -> n);
         });
+        
         return authorities;
     }
 

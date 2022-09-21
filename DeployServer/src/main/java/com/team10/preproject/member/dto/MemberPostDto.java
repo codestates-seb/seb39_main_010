@@ -9,6 +9,7 @@ import javax.validation.constraints.Pattern;
 
 @Getter
 public class MemberPostDto {
+
     @NotBlank
     @Email
     private String email;
@@ -16,7 +17,6 @@ public class MemberPostDto {
     @NotBlank(message = "Username cannot be null")
     @Length(max = 20)
     private String username;
-
 
     @NotBlank(message = "Nickname cannot be null")
     @Length(max = 20)
@@ -28,6 +28,5 @@ public class MemberPostDto {
     private String password;
 
     private String favoriteCompany;
-
     private String selfIntroductions;
 }

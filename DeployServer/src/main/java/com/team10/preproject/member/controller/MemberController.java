@@ -25,10 +25,12 @@ import java.io.UnsupportedEncodingException;
 @Validated
 @Slf4j
 public class MemberController {
+
     private final MemberService memberService;
     private final MemberMapper mapper;
 
     public MemberController(MemberService memberService, MemberMapper mapper) {
+
         this.memberService = memberService;
         this.mapper = mapper;
     }
@@ -44,6 +46,7 @@ public class MemberController {
     @GetMapping("/logout")
     public ResponseEntity logoutMember(
             HttpServletRequest request, HttpServletResponse response) {
+
         memberService.removeCookies(request, response);
 
         return ResponseEntity.ok()
@@ -52,6 +55,7 @@ public class MemberController {
 
     @PostMapping("/signup")
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
+
         Member member = mapper.memberPostToMember(requestBody);
         Member createMember = memberService.createMember(member, getSiteURL(request));
         MemberDto.Response response = mapper.memberToMemberResponse(createMember);
@@ -66,18 +70,23 @@ public class MemberController {
         return siteURL.replace(request.getServletPath(), "");
     }
 
-    @GetMapping("/verify")
+    @GetMapping("/verification")
     public String verifyUser(@Param("code") String code) {
+
         if (memberService.verify(code)) {
+
             return "verify_success";
         } else {
+
             return "verify_fail";
         }
     }
 
     @PostMapping("/forgot-password")
     public ResponseEntity findPassword(@RequestBody @Valid PasswordForgotDto requestBody) throws Exception {
+
         memberService.recoveryPassword(requestBody.getEmail());
+
         return ResponseEntity.ok().body(("Please check your email"));
     }
 

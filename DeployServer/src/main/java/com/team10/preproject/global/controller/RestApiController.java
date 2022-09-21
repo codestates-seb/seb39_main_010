@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class RestApiController {
 
     private final MemberRepository memberRepository;
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping("/api/v1/admin")
@@ -28,7 +27,6 @@ public class RestApiController {
     public String info() {
         return "<h1>info</h1>";
     }
-
 
     @GetMapping("/manager")
     public @ResponseBody String manager() {
