@@ -11,17 +11,18 @@ export const CategoryContainer = styled.div`
 	align-items: center;
 	padding: 20px;
 
-	background-color: lightcyan;
-
 	div {
 		height: 52px;
 		line-height: 52px;
-		padding: 0 10px;
+		padding: 0 15px;
+
+		font-weight: bold;
+		color: #b1b1b1;
+
 		&:hover {
 			border-bottom: 3px solid #000000;
-		}
-		span {
 			cursor: pointer;
+			color: black;
 		}
 	}
 `;

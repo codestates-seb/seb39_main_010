@@ -4,8 +4,9 @@ import JobSorting from 'components/common/JobSorting/JobSorting';
 import React from 'react';
 import styled from 'styled-components';
 import { BsPencil } from 'react-icons/bs';
+import Reviews from 'components/pages/Review/Reviews';
 
-export const StudyContainer = styled.div`
+export const ReviewContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -33,18 +34,20 @@ export const Filtering = styled.div`
 		line-height: 46px;
 		padding: 0 10px;
 
+		font-weight: bold;
+		color: #b1b1b1;
+
 		&:hover {
 			border-bottom: 3px solid #000000;
-		}
-		span {
 			cursor: pointer;
+			color: black;
 		}
 	}
 `;
 
 const Review = () => {
 	return (
-		<StudyContainer>
+		<ReviewContainer>
 			<Intro
 				title={`면접후기`}
 				content={`소중한 면접 경험을 같이 공유해 주세요.`}
@@ -52,7 +55,7 @@ const Review = () => {
 
 			<SearchBar>
 				<div>
-					<SearchBox />
+					<SearchBox text={`궁금한 기업을 찾아보세요.`} />
 					<JobSorting />
 				</div>
 
@@ -65,7 +68,8 @@ const Review = () => {
 					</div>
 				</Filtering>
 			</SearchBar>
-		</StudyContainer>
+			<Reviews />
+		</ReviewContainer>
 	);
 };
 

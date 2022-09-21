@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { isPropertySignature } from 'typescript';
 
 export const SearchContainer = styled.div`
 	display: flex;
@@ -22,8 +23,8 @@ export const SearchContainer = styled.div`
 			margin-right: 5px;
 		}
 		input {
-			float: left;
-			padding: 0;
+			width: 200px;
+
 			background: none;
 			border: none;
 			outline: none;
@@ -34,14 +35,14 @@ export const SearchContainer = styled.div`
 	}
 `;
 
-const Search = () => {
+const Search: React.FC<{ text: string }> = (props) => {
 	return (
 		<SearchContainer>
 			<form>
 				<div>
 					<AiOutlineSearch size={25} />
 				</div>
-				<input type="text" placeholder="관심스터디를 검색해 보세요!" />
+				<input type="text" placeholder={props.text} />
 			</form>
 		</SearchContainer>
 	);
