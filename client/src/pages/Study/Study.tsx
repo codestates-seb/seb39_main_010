@@ -5,6 +5,7 @@ import Category from 'components/pages/Study/Category';
 import React from 'react';
 import styled from 'styled-components';
 import { BsPencil } from 'react-icons/bs';
+import CardContent from 'components/pages/Study/CardContent';
 
 export const StudyContainer = styled.div`
 	display: flex;
@@ -56,7 +57,7 @@ const Study = () => {
 			<Category />
 			<SearchBar>
 				<div>
-					<SearchBox />
+					<SearchBox text={`관심 스터디를 검색해 보세요!`} />
 					<Sorting />
 				</div>
 
@@ -65,6 +66,7 @@ const Study = () => {
 					작성하기
 				</WriteButton>
 			</SearchBar>
+			<CardContent />
 		</StudyContainer>
 	);
 };
