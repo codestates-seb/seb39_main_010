@@ -1,6 +1,6 @@
 package com.team10.preproject.member.dto;
 
-import com.team10.preproject.validator.NotSpace;
+import com.team10.preproject.global.validator.NotSpace;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

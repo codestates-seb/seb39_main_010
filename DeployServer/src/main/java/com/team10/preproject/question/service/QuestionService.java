@@ -1,8 +1,8 @@
 package com.team10.preproject.question.service;
 
 
-import com.team10.preproject.exception.BusinessLogicException;
-import com.team10.preproject.exception.ExceptionCode;
+import com.team10.preproject.global.exception.BusinessLogicException;
+import com.team10.preproject.global.exception.ExceptionCode;
 import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.question.entity.Question;
 
