@@ -12,8 +12,8 @@ const Header = () => {
 				<div onClick={() => navigate('/')}></div>
 				<ul>
 					<li onClick={() => navigate('/')}>면접 질문</li>
-					<li onClick={() => navigate('/study-board')}>스터디모집</li>
-					<li onClick={() => navigate('/review')}>면접 후기</li>
+					<li onClick={() => navigate('/study')}>스터디모집</li>
+					<li onClick={() => navigate('/interview/review')}>면접 후기</li>
 				</ul>
 			</LogoandNav>
 
