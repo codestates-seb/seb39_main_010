@@ -14,11 +14,9 @@ public class CustomFiter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-
         res.setCharacterEncoding("UTF-8");
         if(req.getMethod().equals("POST")) {
             String headerAuth = req.getHeader("Authorization");
-
             if(headerAuth.equals("customAuth")) {
                 chain.doFilter(req, res);
             } else {

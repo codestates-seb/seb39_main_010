@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MemberResponseDto {
+
     private long memberId;
     private String email;
     private String nickname;
@@ -15,10 +16,10 @@ public class MemberResponseDto {
     private String favoriteCompany;
     private String selfIntroductions;
 //    private Member.MemberStatus memberStatus;
-//
 //    public String getMemberStatus() { return memberStatus.getStatus(); }
 
     public void setMemberId(long memberId) {
+
         this.memberId = memberId;
     }
 }

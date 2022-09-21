@@ -13,6 +13,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper=true)
 public class Member extends Auditable{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
@@ -40,7 +41,6 @@ public class Member extends Auditable{
     private String selfIntroductions;
 
     private boolean enabled;
-
     private String provider;
     private String providerId;
 
@@ -50,6 +50,7 @@ public class Member extends Auditable{
 
     @Builder
     public Member(String username, String email, String role, String provider, String providerId, String nickname, String password) {
+
         this.username = username;
         this.email = email;
         this.role = role;
@@ -62,9 +63,11 @@ public class Member extends Auditable{
     }
 
     public List<String> getRoleList() {
+
         if(this.role.length() > 0) {
             return Arrays.asList(this.role.split(","));
         }
+
         return new ArrayList<>();
     }
 

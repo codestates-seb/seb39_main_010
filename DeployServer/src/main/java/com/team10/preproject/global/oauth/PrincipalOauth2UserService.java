@@ -19,15 +19,12 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
         OAuth2User oauth2User = super.loadUser(userRequest);
-
         String provider = userRequest.getClientRegistration().getClientId();
         String providerId = oauth2User.getAttribute("sub");
         String username = oauth2User.getAttribute("name");
         String email = oauth2User.getAttribute("email");
         String role = "ROLE_USER";
-
         Member memberEntity = memberRepository.findByUsername(username);
-
         if(memberEntity == null) {
             // OAuth로 처음 로그인한 유저 - 회원가입 처리
             memberEntity = Member.builder()
