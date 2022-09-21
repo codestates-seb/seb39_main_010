@@ -1,6 +1,6 @@
 package com.team10.preproject.member.controller;
 
-import com.team10.preproject.dto.SingleResponseDto;
+import com.team10.preproject.global.dto.SingleResponseDto;
 import com.team10.preproject.member.dto.MemberDto;
 import com.team10.preproject.member.dto.PasswordForgotDto;
 import com.team10.preproject.member.entity.Member;
@@ -17,8 +17,6 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.io.UnsupportedEncodingException;
 
@@ -55,7 +53,6 @@ public class MemberController {
     @PostMapping("/signup")
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         Member member = mapper.memberPostToMember(requestBody);
-
         Member createMember = memberService.createMember(member, getSiteURL(request));
         MemberDto.Response response = mapper.memberToMemberResponse(createMember);
 
