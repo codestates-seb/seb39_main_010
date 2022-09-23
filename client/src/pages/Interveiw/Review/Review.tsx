@@ -1,10 +1,7 @@
-import Intro from 'components/common/Intro/Intro';
-import SearchBox from 'components/common/SearchBox/SearchBox';
-import JobSorting from 'components/common/JobSorting/JobSorting';
 import React from 'react';
 import styled from 'styled-components';
-import { BsPencil } from 'react-icons/bs';
-import Reviews from 'components/pages/Review/Reviews';
+import { Intro, SearchBox, Sorting } from 'components/common';
+import { Reviews } from 'components/pages';
 
 export const ReviewContainer = styled.div`
 	display: flex;
@@ -46,6 +43,23 @@ export const Filtering = styled.div`
 `;
 
 const Review = () => {
+	const OPTIONS = [
+		{ value: 'all', name: '직무전체' },
+		{ value: 'sales', name: '영업/고객상담' },
+		{ value: 'business', name: '경영/사무' },
+		{ value: 'marketing', name: '마케팅/광고/홍보' },
+		{ value: 'produce', name: '생산/제조' },
+		{ value: 'research', name: '연구개발/설계' },
+		{ value: 'internet', name: 'IT/인터넷' },
+		{ value: 'service', name: '서비스' },
+		{ value: 'trade', name: '무역/유통' },
+		{ value: 'medical', name: '의료' },
+		{ value: 'structure', name: '건설' },
+		{ value: 'education', name: '교육' },
+		{ value: 'design', name: '디자인' },
+		{ value: 'profession', name: '전문/특수직' },
+		{ value: 'media', name: '미디어' },
+	];
 	return (
 		<ReviewContainer>
 			<Intro
@@ -56,7 +70,7 @@ const Review = () => {
 			<SearchBar>
 				<div>
 					<SearchBox text={`궁금한 기업을 찾아보세요.`} />
-					<JobSorting />
+					<Sorting options={OPTIONS} />
 				</div>
 
 				<Filtering>

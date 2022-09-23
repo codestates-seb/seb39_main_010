@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { IOptions } from 'pages/Study/Study';
 
-export const SortingContainer = styled.div`
+export const FilteringContainer = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -26,17 +27,21 @@ export const SortingContainer = styled.div`
 	}
 `;
 
-const Sorting = () => {
+interface Props {
+	options: IOptions[];
+}
+
+const Filtering = ({ options }: Props) => {
 	return (
-		<SortingContainer>
+		<FilteringContainer>
 			<form>
-				{/* <RiArrowDropDownLine size={20} /> */}
-				<select name="color">
-					<option value="red">최신순</option>
-					<option value="black">인기순</option>
+				<select>
+					{options.map((option: IOptions) => {
+						return <option key={option.value}>{option.name}</option>;
+					})}
 				</select>
 			</form>
-		</SortingContainer>
+		</FilteringContainer>
 	);
 };
-export default Sorting;
+export default Filtering;
