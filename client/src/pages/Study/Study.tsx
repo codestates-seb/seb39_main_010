@@ -1,11 +1,9 @@
-import Intro from 'components/common/Intro/Intro';
-import SearchBox from 'components/common/SearchBox/SearchBox';
-import Sorting from 'components/common/Filtering/Filtering';
-import Category from 'components/pages/Study/Category';
 import React from 'react';
 import styled from 'styled-components';
 import { BsPencil } from 'react-icons/bs';
-import CardContent from 'components/pages/Study/CardContent';
+import { useNavigate } from 'react-router-dom';
+import { Intro, SearchBox, Sorting } from 'components/common';
+import { CardContent, Category } from 'components/pages';
 
 export const StudyContainer = styled.div`
 	display: flex;
@@ -47,7 +45,18 @@ export const WriteButton = styled.button`
 	font-size: 15px;
 `;
 
+export interface IOptions {
+	value: string;
+	name: string;
+}
 const Study = () => {
+	const navigate = useNavigate();
+
+	const OPTIONS = [
+		{ value: 'new', name: '최신순' },
+		{ value: 'popular', name: '인기순' },
+	];
+
 	return (
 		<StudyContainer>
 			<Intro
@@ -58,10 +67,10 @@ const Study = () => {
 			<SearchBar>
 				<div>
 					<SearchBox text={`관심 스터디를 검색해 보세요!`} />
-					<Sorting />
+					<Sorting options={OPTIONS} />
 				</div>
 
-				<WriteButton>
+				<WriteButton onClick={() => navigate('/study/write')}>
 					<BsPencil size={20} />
 					작성하기
 				</WriteButton>
