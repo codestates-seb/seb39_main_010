@@ -36,6 +36,8 @@ export const Top = styled.div`
 export const Middle = styled.div`
 	div {
 		h3 {
+			display: flex;
+			align-items: center;
 			height: 55px;
 
 			font-weight: 600;
@@ -86,6 +88,7 @@ export const Bottom = styled.div`
 
 	div {
 		display: flex;
+		align-items: center;
 		gap: 10px;
 	}
 `;

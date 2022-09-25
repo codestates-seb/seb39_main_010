@@ -2,21 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 import { IOptions } from 'pages/Study/Study';
 
-export const FilteringContainer = styled.div`
+export const SortingContainer = styled.div`
+	/* Auto layout */
+
 	display: flex;
 	flex-direction: row;
+	justify-content: center;
 	align-items: center;
-	padding: 9px 16px;
-	margin-left: 15px;
-	gap: 6px;
+	padding: 10px 20px;
 
-	height: 46px;
+	width: 576px;
+	height: 66px;
 
-	background: #f9f9fc;
-	border: 1px solid #cfcfcf;
-	border-radius: 22px;
+	/* Gray/300 */
+
+	border: 1px solid #d2d5da;
+	border-radius: 10px;
+
 	select {
-		float: right;
 		padding: 0;
 		background: none;
 		border: none;
@@ -33,7 +36,7 @@ interface Props {
 
 const Filtering = ({ options }: Props) => {
 	return (
-		<FilteringContainer>
+		<SortingContainer>
 			<form>
 				<select>
 					{options.map((option: IOptions) => {
@@ -41,7 +44,7 @@ const Filtering = ({ options }: Props) => {
 					})}
 				</select>
 			</form>
-		</FilteringContainer>
+		</SortingContainer>
 	);
 };
 export default Filtering;

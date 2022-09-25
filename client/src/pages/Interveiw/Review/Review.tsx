@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Intro, SearchBox, Sorting } from 'components/common';
+import { Intro, SearchBox, SortingRound } from 'components/common';
 import { Reviews } from 'components/pages';
 
 export const ReviewContainer = styled.div`
@@ -42,6 +42,8 @@ export const Filtering = styled.div`
 	}
 `;
 
+// export Job
+
 const Review = () => {
 	const OPTIONS = [
 		{ value: 'all', name: '직무전체' },
@@ -70,7 +72,7 @@ const Review = () => {
 			<SearchBar>
 				<div>
 					<SearchBox text={`궁금한 기업을 찾아보세요.`} />
-					<Sorting options={OPTIONS} />
+					<SortingRound options={OPTIONS} />
 				</div>
 
 				<Filtering>
