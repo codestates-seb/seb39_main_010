@@ -8,11 +8,11 @@ const ContentsContainer = styled.div`
 `;
 const JobandTag = styled.div`
 	display: flex;
+	justify-content: space-between;
 `;
 
 const Contents = () => {
 	const OPTIONS = [
-		{ value: 'all', name: '직무전체' },
 		{ value: 'sales', name: '영업/고객상담' },
 		{ value: 'business', name: '경영/사무' },
 		{ value: 'marketing', name: '마케팅/광고/홍보' },
@@ -42,7 +42,7 @@ const Contents = () => {
 					</div>
 					<div>
 						<Input
-							width="500px"
+							width="576px"
 							height="66px"
 							placeholder={'태그를 설정해 주세요 (최대 10개)'}
 						/>
