@@ -71,6 +71,12 @@ const StyledInput = styled.input<InputProps>`
 	font-size: 18px;
 	border-radius: 10px;
 
+	:focus {
+		outline: none !important;
+		border-color: #94caf3;
+		box-shadow: 0 0 0px 4px #d6edfc;
+	}
+
 	& ::placeholder {
 		color: #949494;
 	}

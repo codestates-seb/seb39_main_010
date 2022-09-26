@@ -45,7 +45,8 @@ export default TextArea;
 const TextAreaContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	height: 405px;
+
+	background-color: yellow;
 
 	& label {
 		font-size: 18px;
@@ -61,7 +62,17 @@ const StyledTextArea = styled.textarea<TextAreaProps>`
 	font-size: 18px;
 	border-radius: 10px;
 
+	width: 1200px;
+	height: 405px;
+	resize: none;
+
 	& ::placeholder {
 		color: #949494;
+	}
+
+	:focus {
+		outline: none !important;
+		border-color: #94caf3;
+		box-shadow: 0 0 0px 4px #d6edfc;
 	}
 `;
