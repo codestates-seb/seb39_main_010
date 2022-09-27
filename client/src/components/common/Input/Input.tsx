@@ -1,11 +1,12 @@
 import React, { HTMLInputTypeAttribute, InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-interface StyleProps {
-	width?: string;
-	height?: string;
-	marginBottom?: string;
-}
+// TODO: 추후 최종적으로 필요없으면 style props 관련 주석 삭제 필요
+// interface StyleProps {
+// 	width?: string;
+// 	height?: string;
+// 	marginBottom?: string;
+// }
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	type?: HTMLInputTypeAttribute;
@@ -14,7 +15,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	value?: string;
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	label?: string;
-	style?: StyleProps;
+	// style?: StyleProps;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -54,6 +55,7 @@ export default Input;
 const InputContainer = styled.div`
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 
 	& label {
 		font-size: 18px;
@@ -62,9 +64,9 @@ const InputContainer = styled.div`
 `;
 
 const StyledInput = styled.input<InputProps>`
-	width: ${({ width }) => width ?? '100%'};
-	height: ${({ height }) => height ?? '66px'};
-	margin-bottom: ${({ style }) => style?.marginBottom ?? '18px'};
+	width: 100%;
+	height: 66px;
+	margin-bottom: '18px';
 	padding: 10px 20px;
 	border: 1px solid #d2d5da;
 	background-color: white;

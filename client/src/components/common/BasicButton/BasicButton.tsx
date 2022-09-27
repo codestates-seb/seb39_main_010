@@ -1,10 +1,10 @@
 import React, { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
+import { theme } from 'styles/theme';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 	children: React.ReactNode;
-	width?: string;
-	height?: string;
+	disabled?: boolean;
 	bgColor?: string;
 	color?: string;
 	mode?: 'basic' | 'login';
@@ -29,12 +29,23 @@ const ButtonOptions: ButtonOptions = {
 	},
 };
 
-const BasicButton = ({ mode = 'basic', children, ...props }: Props) => {
+const BasicButton = ({
+	mode = 'basic',
+	disabled,
+	children,
+	...props
+}: Props) => {
 	const { bgColor, color } = ButtonOptions[mode];
 
 	return (
-		<StyledButton mode={mode} bgColor={bgColor} color={color} {...props}>
-			<span>{children}</span>
+		<StyledButton
+			mode={mode}
+			disabled={disabled}
+			bgColor={bgColor}
+			color={color}
+			{...props}
+		>
+			{children}
 		</StyledButton>
 	);
 };
@@ -45,8 +56,8 @@ const StyledButton = styled.button<Props>`
 	border: 1px solid #3563e9;
 	border-radius: 10px;
 	padding: 10px 20px;
-	width: ${(props) => props.width ?? '100%'};
-	height: ${(props) => props.height ?? '66px'};
+	width: 100%;
+	height: 66px;
 	background-color: ${(props) => props.bgColor};
 	color: ${(props) => props.color};
 	font-size: 24px;
@@ -55,4 +66,11 @@ const StyledButton = styled.button<Props>`
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
+
+	&:disabled {
+		border: 1px solid ${theme.colors.gray300};
+		background-color: ${theme.colors.gray100};
+		color: ${theme.colors.gray400};
+		cursor: default;
+	}
 `;
