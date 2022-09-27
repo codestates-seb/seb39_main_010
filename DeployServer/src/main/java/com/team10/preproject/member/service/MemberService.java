@@ -4,6 +4,7 @@ import com.team10.preproject.global.exception.BusinessLogicException;
 import com.team10.preproject.global.exception.ExceptionCode;
 import com.team10.preproject.global.helper.event.MemberRegistrationApplicationEvent;
 import com.team10.preproject.member.entity.Member;
+import com.team10.preproject.member.entity.Role;
 import com.team10.preproject.member.repository.MemberRepository;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class MemberService {
 
     private Member findExistsEmail(String email) {
 
-        Member member = memberRepository.findByEmail((email));
+        Member member = memberRepository.findByEmail(email);
         if (member == null)
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
 
@@ -65,14 +66,14 @@ public class MemberService {
             throws MessagingException, UnsupportedEncodingException {
 
         String toAddress = member.getEmail();
-        String fromAddress = "x2d7751347m@gmail.com";
-        String senderName = "Motiv";
+        String fromAddress = "cs@Weply.com";
+        String senderName = "Weply";
         String subject = "Password Recovery";
         String content = "Dear [[name]],<br>"
                 + "Please change your password after the first login<br>"
                 + "Password : [[TempPw]]<br>"
                 + "Thank you,<br>"
-                + "Motiv.";
+                + "Weply.";
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         helper.setFrom(fromAddress, senderName);
@@ -117,7 +118,7 @@ public class MemberService {
 
         verifyExistsEmail(member.getEmail());
         member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
-        member.setRole("ROLE_USER");
+        member.setRole(Role.valueOf("ROLE_USER"));
         String randomCode = RandomString.make(64);
         member.setVerificationCode(randomCode);
         member.setEnabled(false);
@@ -132,7 +133,7 @@ public class MemberService {
             throws MessagingException, UnsupportedEncodingException {
 
         String toAddress = member.getEmail();
-        String fromAddress = "x2d7751347m@gmail.com";
+        String fromAddress = "cs@Weply.com";
         String senderName = "Weply";
         String subject = "Please verify your registration";
         String content = "Dear [[name]],<br>"

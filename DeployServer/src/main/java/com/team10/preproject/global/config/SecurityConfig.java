@@ -1,7 +1,7 @@
 package com.team10.preproject.global.config;
 
+import com.team10.preproject.OAuth.service.CustomOAuth2UserService;
 import com.team10.preproject.global.filter.JwtAuthenticationFilter;
-import com.team10.preproject.global.oauth.PrincipalOauth2UserService;
 import com.team10.preproject.global.filter.JwtAuthorizationFilter;
 import com.team10.preproject.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +22,14 @@ public class SecurityConfig {
     @Autowired
     private MemberRepository memberRepository;
 
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Autowired
-    private PrincipalOauth2UserService principalOauth2UserService;
+    private CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -49,7 +50,8 @@ public class SecurityConfig {
                         "/api/v1/users/signup",
                         "/api/v1/users/verify",
                         "/api/v1/users/forgot-password",
-                        "/api/v1/questions/**")
+                        "/api/v1/questions/**",
+                        "/")
                 .permitAll()
                 .antMatchers("/api/v1/users/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
@@ -61,7 +63,7 @@ public class SecurityConfig {
                 .and()
                 .oauth2Login()
                 .userInfoEndpoint()
-                .userService(principalOauth2UserService);
+                .userService(customOAuth2UserService);
 
         return http.build();
     }
