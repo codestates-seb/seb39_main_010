@@ -66,6 +66,7 @@ public class MemberController {
     }
 
     private String getSiteURL (HttpServletRequest request) {
+
         String siteURL = request.getRequestURL().toString();
         return siteURL.replace(request.getServletPath(), "");
     }
@@ -86,7 +87,6 @@ public class MemberController {
     public ResponseEntity findPassword(@RequestBody @Valid PasswordForgotDto requestBody) throws Exception {
 
         memberService.recoveryPassword(requestBody.getEmail());
-
         return ResponseEntity.ok().body(("Please check your email"));
     }
 
@@ -94,8 +94,8 @@ public class MemberController {
     public ResponseEntity patchMember(
             @PathVariable("member-id") @Positive long memberId,
             @Valid @RequestBody MemberDto.Patch requestBody) {
-        requestBody.setMemberId(memberId);
 
+        requestBody.setMemberId(memberId);
         Member member =
                 memberService.updateMember(mapper.memberPatchToMember(requestBody));
 
@@ -107,6 +107,7 @@ public class MemberController {
     @DeleteMapping("/{member-id}")
     public ResponseEntity deleteMember(
             @PathVariable("member-id") @Positive long memberId) {
+
         memberService.deleteMember(memberId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

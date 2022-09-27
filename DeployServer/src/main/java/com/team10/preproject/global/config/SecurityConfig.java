@@ -1,12 +1,13 @@
 package com.team10.preproject.global.config;
 
-import com.team10.preproject.OAuth.service.CustomOAuth2UserService;
+import com.team10.preproject.oauth.service.CustomOAuth2UserService;
 import com.team10.preproject.global.filter.JwtAuthenticationFilter;
 import com.team10.preproject.global.filter.JwtAuthorizationFilter;
 import com.team10.preproject.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -48,18 +49,15 @@ public class SecurityConfig {
                 .antMatchers("/api/v1/users/login",
                         "/api/v1/users/logout",
                         "/api/v1/users/signup",
-                        "/api/v1/users/verify",
+                        "/api/v1/users/verification",
                         "/api/v1/users/forgot-password",
                         "/api/v1/questions/**",
-                        "/")
+                        "/",
+                        "/h2/**")
                 .permitAll()
-                .antMatchers("/api/v1/users/**")
-                .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-                .antMatchers("/api/v1/manager/**")
-                .access("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-                .antMatchers("/api/v1/admin/**")
-                .access("hasRole('ROLE_ADMIN')")
-                .anyRequest().permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/users/**")
+                .permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .oauth2Login()
                 .userInfoEndpoint()

@@ -1,4 +1,4 @@
-package com.team10.preproject.global.oauth;
+package com.team10.preproject.global.auth;
 
 import com.team10.preproject.member.entity.Member;
 import lombok.Data;

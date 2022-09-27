@@ -10,7 +10,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     public Member findByEmail(String email);
     public Member findByUsername(String username);
-    Optional<Member> findByEmailAndProvider(String email, String provider);
 
     @Query("SELECT u FROM Member u WHERE u.verificationCode = ?1")
     public Member findByVerificationCode(String code);
