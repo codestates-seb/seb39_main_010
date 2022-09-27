@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class Member extends Auditable{
 
     @Id
