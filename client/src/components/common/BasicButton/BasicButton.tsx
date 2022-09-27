@@ -5,8 +5,6 @@ import { theme } from 'styles/theme';
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 	children: React.ReactNode;
 	disabled?: boolean;
-	width?: string;
-	height?: string;
 	bgColor?: string;
 	color?: string;
 	mode?: 'basic' | 'login';
@@ -58,8 +56,8 @@ const StyledButton = styled.button<Props>`
 	border: 1px solid #3563e9;
 	border-radius: 10px;
 	padding: 10px 20px;
-	width: ${(props) => props.width ?? '100%'};
-	height: ${(props) => props.height ?? '66px'};
+	width: 100%;
+	height: 66px;
 	background-color: ${(props) => props.bgColor};
 	color: ${(props) => props.color};
 	font-size: 24px;
