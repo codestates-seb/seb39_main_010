@@ -15,4 +15,4 @@ public class JacksonFactory {
         return objectMapper;
     }
 }
-//time table mapper
+//time table mapper로 사용가능

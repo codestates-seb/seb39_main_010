@@ -49,6 +49,4 @@ public class RestApiController {
     public @ResponseBody String data() {
         return "data";
     }
-
-
 }

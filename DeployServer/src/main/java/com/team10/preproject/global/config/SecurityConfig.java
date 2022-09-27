@@ -1,6 +1,6 @@
 package com.team10.preproject.global.config;
 
-import com.team10.preproject.OAuth.service.CustomOAuth2UserService;
+import com.team10.preproject.oauth.service.CustomOAuth2UserService;
 import com.team10.preproject.global.filter.JwtAuthenticationFilter;
 import com.team10.preproject.global.filter.JwtAuthorizationFilter;
 import com.team10.preproject.member.repository.MemberRepository;

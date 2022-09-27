@@ -81,7 +81,6 @@ public class Member extends Auditable{
     }
 
     public List<String> getRoleList() {
-
         return new ArrayList<>();
     }
 

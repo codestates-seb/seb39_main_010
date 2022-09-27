@@ -1,7 +1,7 @@
-package com.team10.preproject.OAuth.service;
+package com.team10.preproject.oauth.service;
 
-import com.team10.preproject.OAuth.dto.SessionUser;
-import com.team10.preproject.OAuth.dto.OAuthAttributes;
+import com.team10.preproject.oauth.dto.SessionUser;
+import com.team10.preproject.oauth.dto.OAuthAttributes;
 import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,19 +20,19 @@ import java.util.Collections;
 @Service
 @RequiredArgsConstructor
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+
     private final MemberRepository memberRepository;
     private final HttpSession httpSession;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
-
         // OAuth2 서비스 id (구글, 카카오, 네이버)
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         // OAuth2 로그인 진행 시 키가 되는 필드 값(PK)
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
-
         // OAuth2UserService
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
         Member member = saveOrUpdate(attributes);
@@ -45,6 +45,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     // 유저 생성 및 수정 서비스 로직
     private Member saveOrUpdate(OAuthAttributes attributes){
+
         Member member = memberRepository.findByEmail(attributes.getEmail());
         if (member == null){
             attributes.toEntity();
@@ -54,6 +55,5 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         }
 
         return memberRepository.save(member);
-
     }
 }

@@ -27,6 +27,7 @@ public class MemberPostDto {
             message = "Password Must be 8 to 20 Characters and a Combination of UpperCase Letters and LowerCase Letters and Special Characters.")
     private String password;
 
+    private String picture;
     private String favoriteCompany;
     private String selfIntroductions;
 }
