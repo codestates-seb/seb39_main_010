@@ -48,10 +48,13 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         Member member = memberRepository.findByEmail(attributes.getEmail());
         if (member == null){
-            attributes.toEntity();
+
+            member = attributes.toEntity();
+            member.setEnabled(true);
         }
         else {
-            member.update(attributes.getPicture());
+
+            member.updatePicture(attributes.getPicture());
         }
 
         return memberRepository.save(member);

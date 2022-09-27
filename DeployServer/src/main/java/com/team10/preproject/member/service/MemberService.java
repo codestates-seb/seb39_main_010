@@ -53,7 +53,7 @@ public class MemberService {
 
         verifyExistsEmail(member.getEmail());
         member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
-        member.setRole(Role.valueOf("ROLE_USER"));
+        member.setRole(Role.USER);
         String randomCode = RandomString.make(64);
         member.setVerificationCode(randomCode);
         member.setEnabled(false);
@@ -62,6 +62,13 @@ public class MemberService {
         publisher.publishEvent(new MemberRegistrationApplicationEvent(this, savedMember));
 
         return savedMember;
+    }
+
+    private void verifyExistsEmail(String email) {
+
+        Member member = memberRepository.findByEmail((email));
+        if (member != null)
+            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
 
     private void sendVerificationEmail(Member member, String siteURL)
@@ -82,7 +89,7 @@ public class MemberService {
         helper.setTo(toAddress);
         helper.setSubject(subject);
         content = content.replace("[[name]]", member.getNickname());
-        String verifyURL = siteURL + "/verification?code=" + member.getVerificationCode();
+        String verifyURL = siteURL + "/api/v1/users/verification?code=" + member.getVerificationCode();
         content = content.replace("[[URL]]", verifyURL);
         helper.setText(content, true);
         mailSender.send(message);
@@ -158,6 +165,10 @@ public class MemberService {
                 .ifPresent(findMember::setEmail);
         Optional.ofNullable(member.getPicture())
                 .ifPresent(findMember::setPicture);
+        Optional.ofNullable(member.getFavoriteCompany())
+                .ifPresent(findMember::setFavoriteCompany);
+        Optional.ofNullable(member.getSelfIntroductions())
+                .ifPresent(findMember::setSelfIntroductions);
 //        Optional.ofNullable(member.getMemberStatus())
 //                .ifPresent(memberStatus -> findMember.setMemberStatus(memberStatus));
 
@@ -192,13 +203,6 @@ public class MemberService {
                         new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
         return findMember;
-    }
-
-    private void verifyExistsEmail(String email) {
-
-        Member member = memberRepository.findByEmail((email));
-        if (member != null)
-            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
 
     public void removeCookies(HttpServletRequest request, HttpServletResponse response) {
