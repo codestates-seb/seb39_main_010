@@ -7,22 +7,26 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @NoArgsConstructor
 @Entity
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = false)
 public class Member extends Auditable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
-    private String role;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
     @Column(nullable = false, updatable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, updatable = false, unique = true)
+    @Column(updatable = false, unique = true)
     private String username;
 
     @Column(length = 20, nullable = false)
@@ -37,6 +41,9 @@ public class Member extends Auditable{
     @Column
     private String favoriteCompany;
 
+    @Column
+    private String picture;
+
     @Lob
     private String selfIntroductions;
 
@@ -49,7 +56,7 @@ public class Member extends Auditable{
 //    private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
     @Builder
-    public Member(String username, String email, String role, String provider, String providerId, String nickname, String password) {
+    public Member(String username, String email, Role role, String provider, String providerId, String picture, String nickname, String password) {
 
         this.username = username;
         this.email = email;
@@ -58,15 +65,22 @@ public class Member extends Auditable{
         this.providerId = providerId;
         this.nickname = nickname;
         this.password = password;
+        this.picture = picture;
         this.favoriteCompany = favoriteCompany;
         this.selfIntroductions = selfIntroductions;
     }
 
-    public List<String> getRoleList() {
+    public Member update(String picture){
+        this.picture = picture;
 
-        if(this.role.length() > 0) {
-            return Arrays.asList(this.role.split(","));
-        }
+        return this;
+    }
+
+    public String getRoleKey(){
+        return this.role.getKey();
+    }
+
+    public List<String> getRoleList() {
 
         return new ArrayList<>();
     }
