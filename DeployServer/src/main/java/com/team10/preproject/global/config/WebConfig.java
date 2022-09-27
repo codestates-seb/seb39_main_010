@@ -1,5 +1,6 @@
 package com.team10.preproject.global.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -7,17 +8,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-//    @Value("${config.domain}")
-//    private String domain;
+    @Value("${config.domain}")
+    private String domain;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
 
         registry.addMapping("/**")
-//                .allowedOrigins("domain")
-//                .allowCredentials(true)
+                .allowCredentials(true)
                 .exposedHeaders("authorization")
-                .allowedOriginPatterns("*")
+                .allowedOriginPatterns(domain)
                 .allowedMethods("GET", "PUT", "POST", "DELETE", "PATCH", "OPTIONS");
     }
 }

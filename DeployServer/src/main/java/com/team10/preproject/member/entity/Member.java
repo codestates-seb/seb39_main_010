@@ -11,8 +11,8 @@ import java.util.Optional;
 
 @NoArgsConstructor
 @Entity
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Getter
+@Setter
 public class Member extends Auditable{
 
     @Id
@@ -23,7 +23,7 @@ public class Member extends Auditable{
     @Column(nullable = false)
     private Role role;
 
-    @Column(nullable = false, updatable = false, unique = true)
+    @Column(nullable = false)
     private String email;
 
     @Column(updatable = false, unique = true)
@@ -32,37 +32,33 @@ public class Member extends Auditable{
     @Column(length = 20, nullable = false)
     private String nickname;
 
-    @Column(nullable = false)
     private String password;
 
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
 
-    @Column
+    @Column(length = 200)
     private String favoriteCompany;
 
-    @Column
+    @Lob
     private String picture;
 
-    @Lob
+    @Column(length = 200)
     private String selfIntroductions;
 
     private boolean enabled;
-    private String provider;
-    private String providerId;
 
 //    @Enumerated(value = EnumType.STRING)
 //    @Column(length = 20, nullable = false)
 //    private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
     @Builder
-    public Member(String username, String email, Role role, String provider, String providerId, String picture, String nickname, String password) {
+    public Member(Long memberId, String username, String email, Role role, String nickname, String password, String picture, String favoriteCompany, String selfIntroductions) {
 
+        this.memberId = memberId;
         this.username = username;
         this.email = email;
         this.role = role;
-        this.provider = provider;
-        this.providerId = providerId;
         this.nickname = nickname;
         this.password = password;
         this.picture = picture;
@@ -70,7 +66,7 @@ public class Member extends Auditable{
         this.selfIntroductions = selfIntroductions;
     }
 
-    public Member update(String picture){
+    public Member updatePicture(String picture){
         this.picture = picture;
 
         return this;
@@ -82,6 +78,9 @@ public class Member extends Auditable{
 
     public List<String> getRoleList() {
 
+        if(this.role != null) {
+            return Arrays.asList(this.role.getKey());
+        }
         return new ArrayList<>();
     }
 

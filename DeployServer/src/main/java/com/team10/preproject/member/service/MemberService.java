@@ -42,6 +42,74 @@ public class MemberService {
 
     private final ApplicationEventPublisher publisher;
 
+    public MemberService(MemberRepository memberRepository,
+                         ApplicationEventPublisher publisher) {
+
+        this.memberRepository = memberRepository;
+        this.publisher = publisher;
+    }
+
+    public Member createMember(Member member, String siteURL) throws UnsupportedEncodingException, MessagingException {
+
+        verifyExistsEmail(member.getEmail());
+        member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
+        member.setRole(Role.USER);
+        String randomCode = RandomString.make(64);
+        member.setVerificationCode(randomCode);
+        member.setEnabled(false);
+        sendVerificationEmail(member, siteURL);
+        Member savedMember = memberRepository.save(member);
+        publisher.publishEvent(new MemberRegistrationApplicationEvent(this, savedMember));
+
+        return savedMember;
+    }
+
+    private void verifyExistsEmail(String email) {
+
+        Member member = memberRepository.findByEmail((email));
+        if (member != null)
+            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+    }
+
+    private void sendVerificationEmail(Member member, String siteURL)
+            throws MessagingException, UnsupportedEncodingException {
+
+        String toAddress = member.getEmail();
+        String fromAddress = "cs@Weply.com";
+        String senderName = "Weply";
+        String subject = "Please verify your registration";
+        String content = "Dear [[name]],<br>"
+                + "Please click the link below to verify your registration:<br>"
+                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
+                + "Thank you,<br>"
+                + "Weply.";
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+        content = content.replace("[[name]]", member.getNickname());
+        String verifyURL = siteURL + "/api/v1/users/verification?code=" + member.getVerificationCode();
+        content = content.replace("[[URL]]", verifyURL);
+        helper.setText(content, true);
+        mailSender.send(message);
+    }
+
+    public boolean verify(String verificationCode) {
+
+        Member member = memberRepository.findByVerificationCode(verificationCode);
+        if (member == null || member.isEnabled()) {
+
+            return false;
+        } else {
+            member.setVerificationCode(null);
+            member.setEnabled(true);
+            memberRepository.save(member);
+
+            return true;
+        }
+    }
+
     public void recoveryPassword(String email) throws Exception {
 
         Member member = findExistsEmail(email);
@@ -85,81 +153,6 @@ public class MemberService {
         mailSender.send(message);
     }
 
-    public boolean verify(String verificationCode) {
-
-        Member member = memberRepository.findByVerificationCode(verificationCode);
-        if (member == null || member.isEnabled()) {
-
-            return false;
-        } else {
-            member.setVerificationCode(null);
-            member.setEnabled(true);
-            memberRepository.save(member);
-
-            return true;
-        }
-    }
-
-    public MemberService(MemberRepository memberRepository,
-                         ApplicationEventPublisher publisher) {
-
-        this.memberRepository = memberRepository;
-        this.publisher = publisher;
-    }
-
-    public void removeCookies(HttpServletRequest request, HttpServletResponse response) {
-
-        Cookie rememberMeCookie = new Cookie("remember-me", "");
-        rememberMeCookie.setMaxAge(0);
-        response.addCookie(rememberMeCookie);
-    }
-
-    public Member createMember(Member member, String siteURL) throws UnsupportedEncodingException, MessagingException {
-
-        verifyExistsEmail(member.getEmail());
-        member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
-        member.setRole(Role.valueOf("ROLE_USER"));
-        String randomCode = RandomString.make(64);
-        member.setVerificationCode(randomCode);
-        member.setEnabled(false);
-        sendVerificationEmail(member, siteURL);
-        Member savedMember = memberRepository.save(member);
-        publisher.publishEvent(new MemberRegistrationApplicationEvent(this, savedMember));
-
-        return savedMember;
-    }
-
-    private void sendVerificationEmail(Member member, String siteURL)
-            throws MessagingException, UnsupportedEncodingException {
-
-        String toAddress = member.getEmail();
-        String fromAddress = "cs@Weply.com";
-        String senderName = "Weply";
-        String subject = "Please verify your registration";
-        String content = "Dear [[name]],<br>"
-                + "Please click the link below to verify your registration:<br>"
-                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
-                + "Thank you,<br>"
-                + "Weply.";
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-        helper.setFrom(fromAddress, senderName);
-        helper.setTo(toAddress);
-        helper.setSubject(subject);
-        content = content.replace("[[name]]", member.getNickname());
-        String verifyURL = siteURL + "/verification?code=" + member.getVerificationCode();
-        content = content.replace("[[URL]]", verifyURL);
-        helper.setText(content, true);
-        mailSender.send(message);
-    }
-
-    private String getSiteURL(HttpServletRequest request) {
-
-        String siteURL = request.getRequestURL().toString();
-
-        return siteURL.replace(request.getServletPath(), "");
-    }
-
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public Member updateMember(Member member) {
 
@@ -170,6 +163,12 @@ public class MemberService {
                 .ifPresent(findMember::setPassword);
         Optional.ofNullable(member.getEmail())
                 .ifPresent(findMember::setEmail);
+        Optional.ofNullable(member.getPicture())
+                .ifPresent(findMember::setPicture);
+        Optional.ofNullable(member.getFavoriteCompany())
+                .ifPresent(findMember::setFavoriteCompany);
+        Optional.ofNullable(member.getSelfIntroductions())
+                .ifPresent(findMember::setSelfIntroductions);
 //        Optional.ofNullable(member.getMemberStatus())
 //                .ifPresent(memberStatus -> findMember.setMemberStatus(memberStatus));
 
@@ -206,10 +205,17 @@ public class MemberService {
         return findMember;
     }
 
-    private void verifyExistsEmail(String email) {
+    public void removeCookies(HttpServletRequest request, HttpServletResponse response) {
 
-        Member member = memberRepository.findByEmail((email));
-        if (member != null)
-            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+        Cookie rememberMeCookie = new Cookie("remember-me", "");
+        rememberMeCookie.setMaxAge(0);
+        response.addCookie(rememberMeCookie);
+    }
+
+    private String getSiteURL(HttpServletRequest request) {
+
+        String siteURL = request.getRequestURL().toString();
+
+        return siteURL.replace(request.getServletPath(), "");
     }
 }
