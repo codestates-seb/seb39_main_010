@@ -9,7 +9,6 @@ spring:
             scope:
               - email
               - profile
-            callback-url: http://localhost:8080/auth/google/callback
   #          naver:
   #            client-id: ${{ secrets.NAVER_CLIENT_ID }}
   #            client-secret: ${{ secrets.NAVER_CLIENT_SECRET }}
