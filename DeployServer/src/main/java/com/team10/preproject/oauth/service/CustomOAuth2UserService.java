@@ -5,6 +5,7 @@ import com.team10.preproject.oauth.dto.OAuthAttributes;
 import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -21,8 +22,11 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
-    private final MemberRepository memberRepository;
-    private final HttpSession httpSession;
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
+    private HttpSession httpSession;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -43,7 +47,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 attributes.getNameAttributeKey());
     }
 
-    // 유저 생성 및 수정 서비스 로직
+    // OAuth 유저 생성 및 수정 서비스 로직
     private Member saveOrUpdate(OAuthAttributes attributes){
 
         Member member = memberRepository.findByEmail(attributes.getEmail());

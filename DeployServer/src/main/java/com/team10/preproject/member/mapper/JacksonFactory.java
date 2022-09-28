@@ -2,7 +2,7 @@ package com.team10.preproject.member.mapper;
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+//time table mapper로 사용가능
 public class JacksonFactory {
 
     private static ObjectMapper objectMapper = null;
@@ -15,4 +15,3 @@ public class JacksonFactory {
         return objectMapper;
     }
 }
-//time table mapper로 사용가능

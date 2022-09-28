@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @NoArgsConstructor
 @Entity
@@ -23,10 +22,10 @@ public class Member extends Auditable{
     @Column(nullable = false)
     private Role role;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(updatable = false, unique = true)
+    @Column(length = 20, unique = true, updatable = false)
     private String username;
 
     @Column(length = 20, nullable = false)
@@ -53,7 +52,7 @@ public class Member extends Auditable{
 //    private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
     @Builder
-    public Member(Long memberId, String username, String email, Role role, String nickname, String password, String picture, String favoriteCompany, String selfIntroductions) {
+    public Member(Long memberId, String username, String email, Role role, boolean enabled, String verificationCode, String nickname, String password, String picture, String favoriteCompany, String selfIntroductions) {
 
         this.memberId = memberId;
         this.username = username;
@@ -64,12 +63,12 @@ public class Member extends Auditable{
         this.picture = picture;
         this.favoriteCompany = favoriteCompany;
         this.selfIntroductions = selfIntroductions;
+        this.enabled = enabled;
+        this.verificationCode = verificationCode;
     }
 
-    public Member updatePicture(String picture){
+    public void updatePicture(String picture){
         this.picture = picture;
-
-        return this;
     }
 
     public String getRoleKey(){
@@ -79,7 +78,7 @@ public class Member extends Auditable{
     public List<String> getRoleList() {
 
         if(this.role != null) {
-            return Arrays.asList(this.role.getKey());
+            return List.of(this.role.getKey());
         }
         return new ArrayList<>();
     }

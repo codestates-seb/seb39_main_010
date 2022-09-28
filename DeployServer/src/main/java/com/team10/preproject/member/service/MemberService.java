@@ -1,11 +1,14 @@
 package com.team10.preproject.member.service;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.team10.preproject.global.exception.BusinessLogicException;
 import com.team10.preproject.global.exception.ExceptionCode;
 import com.team10.preproject.global.helper.event.MemberRegistrationApplicationEvent;
 import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.member.entity.Role;
 import com.team10.preproject.member.repository.MemberRepository;
+import com.team10.preproject.token.service.TokenService;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -25,6 +28,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
+import java.util.Objects;
 import java.util.Optional;
 
 @Transactional
@@ -49,7 +53,7 @@ public class MemberService {
         this.publisher = publisher;
     }
 
-    public Member createMember(Member member, String siteURL) throws UnsupportedEncodingException, MessagingException {
+    public Member createMember(Member member, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
 
         verifyExistsEmail(member.getEmail());
         member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
@@ -57,7 +61,7 @@ public class MemberService {
         String randomCode = RandomString.make(64);
         member.setVerificationCode(randomCode);
         member.setEnabled(false);
-        sendVerificationEmail(member, siteURL);
+        sendSignupVerificationEmail(member, getSiteURL(request));
         Member savedMember = memberRepository.save(member);
         publisher.publishEvent(new MemberRegistrationApplicationEvent(this, savedMember));
 
@@ -66,12 +70,19 @@ public class MemberService {
 
     private void verifyExistsEmail(String email) {
 
-        Member member = memberRepository.findByEmail((email));
+        Member member = memberRepository.findByEmail(email);
         if (member != null)
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
 
-    private void sendVerificationEmail(Member member, String siteURL)
+    private String getSiteURL(HttpServletRequest request) {
+
+        String siteURL = request.getRequestURL().toString();
+
+        return siteURL.replace(request.getServletPath(), "");
+    }
+
+    private void sendSignupVerificationEmail(Member member, String siteURL)
             throws MessagingException, UnsupportedEncodingException {
 
         String toAddress = member.getEmail();
@@ -89,13 +100,13 @@ public class MemberService {
         helper.setTo(toAddress);
         helper.setSubject(subject);
         content = content.replace("[[name]]", member.getNickname());
-        String verifyURL = siteURL + "/api/v1/users/verification?code=" + member.getVerificationCode();
+        String verifyURL = siteURL + "/api/v1/users/signup-verification?code=" + member.getVerificationCode();
         content = content.replace("[[URL]]", verifyURL);
         helper.setText(content, true);
         mailSender.send(message);
     }
 
-    public boolean verify(String verificationCode) {
+    public boolean signupVerify(String verificationCode) {
 
         Member member = memberRepository.findByVerificationCode(verificationCode);
         if (member == null || member.isEnabled()) {
@@ -157,12 +168,12 @@ public class MemberService {
     public Member updateMember(Member member) {
 
         Member findMember = findVerifiedMember(member.getMemberId());
+        Optional.ofNullable(member.getEmail())
+                .ifPresent(findMember::setEmail);
         Optional.ofNullable(member.getNickname())
                 .ifPresent(findMember::setNickname);
         Optional.ofNullable(member.getPassword())
                 .ifPresent(findMember::setPassword);
-        Optional.ofNullable(member.getEmail())
-                .ifPresent(findMember::setEmail);
         Optional.ofNullable(member.getPicture())
                 .ifPresent(findMember::setPicture);
         Optional.ofNullable(member.getFavoriteCompany())
@@ -173,12 +184,6 @@ public class MemberService {
 //                .ifPresent(memberStatus -> findMember.setMemberStatus(memberStatus));
 
         return memberRepository.save(findMember);
-    }
-
-    @Transactional(readOnly = true)
-    public Member findMember(long memberId) {
-
-        return findVerifiedMember(memberId);
     }
 
     public Page<Member> findMembers(int page, int size) {
@@ -198,11 +203,24 @@ public class MemberService {
 
         Optional<Member> optionalMember =
                 memberRepository.findById(memberId);
-        Member findMember =
-                optionalMember.orElseThrow(() ->
-                        new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        return optionalMember.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    }
 
-        return findMember;
+    @Transactional(readOnly = true)
+    public Member findMember(long memberId) {
+        return findVerifiedMember(memberId);
+    }
+
+    public void checkOwnerShip(HttpServletRequest request, Long memberId) {
+
+        String jwtToken = request.getHeader("Refresh");
+        String email = JWT.require(Algorithm.HMAC512("cos_jwt_token")).build().verify(jwtToken).getClaim("email").asString();
+        Member member = memberRepository.findByEmail(email);
+        if(!Objects.equals(member.getMemberId(), memberId)) {
+
+            throw new BusinessLogicException(ExceptionCode.INVALID_MEMBER_AUTHENTICATION);
+        }
     }
 
     public void removeCookies(HttpServletRequest request, HttpServletResponse response) {
@@ -210,12 +228,5 @@ public class MemberService {
         Cookie rememberMeCookie = new Cookie("remember-me", "");
         rememberMeCookie.setMaxAge(0);
         response.addCookie(rememberMeCookie);
-    }
-
-    private String getSiteURL(HttpServletRequest request) {
-
-        String siteURL = request.getRequestURL().toString();
-
-        return siteURL.replace(request.getServletPath(), "");
     }
 }

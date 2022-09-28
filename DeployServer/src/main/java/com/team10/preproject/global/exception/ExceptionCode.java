@@ -8,6 +8,7 @@ public enum ExceptionCode {
     MEMBER_EXISTS(409, "Member exists"),
     NOT_IMPLEMENTATION(501, "Not Implementation"),
     INVALID_MEMBER_STATUS(400, "Invalid member status"),
+    INVALID_MEMBER_AUTHENTICATION(400, "Invalid member authentication"),
     NoSuchElementException(500, "No value present");
 
     @Getter

@@ -14,7 +14,7 @@ public class MemberPostDto {
     @Email
     private String email;
 
-    @NotBlank(message = "Username cannot be null")
+    @NotBlank(message = "ID cannot be null")
     @Length(max = 20)
     private String username;
 
