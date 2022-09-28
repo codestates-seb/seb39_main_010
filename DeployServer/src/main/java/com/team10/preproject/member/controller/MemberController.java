@@ -1,5 +1,6 @@
 package com.team10.preproject.member.controller;
 
+import com.nimbusds.jose.proc.SecurityContext;
 import com.team10.preproject.global.dto.SingleResponseDto;
 import com.team10.preproject.member.dto.MemberDto;
 import com.team10.preproject.member.dto.PasswordForgotDto;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.io.UnsupportedEncodingException;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -57,7 +60,7 @@ public class MemberController {
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
 
         Member member = mapper.memberPostToMember(requestBody);
-        Member createMember = memberService.createMember(member, getSiteURL(request));
+        Member createMember = memberService.createMember(member, request);
         MemberDto.Response response = mapper.memberToMemberResponse(createMember);
 
         return new ResponseEntity<>(
@@ -65,16 +68,10 @@ public class MemberController {
                 HttpStatus.CREATED);
     }
 
-    private String getSiteURL (HttpServletRequest request) {
-
-        String siteURL = request.getRequestURL().toString();
-        return siteURL.replace(request.getServletPath(), "");
-    }
-
-    @GetMapping("/verification")
+    @GetMapping("/signup-verification")
     public String verifyUser(@Param("code") String code) {
 
-        if (memberService.verify(code)) {
+        if (memberService.signupVerify(code)) {
 
             return "verify_success";
         } else {
@@ -87,14 +84,15 @@ public class MemberController {
     public ResponseEntity findPassword(@RequestBody @Valid PasswordForgotDto requestBody) throws Exception {
 
         memberService.recoveryPassword(requestBody.getEmail());
-        return ResponseEntity.ok().body(("Please check your email"));
+        return ResponseEntity.ok().body("Please check your email");
     }
 
     @PatchMapping("/{member-id}")
-    public ResponseEntity patchMember(
-            @PathVariable("member-id") @Positive long memberId,
-            @Valid @RequestBody MemberDto.Patch requestBody) {
+    public ResponseEntity patchMember(HttpServletRequest request,
+                                      @PathVariable("member-id")@Positive long memberId,
+                                      @Valid @RequestBody MemberDto.Patch requestBody) {
 
+        memberService.checkOwnerShip(request, memberId);
         requestBody.setMemberId(memberId);
         Member member =
                 memberService.updateMember(mapper.memberPatchToMember(requestBody));
@@ -105,9 +103,10 @@ public class MemberController {
     }
 
     @DeleteMapping("/{member-id}")
-    public ResponseEntity deleteMember(
+    public ResponseEntity deleteMember(HttpServletRequest request,
             @PathVariable("member-id") @Positive long memberId) {
 
+        memberService.checkOwnerShip(request, memberId);
         memberService.deleteMember(memberId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

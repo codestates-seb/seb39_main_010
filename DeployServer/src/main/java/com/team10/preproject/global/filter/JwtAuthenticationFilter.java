@@ -5,7 +5,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.global.auth.PrincipalDetails;
+import com.team10.preproject.token.entity.Token;
+import com.team10.preproject.token.service.TokenService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +27,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final AuthenticationManager authenticationManager;
 
+    private final TokenService tokenService;
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
@@ -31,12 +36,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             ObjectMapper om = new ObjectMapper();
             Member member = om.readValue(request.getInputStream(), Member.class);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(member.getUsername(), member.getPassword());
-            Authentication authentication = authenticationManager.authenticate(authenticationToken);
-            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 
-            return authentication;
+            return authenticationManager.authenticate(authenticationToken);
         } catch (IOException e) {
-            e.printStackTrace();;
+            e.printStackTrace();
         }
 
         return null;
@@ -49,18 +52,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
 //        ObjectMapper objectMapper = new ObjectMapper();
 //        objectMapper.findAndRegisterModules();
-        Long memberId = principalDetails.getMember().getMemberId();
-        String username = principalDetails.getMember().getUsername();
-        String nickname = principalDetails.getMember().getNickname();
+        Long memberId = principalDetails.getMemberId();
+        String username = principalDetails.getUsername();
+        String nickname = principalDetails.getNickname();
+        String email = principalDetails.getEmail();
         String json =
-                "{\"memberId\":" + memberId + ",\n\"email\":\"" + username + "\",\n\"nickname\":\"" + nickname + "\"}";
-        String jwtToken = JWT.create()
-                .withSubject("cos jwt token")
-                .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 100)))
-                .withClaim("id", memberId)
-                .withClaim("username", username)
-                .sign(Algorithm.HMAC512("cos_jwt_token"));
-        response.addHeader("Authorization", "Bearer " + jwtToken);
+                "{\"memberId\":" + memberId + ",\n\"username\":\"" + username + "\",\n\"email\":\"" + email + "\",\n\"nickname\":\"" + nickname + "\"}";
+        Token jwtToken = tokenService.generateToken(memberId, email, nickname);
+        response.addHeader("Authorization", jwtToken.getAccessToken());
+        response.addHeader("Refresh", jwtToken.getRefreshToken());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);
