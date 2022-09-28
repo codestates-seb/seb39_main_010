@@ -86,7 +86,7 @@ public class MemberService {
             throws MessagingException, UnsupportedEncodingException {
 
         String toAddress = member.getEmail();
-        String fromAddress = "cs@Weply.com";
+        String fromAddress = "CS@Weply.com";
         String senderName = "Weply";
         String subject = "Please verify your registration";
         String content = "Dear [[name]],<br>"
@@ -145,7 +145,7 @@ public class MemberService {
             throws MessagingException, UnsupportedEncodingException {
 
         String toAddress = member.getEmail();
-        String fromAddress = "cs@Weply.com";
+        String fromAddress = "CS@Weply.com";
         String senderName = "Weply";
         String subject = "Password Recovery";
         String content = "Dear [[name]],<br>"
