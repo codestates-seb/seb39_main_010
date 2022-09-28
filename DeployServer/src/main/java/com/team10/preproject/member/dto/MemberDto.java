@@ -83,10 +83,8 @@ public class MemberDto {
     public static class Response {
 
         private long memberId;
-        private String username;
         private String email;
         private String nickname;
-        private String password;
         private String picture;
         private String favoriteCompany;
         private String selfIntroductions;
