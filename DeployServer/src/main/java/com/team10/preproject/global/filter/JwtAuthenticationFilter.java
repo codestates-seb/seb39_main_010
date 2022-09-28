@@ -48,10 +48,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
+        //  Jackson Factory
+        //        ObjectMapper objectMapper = new ObjectMapper();
+        //        objectMapper.findAndRegisterModules();
         System.out.println("successfulAuthentication");
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        objectMapper.findAndRegisterModules();
         Long memberId = principalDetails.getMemberId();
         String username = principalDetails.getUsername();
         String nickname = principalDetails.getNickname();

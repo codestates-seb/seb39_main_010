@@ -60,11 +60,11 @@ public class SecurityConfig {
                         "/api/v1/users/verification",
                         "/api/v1/users/forgot-password",
                         "/token/**",
-                        "/api/v1/questions/**",
                         "/",
                         "/h2/**")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/v1/users/**")
+                .antMatchers(HttpMethod.GET, "/api/v1/users/**",
+                        "/api/v1/questions/**")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()

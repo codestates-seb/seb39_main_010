@@ -43,7 +43,6 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                 .build();
         Token token = tokenService.generateToken(member.getMemberId(), member.getEmail(), member.getNickname());
         log.info("{}", token);
-
         writeTokenResponse(response, token);
     }
 
