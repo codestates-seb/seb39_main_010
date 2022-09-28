@@ -11,8 +11,8 @@ public class TokenService {
 
     public Token generateToken(Long memberId, String email, String nickname) {
 
-        long accessTokenPeriod = 1000L * 60L * 100L;
-        long refreshTokenPeriod = 1000L * 60L * 60L * 3L;
+        long accessTokenPeriod = 1000L * 60L * 10L;
+        long refreshTokenPeriod = 1000L * 60L * 60L;
 
         String accessToken = JWT.create()
                 .withSubject("cos jwt token")

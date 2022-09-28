@@ -18,35 +18,20 @@ public class RestApiController {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @GetMapping("/api/v1/admin")
-    public String admin() {
-        return "admin";
-    }
-
-    @GetMapping("/info")
+    @GetMapping("/")
     public String info() {
-        return "<h1>info</h1>";
+        return "<h1>main page</h1>";
     }
 
-    @GetMapping("/manager")
-    public @ResponseBody String manager() {
-        return "manager";
-    }
-
-    @PostMapping("/token")
-    public String token() {
-        return "<h1>token</h1>";
-    }
-
-    @Secured("ROLE_ADMIN")
-    @GetMapping("/admintools")
-    public @ResponseBody String admintools() {
-        return "admintools";
-    }
-
-    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-    @GetMapping("/data")
-    public @ResponseBody String data() {
-        return "data";
-    }
+//    @Secured("ROLE_ADMIN")
+//    @GetMapping("/admintools")
+//    public @ResponseBody String admintools() {
+//        return "admintools";
+//    }
+//
+//    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
+//    @GetMapping("/data")
+//    public @ResponseBody String data() {
+//        return "data";
+//    }
 }
