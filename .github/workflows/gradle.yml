@@ -9,14 +9,14 @@ name: Java CI with Gradle
 
 on:
   push:
+    paths: ./DeployServer
     branches: [ "main" ]
-    paths: "seb39_main_010/DeployServer**"
 
 permissions:
   contents: read
   
 env:
-  S3_BUCKET_NAME: pre-project-bucket-deploy
+  S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
 
 jobs:
   build:
@@ -35,12 +35,12 @@ jobs:
       with:
         arguments: build
     
-    # build한 후 프로젝트를 압축
+    # build한 후 프로젝트를 압축합니다.
     - name: Make zip file
-      run: zip -r ./main-deploy.zip .
+      run: zip -r ./DeployServer.zip .
       shell: bash
     
-    # Access Key와 Secret Access Key를 통해 권한을 확인
+    # Access Key와 Secret Access Key를 통해 권한을 확인합니다.
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -48,6 +48,14 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-northeast-2
     
-    # 압축한 프로젝트를 S3로 전송
+    # 압축한 프로젝트를 S3로 전송합니다.
     - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./main-deploy.zip s3://$S3_BUCKET_NAME/practice-deploy.zip
+      run: aws s3 cp --region ap-northeast-2 ./Deployment.zip s3://$S3_BUCKET_NAME/practice-deploy.zip
+      
+    # CodeDeploy에게 배로 명령을 내립니다.
+    - name: Code Deploy
+      run: >
+        aws deploy create-deployment --application-name # Code Deploy name
+        --deployment-config-name CodeDeployDefault.AllAtOnce
+        --deployment-group-name #Deploy gruop name
+        --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=DeployServer.zip
