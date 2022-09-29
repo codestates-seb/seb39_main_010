@@ -8,7 +8,7 @@ export const HeaderContainer = styled.div`
 	padding: 0px 6%;
 	gap: 2rem;
 
-	width: 100vw;
+	width: 100%;
 	height: 88px;
 
 	/* background: #ffffff; */
