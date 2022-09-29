@@ -4,10 +4,12 @@ import { Signup } from 'pages/Signup';
 import { Study, StudyDetail, StudyWrite } from 'pages/Study';
 import { Question, Review, ReviewWrite } from 'pages/Interveiw';
 import { Mypage } from 'pages/Mypage';
+import { Header } from 'components/common';
 
 const Router = () => {
 	return (
 		<React.Fragment>
+			<Header />
 			<Routes>
 				<Route path="/" element={<Navigate to="/interview/question" />} />
 				<Route path="/signup" element={<Signup />} />
