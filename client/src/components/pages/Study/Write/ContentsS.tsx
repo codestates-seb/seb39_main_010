@@ -1,17 +1,42 @@
-import { Input, SortingRectangle } from 'components/common';
+import { Input, JobSelect } from 'components/common';
 import TextArea from 'components/common/Textarea/Textarea';
 import React from 'react';
 import styled from 'styled-components';
+import { theme } from 'styles/theme';
+import { Tag } from './Tag';
 
-const ContentsContainer = styled.div`
+export const ContentsContainer = styled.div`
 	width: 1200px;
+	margin: 44px 0;
+	font-size: 18px;
+	.text {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 14px;
+	}
+	.blank {
+		margin-bottom: 44px;
+	}
+	.gray {
+		color: ${theme.colors.gray400};
+	}
+
+	textarea {
+		margin-top: 26px;
+	}
 `;
 const JobandTag = styled.div`
 	display: flex;
 	justify-content: space-between;
+	input {
+		width: 576px;
+	}
+
+	div {
+	}
 `;
 
-const Contents = () => {
+const ContentsS = () => {
 	const OPTIONS = [
 		{ value: 'sales', name: '영업/고객상담' },
 		{ value: 'business', name: '경영/사무' },
@@ -32,30 +57,31 @@ const Contents = () => {
 		<ContentsContainer>
 			<JobandTag>
 				<div>
-					<div>직무선택</div>
-					<SortingRectangle options={OPTIONS} />
+					<div className="text">직무선택</div>
+					<JobSelect options={OPTIONS} />
 				</div>
 				<div>
-					<div>
+					<div className="text">
 						<span>관련태그</span>
-						<span>띄어쓰기로 구분해 주세요</span>
+						<span className="gray">엔터키로 구분해 주세요</span>
 					</div>
 					<div>
-						<Input
+						{/* <Input
+							className="blank"
 							width="576px"
 							height="66px"
 							placeholder={'태그를 설정해 주세요 (최대 10개)'}
-						/>
+						/> */}
+						<Tag />
 					</div>
 				</div>
 			</JobandTag>
 			<div>
-				<div>글제목</div>
-				<Input
-					width="1200px"
-					height="66px"
-					placeholder={'제목을 입력해 주세요.'}
-				/>
+				<div className="text">
+					<span>글제목</span>
+					<span className="gray">0/50</span>
+				</div>
+				<Input placeholder={'제목을 입력해 주세요.'} />
 				<TextArea
 					placeholder={`스터디 모집글을 아래 양식을 참고해 작성해주세요.
 꼼꼼히 작성하면 멋진 스터디 팀원을 만나실 수 있을거예요.
@@ -82,4 +108,4 @@ const Contents = () => {
 		</ContentsContainer>
 	);
 };
-export default Contents;
+export default ContentsS;

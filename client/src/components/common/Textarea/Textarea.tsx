@@ -46,8 +46,6 @@ const TextAreaContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 
-	background-color: yellow;
-
 	& label {
 		font-size: 18px;
 		margin-bottom: 18px;

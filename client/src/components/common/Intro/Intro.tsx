@@ -18,16 +18,14 @@ export const IntroContainer = styled.div`
 	}
 
 	h2 {
-		font-style: normal;
 		font-weight: 600;
 		font-size: 36px;
-		line-height: 143%;
 	}
 	p {
-		font-style: normal;
+		margin-top: 15px;
+
 		font-weight: 400;
 		font-size: 20px;
-		line-height: 143%;
 	}
 `;
 

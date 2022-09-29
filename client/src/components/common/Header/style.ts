@@ -15,8 +15,6 @@ export const HeaderContainer = styled.div`
 	box-shadow: inset 0px -1px 1px rgba(0, 0, 0, 0.1);
 `;
 export const LogoandNav = styled.div`
-	/* Auto layout */
-
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -26,58 +24,37 @@ export const LogoandNav = styled.div`
 	width: 604px;
 	height: 34px;
 
-	/* Inside auto layout */
-
 	div {
-		/* logo */
-
 		width: 134px;
 		height: 34px;
 		background-color: lightgray;
-
-		/* Inside auto layout */
-
-		flex: none;
-		order: 0;
-		flex-grow: 0;
 	}
 
 	ul {
-		/* Auto layout */
-
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		padding: 0px;
 		gap: 30px;
 
-		/* Inside auto layout */
-
-		flex: none;
-		order: 1;
-		flex-grow: 0;
-
 		li:hover {
 			color: #3563e9;
 			font-weight: bold;
 			cursor: pointer;
 		}
+		li.active {
+			color: #3563e9;
+			font-weight: bold;
+		}
 	}
 `;
 export const MypageImg = styled.div`
-	/* Avatar */
-
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	width: 50px;
 	height: 50px;
 
-	/* systemGrey/100 */
-
-	background: #f5f5f5;
+	background: #f5f5f5; //gray500
 	border-radius: 30px;
-
-	/* Inside auto layout */
-
-	flex: none;
-	order: 1;
-	flex-grow: 0;
 `;

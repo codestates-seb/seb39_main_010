@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { Signup } from 'pages/Signup';
 import { Study, StudyDetail, StudyWrite } from 'pages/Study';
 import { Question, Review, ReviewWrite } from 'pages/Interveiw';
+import { Mypage } from 'pages/Mypage';
 
 const Router = () => {
 	return (
@@ -10,7 +11,7 @@ const Router = () => {
 			<Routes>
 				<Route path="/" element={<Navigate to="/interview/question" />} />
 				<Route path="/signup" element={<Signup />} />
-				<Route path="/mypage" element={<div>Mypage</div>} />
+				<Route path="/mypage" element={<Mypage />} />
 				<Route path="/profile/:id" element={<div>Profile</div>} />
 				<Route path="/interview">
 					<Route path="question" element={<Question />} />

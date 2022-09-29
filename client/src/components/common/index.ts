@@ -1,5 +1,5 @@
-export { default as SortingRound } from './SelectBox/SortingRound';
-export { default as SortingRectangle } from './SelectBox/SortingRectangle';
+export { default as PopularSorting } from './SelectBox/PopularSorting';
+export { default as JobSelect } from './SelectBox/JobSelect';
 export { default as Header } from './Header/Header';
 export { default as SearchBox } from './Input/SearchBox';
 export { default as Input } from './Input/Input';

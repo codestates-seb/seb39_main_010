@@ -5,8 +5,8 @@ import SearchBar from './SearchBar';
 
 export const CategoryContainer = styled.div`
 	width: 1200px;
-	height: 52px;
-	box-shadow: inset 0px -1px 1px rgba(0, 0, 0, 0.1);
+	height: 50px;
+	border-bottom: 1px solid #dbdbdb;
 
 	display: flex;
 	flex-direction: row;
@@ -55,7 +55,10 @@ const Category = () => {
 					</div>
 				))}
 			</CategoryContainer>
-			<SearchBar />
+			<SearchBar
+				placeholder="관심 스터디를 검색해 보세요!"
+				navigate="/study/write"
+			/>
 			<div>{currentpage}</div>
 		</>
 	);

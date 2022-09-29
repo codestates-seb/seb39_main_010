@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { IOptions } from 'pages/Study/Study';
 
 export const SortingContainer = styled.div`
 	display: flex;
@@ -27,21 +26,13 @@ export const SortingContainer = styled.div`
 	}
 `;
 
-interface Props {
-	options: IOptions[];
-}
-
-const Filtering = ({ options }: Props) => {
-	const [sorting, setSorting] = useState('최신순');
-	console.log(sorting);
-
+const Filtering = () => {
 	return (
 		<SortingContainer>
 			<form>
-				<select onClick={(e) => setSorting(e.currentTarget.value)}>
-					{options.map((option: IOptions) => {
-						return <option key={option.value}>{option.name}</option>;
-					})}
+				<select>
+					<option>최신순</option>
+					<option>좋아요순</option>
 				</select>
 			</form>
 		</SortingContainer>

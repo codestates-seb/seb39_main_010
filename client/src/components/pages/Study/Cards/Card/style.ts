@@ -60,9 +60,8 @@ export const Middle = styled.div`
 	p {
 		width: 341px;
 		height: 51px;
-		padding: 6px 0;
+		padding: 7px 0;
 
-		font-family: 'Apple SD Gothic Neo';
 		font-style: normal;
 		font-size: 14px;
 		line-height: 148%;
