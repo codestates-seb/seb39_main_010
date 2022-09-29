@@ -16,7 +16,7 @@ permissions:
   contents: read
   
 env:
-  S3_BUCKET_NAME: main-deploy-bucket
+  S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
 
 defaults:
   run:
