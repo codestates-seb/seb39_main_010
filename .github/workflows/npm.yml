@@ -1,4 +1,4 @@
-name: JavaScript CI with NodeJS for Client
+name: JavaScript CI for Client
 
 on:
   push:
