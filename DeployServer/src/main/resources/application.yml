@@ -1,7 +1,10 @@
-#spring:
-#  profiles:
-#    active: local
-#---
+spring:
+  profiles:
+    active: server
+    include: oauth
+  config:
+    domain: ${{ secrets.AWS_S3_Endpoint }}
+---
 spring:
   config:
     activate:

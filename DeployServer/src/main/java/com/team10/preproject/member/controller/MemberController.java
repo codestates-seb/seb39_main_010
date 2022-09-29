@@ -1,37 +1,41 @@
 package com.team10.preproject.member.controller;
 
-import com.team10.preproject.dto.SingleResponseDto;
+import com.nimbusds.jose.proc.SecurityContext;
+import com.team10.preproject.global.dto.SingleResponseDto;
 import com.team10.preproject.member.dto.MemberDto;
+import com.team10.preproject.member.dto.PasswordForgotDto;
 import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.member.mapper.MemberMapper;
 import com.team10.preproject.member.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.io.UnsupportedEncodingException;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/v1/users")
 @Validated
 @Slf4j
 public class MemberController {
+
     private final MemberService memberService;
     private final MemberMapper mapper;
 
     public MemberController(MemberService memberService, MemberMapper mapper) {
+
         this.memberService = memberService;
         this.mapper = mapper;
-    }
-
-    @GetMapping("/")
-    public String user() {
-        return "user";
     }
 
     @GetMapping("/{member-id}")
@@ -45,6 +49,7 @@ public class MemberController {
     @GetMapping("/logout")
     public ResponseEntity logoutMember(
             HttpServletRequest request, HttpServletResponse response) {
+
         memberService.removeCookies(request, response);
 
         return ResponseEntity.ok()
@@ -52,10 +57,10 @@ public class MemberController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
-        Member member = mapper.memberPostToMember(requestBody);
+    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
 
-        Member createMember = memberService.createMember(member);
+        Member member = mapper.memberPostToMember(requestBody);
+        Member createMember = memberService.createMember(member, request);
         MemberDto.Response response = mapper.memberToMemberResponse(createMember);
 
         return new ResponseEntity<>(
@@ -63,12 +68,32 @@ public class MemberController {
                 HttpStatus.CREATED);
     }
 
-    @PatchMapping("/{member-id}")
-    public ResponseEntity patchMember(
-            @PathVariable("member-id") @Positive long memberId,
-            @Valid @RequestBody MemberDto.Patch requestBody) {
-        requestBody.setMemberId(memberId);
+    @GetMapping("/signup-verification")
+    public String verifyUser(@Param("code") String code) {
 
+        if (memberService.signupVerify(code)) {
+
+            return "verify_success";
+        } else {
+
+            return "verify_fail";
+        }
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity findPassword(@RequestBody @Valid PasswordForgotDto requestBody) throws Exception {
+
+        memberService.recoveryPassword(requestBody.getEmail());
+        return ResponseEntity.ok().body("Please check your email");
+    }
+
+    @PatchMapping("/{member-id}")
+    public ResponseEntity patchMember(HttpServletRequest request,
+                                      @PathVariable("member-id")@Positive long memberId,
+                                      @Valid @RequestBody MemberDto.Patch requestBody) {
+
+        memberService.checkOwnerShip(request, memberId);
+        requestBody.setMemberId(memberId);
         Member member =
                 memberService.updateMember(mapper.memberPatchToMember(requestBody));
 
@@ -78,8 +103,10 @@ public class MemberController {
     }
 
     @DeleteMapping("/{member-id}")
-    public ResponseEntity deleteMember(
+    public ResponseEntity deleteMember(HttpServletRequest request,
             @PathVariable("member-id") @Positive long memberId) {
+
+        memberService.checkOwnerShip(request, memberId);
         memberService.deleteMember(memberId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

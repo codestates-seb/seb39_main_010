@@ -9,9 +9,14 @@ import javax.validation.constraints.Pattern;
 
 @Getter
 public class MemberPostDto {
+
     @NotBlank
     @Email
     private String email;
+
+    @NotBlank(message = "ID cannot be null")
+    @Length(max = 20)
+    private String username;
 
     @NotBlank(message = "Nickname cannot be null")
     @Length(max = 20)
@@ -19,6 +24,15 @@ public class MemberPostDto {
 
     @NotBlank(message = "Password cannot be null")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$",
-            message = "password must be 8-20 characters long and contain one uppercase and one lowercase and one special character.")
+            message = "Password Must be 8 to 20 Characters and a Combination of UpperCase Letters and LowerCase Letters and Special Characters.")
     private String password;
+
+    @Length(max = 2000)
+    private String picture;
+
+    @Length(max = 200)
+    private String favoriteCompany;
+
+    @Length(max = 200)
+    private String selfIntroductions;
 }

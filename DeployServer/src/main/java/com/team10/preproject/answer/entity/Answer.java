@@ -2,7 +2,7 @@ package com.team10.preproject.answer.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.team10.preproject.audit.Auditable;
+import com.team10.preproject.global.audit.Auditable;
 import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.question.entity.Question;
 import lombok.*;

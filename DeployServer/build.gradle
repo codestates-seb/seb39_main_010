@@ -33,8 +33,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mustache'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation 'org.mapstruct:mapstruct:1.5.1.Final'
@@ -48,6 +48,7 @@ dependencies {
 	implementation 'com.google.code.gson:gson'
 	implementation 'mysql:mysql-connector-java'
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 }
 
 //querydsl설정
