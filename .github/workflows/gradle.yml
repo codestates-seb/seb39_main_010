@@ -36,13 +36,11 @@ jobs:
         distribution: 'temurin'
     - name: gradlew permission
       run: chmod +x gradlew
-    - name: test permission
-      run: chmod +x test
     - name: Build with Gradle
-#       run: ./gradlew build
-      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-      with:
-        arguments: build
+      run: ./gradlew build -x check --parallel
+#       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+#       with:
+#         arguments: build
     
     # build한 후 프로젝트를 압축합니다.
     - name: Make zip file
