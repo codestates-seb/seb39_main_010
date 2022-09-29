@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AnswerPutDto {
+
     private Long answerId;
 
     @NotBlank(message = "내용은 공백이 불가능 합니다.")

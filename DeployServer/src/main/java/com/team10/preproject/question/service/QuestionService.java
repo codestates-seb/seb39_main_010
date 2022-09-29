@@ -1,9 +1,11 @@
 package com.team10.preproject.question.service;
 
-
+import com.team10.preproject.answer.repository.AnswerRepository;
 import com.team10.preproject.global.exception.BusinessLogicException;
 import com.team10.preproject.global.exception.ExceptionCode;
 import com.team10.preproject.member.entity.Member;
+import com.team10.preproject.question.dto.CommentsChildrenResponse;
+import com.team10.preproject.question.dto.QuestionOneResponse;
 import com.team10.preproject.question.entity.Question;
 
 import com.team10.preproject.question.repository.QuestionRepository;
@@ -14,7 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class QuestionService {
@@ -22,12 +24,16 @@ public class QuestionService {
     @Autowired
     private QuestionRepository questionRepository;
 
+    @Autowired
+    private AnswerRepository answerRepository;
+
 
     // 글 작성
     @Transactional
     public Question questionwrite(Question question, Member member){
 
         question.setMember(member);
+
         return questionRepository.save(question);
     }
 
@@ -38,26 +44,37 @@ public class QuestionService {
         return questionRepository.findAll(pageable);
     }
 
-    // 특정 질문 불러오기
-    @Transactional(readOnly = true)
-    public Question questionView(Long questionId){
-        Optional<Question> optionalQuestion =
-                questionRepository.findById(questionId);
-        Question question =
-                optionalQuestion.orElseThrow(() -> {
-                    return new BusinessLogicException(ExceptionCode.NoSuchElementException);
+    @Transactional
+    public QuestionOneResponse questionView(Long questionId) {
+
+        QuestionOneResponse questionOneResponse = questionRepository.findOneQuestionById(questionId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NoSuchElementException));
+        commentsExtractor(questionId, questionOneResponse);
+
+        return questionOneResponse;
+    }
+
+    private void commentsExtractor(Long questionId, QuestionOneResponse questionOneResponse) {
+
+        questionOneResponse.getAnswers()
+                .forEach(comment -> {
+                    List<CommentsChildrenResponse> comments =
+                            answerRepository.findQuestionAnswers(questionId, comment.getAnswerId());
+                    comment.setChildren(comments);
                 });
-        return question;
     }
 
     @Transactional
     public Question questionUpdate(long questionId,Question requestQuestion){
+
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() ->{
                     return new IllegalArgumentException("글 찾기 실패 : 해당 글을 찾을 수 없습니다.");
                 });
+
         question.setTitle(requestQuestion.getTitle());
         question.setContent(requestQuestion.getContent());
+
         return questionRepository.save(question);
     }
 

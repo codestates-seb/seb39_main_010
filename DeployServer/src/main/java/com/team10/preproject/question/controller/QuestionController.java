@@ -4,6 +4,7 @@ package com.team10.preproject.question.controller;
 import com.team10.preproject.global.dto.SingleResponseDto;
 import com.team10.preproject.global.auth.PrincipalDetails;
 import com.team10.preproject.question.dto.QuestionDto;
+import com.team10.preproject.question.dto.QuestionOneResponse;
 import com.team10.preproject.question.dto.QuestionResponseDto;
 import com.team10.preproject.question.entity.Question;
 import com.team10.preproject.question.mapper.QuestionMapper;
@@ -42,6 +43,7 @@ public class QuestionController {
         questionResponseDto.setMemberId(principal.getMember().getMemberId());
         questionResponseDto.setEmail(principal.getMember().getEmail());
         questionResponseDto.setNickname(principal.getMember().getNickname());
+
         return new ResponseEntity<>(
                 new SingleResponseDto<>(questionResponseDto), HttpStatus.CREATED);
     }
@@ -57,16 +59,18 @@ public class QuestionController {
     }
 
     @GetMapping("/{question-id}")
-    public ResponseEntity questionView(@PathVariable("question-id") Long questionId){
+    public QuestionOneResponse questionView(@PathVariable("question-id") Long questionId){
 
-        Question question = questionService.questionView(questionId);
-        return new ResponseEntity<>(question, HttpStatus.OK);
+        QuestionOneResponse questionOneResponse = questionService.questionView(questionId);
+
+        return questionOneResponse;
     }
 
     @DeleteMapping("/{question-id}")
     public ResponseEntity questionDelete(@PathVariable("question-id") Long questionId){
 
         questionService.questionDelete(questionId);
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

@@ -40,13 +40,4 @@ public class QuestionDto {
         private String content;
     }
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Response{
-        private Long questionId;
-        private String title;
-        private String content;
-        public Long memberId;
-    }
 }
