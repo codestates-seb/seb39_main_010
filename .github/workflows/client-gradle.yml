@@ -9,7 +9,7 @@ name: Java CI with Gradle For Client
 
 on:
   push:
-    paths: ./Client
+    paths: ./client
     branches: [ "main" ]
 
 permissions:
@@ -37,7 +37,7 @@ jobs:
     
     # build한 후 프로젝트를 압축합니다.
     - name: Make zip file
-      run: zip -r ./Client.zip .
+      run: zip -r ./client.zip .
       shell: bash
     
     # Access Key와 Secret Access Key를 통해 권한을 확인합니다.
@@ -50,4 +50,4 @@ jobs:
     
     # 압축한 프로젝트를 S3로 전송합니다.
     - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./Client.zip s3://$S3_BUCKET_NAME/Client.zip
+      run: aws s3 cp --region ap-northeast-2 ./client.zip s3://$S3_BUCKET_NAME/client.zip
