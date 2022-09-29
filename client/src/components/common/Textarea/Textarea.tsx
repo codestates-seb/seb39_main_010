@@ -1,12 +1,6 @@
 import React, { TextareaHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-interface StyleProps {
-	width?: string;
-	height?: string;
-	marginBottom?: string;
-}
-
 export interface TextAreaProps
 	extends TextareaHTMLAttributes<HTMLTextAreaElement> {
 	placeholder: string;
@@ -14,32 +8,29 @@ export interface TextAreaProps
 	value?: string;
 	onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 	label?: string;
-	style?: StyleProps;
 }
 
-const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
-	(
-		{ placeholder, name, value, onChange, label, ...props }: TextAreaProps,
-		ref
-	) => {
-		return (
-			<TextAreaContainer>
-				{label && <label>{label}</label>}
-				<StyledTextArea
-					placeholder={placeholder}
-					name={name}
-					value={value}
-					onChange={onChange}
-					ref={ref}
-					{...props}
-				/>
-			</TextAreaContainer>
-		);
-	}
-);
-
-TextArea.displayName = 'TextArea';
-
+const TextArea = ({
+	placeholder,
+	name,
+	value,
+	onChange,
+	label,
+	...props
+}: TextAreaProps) => {
+	return (
+		<TextAreaContainer>
+			{label && <label>{label}</label>}
+			<StyledTextArea
+				placeholder={placeholder}
+				name={name}
+				value={value}
+				onChange={onChange}
+				{...props}
+			/>
+		</TextAreaContainer>
+	);
+};
 export default TextArea;
 
 const TextAreaContainer = styled.div`
