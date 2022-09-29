@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SearchBox, SortingRound } from 'components/common';
+import { PopularSorting, SearchBox } from 'components/common';
 import { BsPencil } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
+import JobSorting from 'components/common/SelectBox/JobSorting';
 
 export const SearchBarContainer = styled.div`
 	display: flex;
@@ -11,12 +12,11 @@ export const SearchBarContainer = styled.div`
 
 	width: 1200px;
 
-	background-color: aliceblue;
-
 	div {
 		display: flex;
 	}
 `;
+
 export const WriteButton = styled.button`
 	display: flex;
 	flex-direction: row;
@@ -36,24 +36,28 @@ export const WriteButton = styled.button`
 	color: #ffffff;
 	font-size: 15px;
 `;
-const SearchBar = () => {
+
+interface IProps {
+	placeholder: string;
+	navigate: string;
+}
+
+export const SearchBar = (props: IProps) => {
 	const navigate = useNavigate();
-	const OPTIONS = [
-		{ value: 'new', name: '최신순' },
-		{ value: 'popular', name: '인기순' },
-	];
 	return (
 		<SearchBarContainer>
 			<div>
-				<SearchBox text={`관심 스터디를 검색해 보세요!`} />
-				<SortingRound options={OPTIONS} />
+				<SearchBox text={props.placeholder} />
+				<JobSorting />
+				<PopularSorting />
 			</div>
 
-			<WriteButton onClick={() => navigate('/study/write')}>
+			<WriteButton onClick={() => navigate(props.navigate)}>
 				<BsPencil size={20} />
 				작성하기
 			</WriteButton>
 		</SearchBarContainer>
 	);
 };
+
 export default SearchBar;
