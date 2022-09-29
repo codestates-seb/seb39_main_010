@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AnswerResponseDto {
+
     private Long answerId;
     private String comment;
     private LocalDateTime createdAt;
@@ -19,6 +20,7 @@ public class AnswerResponseDto {
 
 
     public AnswerResponseDto(Answer answer) {
+
         this.answerId = answer.getAnswerId();
         this.comment = answer.getComment();
         this.createdAt = answer.getCreatedAt();
