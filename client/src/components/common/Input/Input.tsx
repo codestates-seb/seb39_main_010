@@ -15,6 +15,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	value?: string;
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	label?: string;
+	errorMessage?: string;
 	// style?: StyleProps;
 }
 
@@ -27,6 +28,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 			value,
 			onChange,
 			label,
+			errorMessage,
 			...props
 		}: InputProps,
 		ref
@@ -43,6 +45,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 					ref={ref}
 					{...props}
 				/>
+				<p>{errorMessage}</p>
 			</InputContainer>
 		);
 	}
@@ -60,6 +63,11 @@ const InputContainer = styled.div`
 	& label {
 		font-size: 18px;
 		margin-bottom: 18px;
+	}
+
+	& p {
+		color: red;
+		font-size: 12px;
 	}
 `;
 
