@@ -9,7 +9,7 @@ name: Java CI with Gradle for Server
 
 on:
   push:
-    paths: ./DeployServer
+    paths: ./DeployServer/**
     branches: [ "main" ]
 
 permissions:
