@@ -11,6 +11,10 @@ on:
 env:
   S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
 
+defaults:
+  run:
+    working-directory: client # The working directory path
+
 jobs:
   build:
     runs-on: ubuntu-latest
