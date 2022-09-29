@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import CardAll from '../Card/CardAll';
 
-export const CardContentAllContainer = styled.div`
+export const CardContentContainer = styled.div`
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-auto-rows: minmax(272px, auto);
@@ -10,14 +10,13 @@ export const CardContentAllContainer = styled.div`
 	margin-top: 1.5rem;
 
 	width: 1200px;
-	background-color: yellow;
 `;
 
 const CardContentAll = () => {
 	return (
-		<CardContentAllContainer>
+		<CardContentContainer>
 			<CardAll />
-		</CardContentAllContainer>
+		</CardContentContainer>
 	);
 };
 export default CardContentAll;
