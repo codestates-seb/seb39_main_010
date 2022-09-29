@@ -1,4 +1,4 @@
-import React;
+import React from 'react';
 import styled from 'styled-components';
 import { Intro } from 'components/common';
 import { Category } from 'components/pages';
