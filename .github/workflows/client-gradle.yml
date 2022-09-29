@@ -10,7 +10,7 @@ name: Java CI with Gradle for Client
 on:
   push:
     paths: 
-      - ./client/**
+      - './client/**'
     branches: [ "main" ]
 
 permissions:
