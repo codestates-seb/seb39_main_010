@@ -1,51 +1,66 @@
 package com.team10.preproject.answer.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.team10.preproject.audit.Auditable;
 import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.question.entity.Question;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
-public class Answer {
+public class Answer extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
 
-    @Column(nullable = false)
     @Lob
+    @Column(nullable = false)
     private String comment;
 
-    @CreationTimestamp
-    @Column(name = "created_at")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @Enumerated(value = EnumType.STRING)
+    private DeleteStatus isDeleted;
 
-    @Column(name = "updated_at")
-    @UpdateTimestamp
-    private LocalDateTime updatedAt = LocalDateTime.now();
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
+    @JsonIgnore
     private Question question;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
+    @JsonIgnoreProperties({"password","createdAt","updatedAt","email","username","roles","roleList"})
     private Member member;
-    
-    public void update(Member member, Question question, String comment){
-        setMember(member);
-        setQuestion(question);
-        setComment(comment);
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Answer parent;
+
+    @OneToMany(mappedBy = "parent", orphanRemoval = true)
+    private List<Answer> children = new ArrayList<>();
+
+    public static Answer createAnswer(String comment, Question question, Member member, Answer parent){
+
+        Answer answer = new Answer();
+        answer.comment = comment;
+        answer.question = question;
+        answer.member = member;
+        answer.parent = parent;
+        answer.isDeleted = DeleteStatus.N;
+
+        return answer;
+    }
+
+    public void changeDeletedStatus(DeleteStatus deleteStatus){
+        this.isDeleted = deleteStatus;
     }
 
 }
