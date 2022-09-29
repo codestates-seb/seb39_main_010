@@ -31,7 +31,7 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
     - name: gradlew permission
-      run: chmod +x DeployServer/gradlew
+      run: chmod +x ./DeployServer/gradlew
     - name: Build with Gradle
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
