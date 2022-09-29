@@ -14,7 +14,7 @@ export interface IOptions {
 	name: string;
 }
 const Study = () => {
-	const [data, setData] = useState('initial data');
+	// const [data, setData] = useState('initial data');
 
 	return (
 		<StudyContainer>

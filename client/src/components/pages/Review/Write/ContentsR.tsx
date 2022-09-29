@@ -1,7 +1,7 @@
 import { Input } from 'components/common';
 import JobSelect from 'components/common/SelectBox/JobSelect';
 import TextArea from 'components/common/Textarea/Textarea';
-import { ContentsContainer } from 'components/pages/Study/Write/ContentsS';
+// import { ContentsContainer } from 'components/pages/Study/Write/ContentsS';
 import React from 'react';
 import styled from 'styled-components';
 import { theme } from 'styles/theme';

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HeaderContainer, LogoandNav, MypageImg } from './style';
 import { FiUser } from 'react-icons/fi';
-import { idText } from 'typescript';
+// import { idText } from 'typescript';
 
 const Header = () => {
 	const [tab, setTab] = useState('');
