@@ -12,11 +12,11 @@ on:
     paths: [ 'DeployServer/**' ]
     branches: [ 'main' ]
 
-# permissions:
-#   contents: read
+permissions:
+  contents: read
   
 env:
-  S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+  S3_BUCKET_NAME: main-deploy-bucket
 
 defaults:
   run:
