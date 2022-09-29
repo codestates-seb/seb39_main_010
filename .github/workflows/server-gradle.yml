@@ -18,6 +18,10 @@ permissions:
 env:
   S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
 
+defaults:
+  run:
+    working-directory: DeployServer # The working directory path
+
 jobs:
   build:
 
