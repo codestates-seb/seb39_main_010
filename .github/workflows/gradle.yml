@@ -47,7 +47,7 @@ jobs:
           echo spring.security.oauth2.client.registration.naver.client-secret= ${{ secrets.NAVER_CLIENT_SECRET }} >> ./src/main/resources/application-secrets.properties
           echo spring.security.oauth2.client.registration.kakao.client-id= ${{ secrets.KAKAO_CLIENT_ID }} >> ./src/main/resources/application-secrets.properties
           echo spring.security.oauth2.client.registration.kakao.client-secret= ${{ secrets.KAKAO_CLIENT_SECRET }} >> ./src/main/resources/application-secrets.properties
-          echo spring.mail.username= ${{ secrets.MAIL_SENDER_ID }} >> ./src/main/resources/secrets.properties
+          echo spring.mail.username= ${{ secrets.MAIL_SENDER_ID }} > ./src/main/resources/secrets.properties
           echo spring.mail.password= ${{ secrets.MAIL_SENDER_PW }} >> ./src/main/resources/secrets.properties
           echo spring.config.domain= ${{ secrets.AWS_S3_Endpoint }} >> ./src/main/resources/secrets.properties
           cat ./src/main/resources/application-secrets.properties
