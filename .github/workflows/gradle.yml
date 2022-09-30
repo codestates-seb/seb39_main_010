@@ -50,7 +50,8 @@ jobs:
           echo spring.mail.username= ${{ secrets.MAIL_SENDER_ID }} >> secrets.properties
           echo spring.mail.password= ${{ secrets.MAIL_SENDER_PW }} >> secrets.properties
           echo spring.config.domain= ${{ secrets.AWS_S3_Endpoint }} >> secrets.properties
-          cat apikey.properties
+          cat application-secrets.properties
+          cat secrets.properties
     - name: Build with Gradle
       run: ./gradlew build -x check --parallel
 #       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
