@@ -2,7 +2,7 @@ package com.team10.preproject.question.controller;
 
 
 import com.team10.preproject.global.dto.SingleResponseDto;
-import com.team10.preproject.global.auth.PrincipalDetails;
+import com.team10.preproject.member.auth.PrincipalDetails;
 import com.team10.preproject.question.dto.QuestionDto;
 import com.team10.preproject.question.dto.QuestionOneResponse;
 import com.team10.preproject.question.dto.QuestionResponseDto;

@@ -1,8 +1,8 @@
-package com.team10.preproject.token.service;
+package com.team10.preproject.member.token.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.team10.preproject.token.entity.Token;
+import com.team10.preproject.member.token.entity.Token;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
