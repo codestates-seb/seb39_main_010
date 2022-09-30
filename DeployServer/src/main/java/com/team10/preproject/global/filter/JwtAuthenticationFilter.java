@@ -2,9 +2,9 @@ package com.team10.preproject.global.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team10.preproject.member.entity.Member;
-import com.team10.preproject.global.auth.PrincipalDetails;
-import com.team10.preproject.token.entity.Token;
-import com.team10.preproject.token.service.TokenService;
+import com.team10.preproject.member.auth.PrincipalDetails;
+import com.team10.preproject.member.token.entity.Token;
+import com.team10.preproject.member.token.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

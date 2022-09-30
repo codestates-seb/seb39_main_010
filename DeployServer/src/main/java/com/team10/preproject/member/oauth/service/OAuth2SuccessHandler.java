@@ -1,10 +1,10 @@
-package com.team10.preproject.oauth.service;
+package com.team10.preproject.member.oauth.service;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team10.preproject.member.entity.Member;
-import com.team10.preproject.token.entity.Token;
-import com.team10.preproject.token.service.TokenService;
+import com.team10.preproject.member.token.entity.Token;
+import com.team10.preproject.member.token.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

@@ -1,7 +1,7 @@
-package com.team10.preproject.token.controller;
+package com.team10.preproject.member.token.controller;
 
-import com.team10.preproject.token.entity.Token;
-import com.team10.preproject.token.service.TokenService;
+import com.team10.preproject.member.token.entity.Token;
+import com.team10.preproject.member.token.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

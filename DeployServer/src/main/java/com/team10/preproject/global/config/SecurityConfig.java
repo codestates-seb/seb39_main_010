@@ -1,11 +1,11 @@
 package com.team10.preproject.global.config;
 
-import com.team10.preproject.oauth.service.CustomOAuth2UserService;
+import com.team10.preproject.member.oauth.service.CustomOAuth2UserService;
 import com.team10.preproject.global.filter.JwtAuthenticationFilter;
 import com.team10.preproject.global.filter.JwtAuthorizationFilter;
 import com.team10.preproject.member.repository.MemberRepository;
-import com.team10.preproject.oauth.service.OAuth2SuccessHandler;
-import com.team10.preproject.token.service.TokenService;
+import com.team10.preproject.member.oauth.service.OAuth2SuccessHandler;
+import com.team10.preproject.member.token.service.TokenService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
