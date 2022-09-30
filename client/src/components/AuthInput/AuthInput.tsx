@@ -1,13 +1,6 @@
 import React, { HTMLInputTypeAttribute, InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-// TODO: 추후 최종적으로 필요없으면 style props 관련 주석 삭제 필요
-// interface StyleProps {
-// 	width?: string;
-// 	height?: string;
-// 	marginBottom?: string;
-// }
-
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	type?: HTMLInputTypeAttribute;
 	placeholder: string;
@@ -16,35 +9,43 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	label?: string;
 	errorMessage?: string;
-	// style?: StyleProps;
 }
 
-const Input = ({
-	type = 'text',
-	placeholder,
-	name,
-	value,
-	onChange,
-	label,
-	errorMessage,
-	...props
-}: InputProps) => {
-	return (
-		<InputContainer>
-			{label && <label>{label}</label>}
-			<StyledInput
-				type={type}
-				placeholder={placeholder}
-				name={name}
-				value={value}
-				onChange={onChange}
-				{...props}
-			/>
-			<p>{errorMessage}</p>
-		</InputContainer>
-	);
-};
-export default Input;
+const AuthInput = React.forwardRef<HTMLInputElement, InputProps>(
+	(
+		{
+			type = 'text',
+			placeholder,
+			name,
+			value,
+			onChange,
+			label,
+			errorMessage,
+			...props
+		}: InputProps,
+		ref
+	) => {
+		return (
+			<InputContainer>
+				{label && <label>{label}</label>}
+				<StyledInput
+					type={type}
+					placeholder={placeholder}
+					name={name}
+					value={value}
+					onChange={onChange}
+					ref={ref}
+					{...props}
+				/>
+				<p>{errorMessage}</p>
+			</InputContainer>
+		);
+	}
+);
+
+AuthInput.displayName = 'AuthInput';
+
+export default AuthInput;
 
 const InputContainer = styled.div`
 	display: flex;
