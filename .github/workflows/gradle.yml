@@ -64,5 +64,5 @@ jobs:
       run: >
         aws deploy create-deployment --application-name githubAction-deploy
         --deployment-config-name CodeDeployDefault.AllAtOnce
-        --deployment-group-name githubAction-deploy-gruop
+        --deployment-group-name githubAction-deploy-group
         --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=DeployServer.zip
