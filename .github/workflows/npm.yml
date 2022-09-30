@@ -1,4 +1,4 @@
-name: JavaScript CI with NodeJS for Client
+name: JavaScript CI for Client
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
     branches: [ "main" ]
     
 env:
-  S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+  S3_BUCKET_NAME: ${{ secrets.S3_CLIENT_BUCKET_NAME }}
 
 defaults:
   run:
@@ -31,17 +31,18 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+        
+    - name: Access Secret Keys
+      run:  |
+          touch .env
+          echo REACT_APP_BASE_URL=${{ secrets.EC2_ELASTIC_IP }} >> .env
+          cat .env
 
     - name: Npm install
       run: npm install
     
     - name: Build
       run: npm run build
-
-    # build한 후 프로젝트를 압축합니다.
-    - name: Make zip file
-      run: zip -r ./client.zip .
-      shell: bash
     
     # Access Key와 Secret Access Key를 통해 권한을 확인합니다.
     - name: Configure AWS credentials
@@ -50,7 +51,10 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-northeast-2
-    
-    # 압축한 프로젝트를 S3로 전송합니다.
-    - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./client.zip s3://$S3_BUCKET_NAME/client.zip
+
+    - name: Deploy 
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        aws s3 sync ./build s3://$S3_BUCKET_NAME
