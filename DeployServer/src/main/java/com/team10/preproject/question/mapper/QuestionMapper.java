@@ -1,6 +1,5 @@
 package com.team10.preproject.question.mapper;
 
-import com.team10.preproject.question.dto.QuestionAnswerResponseDto;
 import com.team10.preproject.question.dto.QuestionDto;
 import com.team10.preproject.question.dto.QuestionResponseDto;
 import com.team10.preproject.question.entity.Question;
@@ -14,5 +13,4 @@ public interface QuestionMapper {
     Question questionPostToQuestion(QuestionDto.Post requestBody);
     Question questionPutToQuesiton(QuestionDto.Put requestBody);
     QuestionResponseDto questionToQuestionResponse(Question question);
-    QuestionAnswerResponseDto questionAnswerResponseDto(Question question);
 }

@@ -20,6 +20,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -34,14 +35,13 @@ public class QuestionController {
 
     @PostMapping
     public ResponseEntity questionWrite(@Valid @RequestBody QuestionDto.Post requestBody,
-                                        @AuthenticationPrincipal PrincipalDetails principal){
+                                        @AuthenticationPrincipal PrincipalDetails principal) {
 
         Question question = mapper.questionPostToQuestion(requestBody);
         Question createQuestion = questionService.questionwrite(question, principal.getMember());
         QuestionResponseDto questionResponseDto = mapper.questionToQuestionResponse(createQuestion);
 
         questionResponseDto.setMemberId(principal.getMember().getMemberId());
-        questionResponseDto.setEmail(principal.getMember().getEmail());
         questionResponseDto.setNickname(principal.getMember().getNickname());
 
         return new ResponseEntity<>(
@@ -50,16 +50,33 @@ public class QuestionController {
 
     @GetMapping
     public ResponseEntity questionList(@PageableDefault(size=5, sort="questionId", direction = Sort.Direction.DESC)
-                    Pageable pageable){
+                                               Pageable pageable, String searchType, String keyword){
 
-        Page<Question> questions = questionService.questionList(pageable);
+        Page<Question> questions = null;
+        if(searchType == null || keyword == null){
+            questions = questionService.questionList(pageable);
+        } else{
+            switch (searchType) {
+                case "title":
+                    questions = questionService.questionSearchTitle(keyword, pageable);
+                    break;
+                case "content":
+                    questions = questionService.questionSearchContent(keyword, pageable);
+                    break;
+                case "tc":
+                    questions = questionService.questionSearchTitleContent(keyword, keyword, pageable);
+                    break;
+                case "writer":
+                    List<QuestionResponseDto> question = questionService.questionSearchWriter(keyword, pageable);
+                    return new ResponseEntity<>(question, HttpStatus.OK);
+            }
+        }
         Page<QuestionResponseDto> pageDto = questions.map(QuestionResponseDto::new);
-
         return new ResponseEntity<>(pageDto, HttpStatus.OK);
     }
 
     @GetMapping("/{question-id}")
-    public QuestionOneResponse questionView(@PathVariable("question-id") Long questionId){
+    public QuestionOneResponse questionView(@PathVariable("question-id") Long questionId) {
 
         QuestionOneResponse questionOneResponse = questionService.questionView(questionId);
 
@@ -67,7 +84,8 @@ public class QuestionController {
     }
 
     @DeleteMapping("/{question-id}")
-    public ResponseEntity questionDelete(@PathVariable("question-id") Long questionId){
+
+    public ResponseEntity questionDelete(@PathVariable("question-id") Long questionId) {
 
         questionService.questionDelete(questionId);
 
@@ -82,7 +100,6 @@ public class QuestionController {
         Question question = questionService.questionUpdate(questionId, mapper.questionPutToQuesiton(requestBody));
         QuestionResponseDto questionResponseDto = mapper.questionToQuestionResponse(question);
         questionResponseDto.setMemberId(question.getMember().getMemberId());
-        questionResponseDto.setEmail(question.getMember().getEmail());
         questionResponseDto.setNickname(question.getMember().getNickname());
 
         return new ResponseEntity<>(

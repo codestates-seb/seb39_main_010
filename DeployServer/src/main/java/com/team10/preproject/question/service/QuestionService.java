@@ -4,8 +4,10 @@ import com.team10.preproject.answer.repository.AnswerRepository;
 import com.team10.preproject.global.exception.BusinessLogicException;
 import com.team10.preproject.global.exception.ExceptionCode;
 import com.team10.preproject.member.entity.Member;
+import com.team10.preproject.member.repository.MemberRepository;
 import com.team10.preproject.question.dto.CommentsChildrenResponse;
 import com.team10.preproject.question.dto.QuestionOneResponse;
+import com.team10.preproject.question.dto.QuestionResponseDto;
 import com.team10.preproject.question.entity.Question;
 
 import com.team10.preproject.question.repository.QuestionRepository;
@@ -27,10 +29,13 @@ public class QuestionService {
     @Autowired
     private AnswerRepository answerRepository;
 
+    @Autowired
+    private MemberRepository memberRepository;
+
 
     // 글 작성
     @Transactional
-    public Question questionwrite(Question question, Member member){
+    public Question questionwrite(Question question, Member member) {
 
         question.setMember(member);
 
@@ -39,7 +44,7 @@ public class QuestionService {
 
     // 질문 리스트
     @Transactional(readOnly = true)
-    public Page<Question> questionList(Pageable pageable){
+    public Page<Question> questionList(Pageable pageable) {
 
         return questionRepository.findAll(pageable);
     }
@@ -65,7 +70,7 @@ public class QuestionService {
     }
 
     @Transactional
-    public Question questionUpdate(long questionId,Question requestQuestion){
+    public Question questionUpdate(long questionId,Question requestQuestion) {
 
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() ->{
@@ -80,9 +85,29 @@ public class QuestionService {
 
     // 특정 질문 삭제하기
     @Transactional
-    public void questionDelete(Long questionId){
+    public void questionDelete(Long questionId) {
 
         questionRepository.deleteById(questionId);
+    }
+
+    public Page<Question> questionSearchTitle(String title, Pageable pageable) {
+
+        return questionRepository.findByTitleContaining(title, pageable);
+    }
+
+    public Page<Question> questionSearchTitleContent(String title, String content, Pageable pageable) {
+
+        return questionRepository.findByTitleContainingOrContentContaining(title , content, pageable);
+    }
+
+    public Page<Question> questionSearchContent(String content, Pageable pageable) {
+
+        return questionRepository.findByContentContaining(content, pageable);
+    }
+
+    public List<QuestionResponseDto> questionSearchWriter(String writer, Pageable pageable) {
+
+        return  questionRepository.findWriterQuestion(writer, pageable);
     }
 
 }

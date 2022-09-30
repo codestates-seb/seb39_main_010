@@ -3,6 +3,7 @@ package com.team10.preproject.question.repository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.team10.preproject.question.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -73,6 +74,27 @@ public class QuestionRepositoryImpl implements CustomQuestionRepository{
                 });
 
         response.get().setAnswers(answers);
+
+        return response;
+    }
+
+    @Override
+    public List<QuestionResponseDto> findWriterQuestion(String keyWord, Pageable pageable) {
+
+        List<QuestionResponseDto> response = queryFactory
+                .select(new QQuestionResponseDto(
+                        question.questionId,
+                        question.title,
+                        question.content,
+                        question.createdAt,
+                        question.updatedAt,
+                        question.member.memberId,
+                        question.member.nickname))
+                .from(question)
+                .where(question.member.nickname.contains(keyWord))
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
+                .fetch();
 
         return response;
     }

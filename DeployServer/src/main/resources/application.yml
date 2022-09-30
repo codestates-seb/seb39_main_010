@@ -3,7 +3,9 @@ spring:
     active: server
     include: oauth
   config:
-    domain: ${{ secrets.AWS_S3_Endpoint }}
+    domain: ${{ http://localhost:8080/ }}
+#    domain: ${{ secrets.AWS_S3_Endpoint }}
+
 ---
 spring:
   config:
