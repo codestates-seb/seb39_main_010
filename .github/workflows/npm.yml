@@ -45,7 +45,7 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-northeast-2
-    
-    # 압축한 프로젝트를 S3로 전송합니다.
+
+    # 프로젝트를 S3로 전송합니다.
     - name: Upload to S3
       run: aws s3 cp --region ap-northeast-2 ./client.zip s3://$S3_BUCKET_NAME/client.zip
