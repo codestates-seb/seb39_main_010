@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -48,6 +47,10 @@ public class MemberDto {
     public static class Patch {
 
         private long memberId;
+
+        @NotSpace
+        @Length(max = 20)
+        private String username;
 
         @NotSpace(message = "Nickname cannot be null")
         @Length(max = 20)

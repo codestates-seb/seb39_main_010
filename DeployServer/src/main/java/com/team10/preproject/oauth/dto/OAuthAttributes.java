@@ -5,17 +5,16 @@ import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.member.entity.Role;
 import lombok.Builder;
 import lombok.Getter;
-
 import java.util.Map;
 
 @Getter
 public class OAuthAttributes {
 
-    private Map<String, Object> attributes; // OAuth2 반환하는 유저 정보 Map
-    private String nameAttributeKey;
-    private String nickname;
-    private String email;
-    private String picture;
+    private final Map<String, Object> attributes; // OAuth2 반환하는 유저 정보 Map
+    private final String nameAttributeKey;
+    private final String nickname;
+    private final String email;
+    private final String picture;
 
     @Builder
     public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String nickname, String email, String picture) {

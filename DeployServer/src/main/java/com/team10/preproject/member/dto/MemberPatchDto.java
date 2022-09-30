@@ -11,27 +11,41 @@ import javax.validation.constraints.Pattern;
 public class MemberPatchDto {
     private long memberId;
 
+    @NotSpace
+    @Length(max = 20)
+    private String username;
+
     @NotSpace(message = "NickName cannot be null")
     @Length(max = 20)
-    private String nickname;
+    private final String nickname;
 
     @NotSpace
     @Email
-    private String email;
+    private final String email;
 
     @NotSpace(message = "Password cannot be null")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$",
             message = "Password Must be 8 to 20 Characters and a Combination of UpperCase Letters and LowerCase Letters and Special Characters.")
-    private String password;
+    private final String password;
 
     @Length(max = 2000)
-    private String picture;
+    private final String picture;
 
     @Length(max = 200)
-    private String favoriteCompany;
+    private final String favoriteCompany;
 
     @Length(max = 200)
-    private String selfIntroductions;
+    private final String selfIntroductions;
+
+    public MemberPatchDto(String username, String nickname, String email, String password, String picture, String favoriteCompany, String selfIntroductions) {
+        this.username = username;
+        this.nickname = nickname;
+        this.email = email;
+        this.password = password;
+        this.picture = picture;
+        this.favoriteCompany = favoriteCompany;
+        this.selfIntroductions = selfIntroductions;
+    }
 //    private Member.MemberStatus memberStatus;
 
     public void setMemberId(long memberId) {

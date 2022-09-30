@@ -2,16 +2,13 @@ package com.team10.preproject.member.entity;
 
 import com.team10.preproject.global.audit.Auditable;
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @NoArgsConstructor
 @Entity
 @Getter
-@Setter
 public class Member extends Auditable{
 
     @Id
@@ -67,8 +64,40 @@ public class Member extends Auditable{
         this.verificationCode = verificationCode;
     }
 
-    public void updatePicture(String picture){
+    public void setEmail(String email){
+        this.email = email;
+    }
+
+    public void setRole(Role role){
+        this.role = role;
+    }
+
+    public void setNickname(String nickname){
+        this.nickname = nickname;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    public void setPicture(String picture){
         this.picture = picture;
+    }
+
+    public void setFavoriteCompany(String favoriteCompany){
+        this.favoriteCompany = favoriteCompany;
+    }
+
+    public void setSelfIntroductions(String selfIntroductions){
+        this.selfIntroductions = selfIntroductions;
+    }
+
+    public void setEnabled(Boolean enabled){
+        this.enabled = enabled;
+    }
+
+    public void setVerificationCode(String verificationCode){
+        this.verificationCode = verificationCode;
     }
 
     public String getRoleKey(){
