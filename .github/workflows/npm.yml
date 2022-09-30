@@ -31,6 +31,12 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+        
+    - name: Access Secret Keys
+      run:  |
+          touch .env
+          echo REACT_APP_BASE_URL=${{ secrets.EC2_ELASTIC_IP }} >> .env
+          cat .env
 
     - name: Npm install
       run: npm install
