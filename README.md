@@ -1,39 +1,34 @@
-# Team10 : codestates-project
+# Team10 : main-project
 
-## 1. pre-project
+## Weply-면접 정보 공유 사이트
 
-### cloning stack overflow
+배포 예정
 
-예시)
+### Features
 
-- 편리한 UI로 Todo를 쉽게 생성하고 삭제할 수 있습니다.
-- Todo에 기한과 카테고리를 설정할 수 있습니다.
-- create-react-app으로 간편한 번들링과 배포가 가능합니다.
-- Spring Boot로 쉽게 서버 배포를 할 수 있습니다.
+- 회원가입, 로그인, 로그아웃, 회원 정보 수정(메일, 닉네임, 비밀번호 변경 등)을 할 수 있습니다.
+- 전체 게시글 목록 조회, 개별 게시글 상세 내용 조회를 할 수 있습니다.
+- 질문 등록, 답변 등록, 질문 수정, 답변 수정, 질문 삭제, 답변 삭제를 할 수 있습니다.
+- Oauth인증으로 Naver, Google, Kakao 계정 정보를 이용하여 로그인 할 수 있습니다.
+- 회원 가입 시 기입된 이메일 주소로 인증 메일을 발송하여 인증 링크를 클릭하여 가입 완료하며, 인증된 이메일로 비밀번호 찾기를 할 수 있습니다.
 
----
-
-## 2. main-project
-
-### 예시) My Todo App
-
-Todo 관리를 위한 웹 애플리케이션입니다.
-
-- 편리한 UI로 Todo를 쉽게 생성하고 삭제할 수 있습니다.
-- Todo에 기한과 카테고리를 설정할 수 있습니다.
-- create-react-app으로 간편한 번들링과 배포가 가능합니다.
-- Spring Boot로 쉽게 서버 배포를 할 수 있습니다.
 
 ---
 
 ### Contributors
 
-- FE: 안태경, 정혜선
-- BE: 민지원, 장민욱
+- FE: 안태경([TaekyungAn](https://github.com/TaekyungAn)), 정혜선([seonnn](https://github.com/seonnn))
+- BE: 민지원([x2d7751347m](https://github.com/x2d7751347m)), 장민욱([black2code](https://github.com/black2code))
+
+---
+
+### Skills
+
+- Back-end : Java, Spring Framework, Spring Framework, AWS, Git, MySQL, Github, JPA
 
 ---
 
 ### Project Wiki
 
 프로젝트 팀 정보, 기획, 아키텍쳐에 대한 자세한 안내입니다.
-(링크)
+(https://github.com/codestates-seb/seb39_main_010/wiki)

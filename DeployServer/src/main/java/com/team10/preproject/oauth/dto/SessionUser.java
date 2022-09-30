@@ -2,7 +2,6 @@ package com.team10.preproject.oauth.dto;
 
 import com.team10.preproject.member.entity.Member;
 import lombok.Getter;
-
 import java.io.Serializable;
 
 /**
@@ -11,9 +10,9 @@ import java.io.Serializable;
 @Getter
 public class SessionUser implements Serializable {
 
-    private String nickname;
-    private String email;
-    private String picture;
+    private final String nickname;
+    private final String email;
+    private final String picture;
 
     public SessionUser(Member member){
 

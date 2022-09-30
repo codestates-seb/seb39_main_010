@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationEvent;
 @Getter
 public class MemberRegistrationApplicationEvent extends ApplicationEvent {
 
-    private Member member;
+    private final Member member;
 
     public MemberRegistrationApplicationEvent(Object source, Member member) {
 

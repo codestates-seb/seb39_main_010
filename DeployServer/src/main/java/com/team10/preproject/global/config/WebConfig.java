@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@PropertySource("classpath:/secrets.properties")
 public class WebConfig implements WebMvcConfigurer {
 
     @Value("${spring.config.domain}")

@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionAnswerResponseDto {
+
     private Long questionId;
     private String title;
     private String content;

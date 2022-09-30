@@ -2,6 +2,7 @@ package com.team10.preproject.answer.controller;
 
 
 
+import com.team10.preproject.answer.dto.AnswerCreateRequestDto;
 import com.team10.preproject.answer.dto.AnswerPutDto;
 import com.team10.preproject.answer.dto.AnswerResponseDto;
 import com.team10.preproject.answer.entity.Answer;
@@ -29,17 +30,18 @@ public class AnswerController {
     private AnswerMapper mapper;
 
     @PostMapping("/{question-id}/answers")
-    public ResponseEntity answerWrite(@PathVariable("question-id") Long questionId, @RequestBody Answer requestAnswer,
-                                      @AuthenticationPrincipal PrincipalDetails principal){
+    public ResponseEntity answerWrite(@PathVariable("question-id") Long questionId,
+                                                    @RequestBody AnswerCreateRequestDto requestDto,
+                                                    @AuthenticationPrincipal PrincipalDetails principal){
 
-        Answer answer = answerService.anserWrite(principal.getMember(), questionId ,requestAnswer);
-        return new ResponseEntity<>(answer, HttpStatus.CREATED);
+        return new ResponseEntity<>(new SingleResponseDto<>
+                (answerService.anwserWrite(principal.getMember(), questionId, requestDto)), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{question-id}/answers/{answer-id}")
     public ResponseEntity answerDelete(@PathVariable("answer-id") Long answerId){
 
-        answerService.anserDelete(answerId);
+        answerService.answerDelete(answerId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
@@ -50,6 +52,7 @@ public class AnswerController {
         Answer answer = answerService.answerUpdate(answerId, mapper.answerPutToAnswer(answerPutDto));
         AnswerResponseDto answerResponseDto = mapper.answerResponseToDto(answer);
         answerResponseDto.setNickname(answer.getMember().getNickname());
+
         return new ResponseEntity<>(
                 new SingleResponseDto<>(answerResponseDto),HttpStatus.OK);
     }

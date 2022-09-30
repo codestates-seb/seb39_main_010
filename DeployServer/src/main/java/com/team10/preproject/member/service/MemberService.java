@@ -8,15 +8,15 @@ import com.team10.preproject.global.helper.event.MemberRegistrationApplicationEv
 import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.member.entity.Role;
 import com.team10.preproject.member.repository.MemberRepository;
-import com.team10.preproject.token.service.TokenService;
 import net.bytebuddy.utility.RandomString;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -33,29 +33,29 @@ import java.util.Optional;
 
 @Transactional
 @Service
+@EnableAsync
 public class MemberService {
 
-    @Autowired
-    MemberRepository memberRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final MemberRepository memberRepository;
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private final JavaMailSender mailSender;
 
     private final ApplicationEventPublisher publisher;
 
     public MemberService(MemberRepository memberRepository,
-                         ApplicationEventPublisher publisher) {
+                         BCryptPasswordEncoder bCryptPasswordEncoder, JavaMailSender mailSender, ApplicationEventPublisher publisher) {
 
         this.memberRepository = memberRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.mailSender = mailSender;
         this.publisher = publisher;
     }
 
     public Member createMember(Member member, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
 
-        verifyExistsEmail(member.getEmail());
         member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
         member.setRole(Role.USER);
         String randomCode = RandomString.make(64);
@@ -68,10 +68,24 @@ public class MemberService {
         return savedMember;
     }
 
-    private void verifyExistsEmail(String email) {
+    public void verifyExistsUsername(String username) {
 
-        Member member = memberRepository.findByEmail(email);
-        if (member != null)
+        Member existMember = memberRepository.findByUsername(username);
+        if (existMember != null)
+            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+    }
+
+    public void verifyExistsEmail(String email) {
+
+        Member existMember = memberRepository.findByUsername(email);
+        if (existMember != null)
+            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+    }
+
+    public void verifyExistsNickname(String nickname) {
+
+        Member existMember = memberRepository.findByNickname(nickname);
+        if (existMember != null)
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
 
@@ -82,6 +96,7 @@ public class MemberService {
         return siteURL.replace(request.getServletPath(), "");
     }
 
+    @Async
     private void sendSignupVerificationEmail(Member member, String siteURL)
             throws MessagingException, UnsupportedEncodingException {
 
@@ -141,6 +156,7 @@ public class MemberService {
         return member;
     }
 
+    @Async
     private void sendTempPasswordEmail(Member member, String randomPasswordCode)
             throws MessagingException, UnsupportedEncodingException {
 
