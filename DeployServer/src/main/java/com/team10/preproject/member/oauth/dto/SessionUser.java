@@ -1,4 +1,4 @@
-package com.team10.preproject.oauth.dto;
+package com.team10.preproject.member.oauth.dto;
 
 import com.team10.preproject.member.entity.Member;
 import lombok.Getter;
