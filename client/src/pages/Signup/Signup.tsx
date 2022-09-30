@@ -1,6 +1,6 @@
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import Input from 'components/common/Input/Input';
+import AuthInput from 'components/AuthInput/AuthInput';
 import BasicButton from 'components/common/BasicButton/BasicButton';
 import styled from 'styled-components';
 import { theme } from 'styles/theme';
@@ -22,7 +22,9 @@ const Signup = () => {
 		formState: { errors },
 	} = useForm<FormData>();
 
-	const onSubmit: SubmitHandler<FormData> = (data) => console.log(data);
+	const onSubmit: SubmitHandler<FormData> = (data) => {
+		console.log(data);
+	};
 
 	const regex = {
 		email:
@@ -53,7 +55,7 @@ const Signup = () => {
 					</SocialButtons>
 				</SocialSignup>
 				<SignupForm onSubmit={handleSubmit(onSubmit)}>
-					<Input
+					<AuthInput
 						placeholder="example@wely.com"
 						label="이메일"
 						type="email"
@@ -71,7 +73,7 @@ const Signup = () => {
 					>
 						이메일 인증하기
 					</BasicButton>
-					<Input
+					<AuthInput
 						placeholder="6~12자 이내 영문, 숫자 사용 가능"
 						label="아이디"
 						{...register('id', {
@@ -80,7 +82,7 @@ const Signup = () => {
 						})}
 						errorMessage={errors.id && errorMessage.id}
 					/>
-					<Input
+					<AuthInput
 						placeholder="영문 소문자, 숫자 조합 8자 이상의 비밀번호"
 						label="비밀번호"
 						type="password"
@@ -90,7 +92,7 @@ const Signup = () => {
 						})}
 						errorMessage={errors.password && errorMessage.password}
 					/>
-					<Input
+					<AuthInput
 						placeholder="비밀번호 확인"
 						label="비밀번호 확인"
 						type="password"
@@ -106,7 +108,7 @@ const Signup = () => {
 							errors.passwordConfirm && errorMessage.passwordConfirm
 						}
 					/>
-					<Input
+					<AuthInput
 						placeholder="알파벳, 한글, 숫자를 20자 이하로 입력해주세요."
 						label="닉네임"
 						{...register('nickname', {
