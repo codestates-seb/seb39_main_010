@@ -12,10 +12,10 @@ public enum ExceptionCode {
     NoSuchElementException(500, "No value present");
 
     @Getter
-    private int status;
+    private final int status;
 
     @Getter
-    private  String message;
+    private final String message;
 
     ExceptionCode(int code, String message) {
 

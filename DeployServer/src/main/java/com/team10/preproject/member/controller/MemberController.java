@@ -1,6 +1,5 @@
 package com.team10.preproject.member.controller;
 
-import com.nimbusds.jose.proc.SecurityContext;
 import com.team10.preproject.global.dto.SingleResponseDto;
 import com.team10.preproject.member.dto.MemberDto;
 import com.team10.preproject.member.dto.PasswordForgotDto;
@@ -11,17 +10,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.io.UnsupportedEncodingException;
-import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -46,20 +42,13 @@ public class MemberController {
         return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
-    @GetMapping("/logout")
-    public ResponseEntity logoutMember(
-            HttpServletRequest request, HttpServletResponse response) {
-
-        memberService.removeCookies(request, response);
-
-        return ResponseEntity.ok()
-                .body("You've been signed out!");
-    }
-
     @PostMapping("/signup")
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
 
         Member member = mapper.memberPostToMember(requestBody);
+        memberService.verifyExistsEmail(member.getEmail());
+        memberService.verifyExistsUsername(member.getUsername());
+        memberService.verifyExistsNickname(member.getNickname());
         Member createMember = memberService.createMember(member, request);
         MemberDto.Response response = mapper.memberToMemberResponse(createMember);
 
@@ -80,6 +69,37 @@ public class MemberController {
         }
     }
 
+    @GetMapping("/exists-username")
+    public void existsUsername(
+            @Valid @RequestBody MemberDto.Patch requestBody) {
+        Member member = mapper.memberPatchToMember(requestBody);
+        memberService.verifyExistsUsername(member.getUsername());
+    }
+
+    @GetMapping("/exists-email")
+    public void existsEmail(
+            @Valid @RequestBody MemberDto.Patch requestBody) {
+        Member member = mapper.memberPatchToMember(requestBody);
+        memberService.verifyExistsUsername(member.getEmail());
+    }
+
+    @GetMapping("/exists-nickname")
+    public void existsNickname(
+            @Valid @RequestBody MemberDto.Patch requestBody) {
+        Member member = mapper.memberPatchToMember(requestBody);
+        memberService.verifyExistsUsername(member.getNickname());
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity logoutMember(
+            HttpServletRequest request, HttpServletResponse response) {
+
+        memberService.removeCookies(request, response);
+
+        return ResponseEntity.ok()
+                .body("You've been signed out!");
+    }
+
     @PostMapping("/forgot-password")
     public ResponseEntity findPassword(@RequestBody @Valid PasswordForgotDto requestBody) throws Exception {
 
@@ -94,6 +114,9 @@ public class MemberController {
 
         memberService.checkOwnerShip(request, memberId);
         requestBody.setMemberId(memberId);
+        memberService.verifyExistsEmail(requestBody.getEmail());
+        memberService.verifyExistsUsername(requestBody.getUsername());
+        memberService.verifyExistsNickname(requestBody.getNickname());
         Member member =
                 memberService.updateMember(mapper.memberPatchToMember(requestBody));
 

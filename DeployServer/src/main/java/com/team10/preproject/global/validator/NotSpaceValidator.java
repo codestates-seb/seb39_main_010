@@ -1,7 +1,6 @@
 package com.team10.preproject.global.validator;
 
 import org.springframework.util.StringUtils;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 

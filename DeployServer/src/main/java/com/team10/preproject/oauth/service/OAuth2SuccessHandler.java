@@ -3,18 +3,14 @@ package com.team10.preproject.oauth.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team10.preproject.member.entity.Member;
-import com.team10.preproject.oauth.dto.OAuthAttributes;
 import com.team10.preproject.token.entity.Token;
 import com.team10.preproject.token.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,11 +21,9 @@ import java.io.IOException;
 @Component
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
-    @Autowired
-    private TokenService tokenService;
+    private final TokenService tokenService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
@@ -41,7 +35,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                 .memberId(oAuth2User.getAttribute("memberId"))
                 .nickname(oAuth2User.getAttribute("nickname"))
                 .build();
-        Token token = tokenService.generateToken(member.getMemberId(), member.getEmail(), member.getNickname());
+        Token token = tokenService.generateToken(member.getEmail());
         log.info("{}", token);
         writeTokenResponse(response, token);
     }
