@@ -2,7 +2,7 @@
 
 ## Weply-면접 정보 공유 사이트
 
-배포 예정
+배포 예정(http://weply.s3-website.ap-northeast-2.amazonaws.com)
 
 ### Features
 
