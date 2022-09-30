@@ -15,6 +15,7 @@ import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:/mail.properties")
+@PropertySource("classpath:/secrets.properties")
 public class EmailConfiguration {
 
     @Value("${spring.mail.transport.protocol}")
