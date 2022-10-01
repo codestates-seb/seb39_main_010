@@ -44,10 +44,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.csrf().disable();
-        http.cors();
-        http.headers().frameOptions().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .csrf().disable()
+                .headers().frameOptions().disable()
+                .and()
+                .cors()
                 .and()
                 .formLogin().disable()
                 .logout().disable()
@@ -67,7 +69,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.GET, "/api/v1/users/**",
                         "/api/v1/questions/**")
                 .permitAll()
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .oauth2Login()
                 .successHandler(successHandler)
