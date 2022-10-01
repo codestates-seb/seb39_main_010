@@ -46,6 +46,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         String email = JWT.require(Algorithm.HMAC512("cos_jwt_token")).build().verify(jwtToken).getClaim("email").asString();
 
         if (email != null) {
+
             Member memberEntity = memberRepository.findByEmail(email);
             PrincipalDetails principalDetails = new PrincipalDetails(memberEntity);
             Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
@@ -55,6 +56,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         else super.doFilterInternal(request, response, chain);
         }
         catch (TokenExpiredException ex) {
+
             System.out.println("Expired JWT Access token");
             String refreshToken = request.getHeader("Refresh");
             if(!tokenService.expiredToken(refreshToken)) {
