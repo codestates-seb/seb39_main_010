@@ -24,9 +24,9 @@ public class TokenController {
 
             String email = tokenService.getEmail(token);
             Token newToken = tokenService.generateToken(email);
+
             return tokenService.addToken(newToken.getAccessToken(), newToken.getRefreshToken(), response);
         }
-
         throw new RuntimeException();
     }
 }
