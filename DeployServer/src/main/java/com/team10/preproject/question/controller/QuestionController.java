@@ -19,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -76,8 +78,10 @@ public class QuestionController {
     }
 
     @GetMapping("/{question-id}")
-    public QuestionOneResponse questionView(@PathVariable("question-id") Long questionId) {
+    public QuestionOneResponse questionView(@PathVariable("question-id") Long questionId,
+                                            HttpServletRequest request, HttpServletResponse response) {
 
+        questionService.updateViewCount(questionId, request, response);
         QuestionOneResponse questionOneResponse = questionService.questionView(questionId);
 
         return questionOneResponse;
@@ -91,7 +95,6 @@ public class QuestionController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 
     @PutMapping("/{question-id}")
     public ResponseEntity questionUpdate(@PathVariable("question-id") Long questionId,

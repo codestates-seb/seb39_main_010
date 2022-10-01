@@ -26,6 +26,9 @@ public class QuestionRepositoryImpl implements CustomQuestionRepository{
                         question.questionId,
                         question.title,
                         question.content,
+                        question.viewCount,
+                        question.createdAt,
+                        question.updatedAt,
                         member.memberId,
                         member.nickname))
                 .from(question)
@@ -42,6 +45,8 @@ public class QuestionRepositoryImpl implements CustomQuestionRepository{
                         answer.parent.answerId,
                         answer.answerId,
                         answer.comment,
+                        answer.createdAt,
+                        answer.updatedAt,
                         member.memberId,
                         member.nickname,
                         answer.isDeleted))
@@ -57,6 +62,8 @@ public class QuestionRepositoryImpl implements CustomQuestionRepository{
                         answer.parent.answerId,
                         answer.answerId,
                         answer.comment,
+                        answer.createdAt,
+                        answer.updatedAt,
                         member.memberId,
                         member.nickname,
                         answer.isDeleted))
@@ -86,6 +93,7 @@ public class QuestionRepositoryImpl implements CustomQuestionRepository{
                         question.questionId,
                         question.title,
                         question.content,
+                        question.viewCount,
                         question.createdAt,
                         question.updatedAt,
                         question.member.memberId,

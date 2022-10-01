@@ -37,4 +37,7 @@ public class Question extends Auditable {
     @JsonIgnoreProperties("question") // 무한 참조 방지
 //    @OrderBy("id desc")
     private List<Answer> answer;
+
+    @Column(name = "view_count", columnDefinition = "int default 0")
+    private int viewCount;
 }

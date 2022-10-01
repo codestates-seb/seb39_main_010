@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,9 @@ public class QuestionOneResponse {
     private Long questionId;
     private String title;
     private String content;
+    private int viewCount;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private Long memberId;
     private String nickname;
 
@@ -23,11 +27,16 @@ public class QuestionOneResponse {
 
 
     @QueryProjection
-    public QuestionOneResponse(Long questionId, String title, String content, Long memberId, String nickname) {
+    public QuestionOneResponse(Long questionId, String title, String content,
+                               int viewCount, LocalDateTime createdAt, LocalDateTime updatedAt,
+                               Long memberId, String nickname) {
 
         this.questionId = questionId;
         this.title = title;
         this.content = content;
+        this.viewCount = viewCount;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.memberId = memberId;
         this.nickname = nickname;
     }
