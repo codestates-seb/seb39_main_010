@@ -185,14 +185,15 @@ const SignupForm = styled.form`
 	align-items: center;
 	width: 100%;
 
-	& label {
-		margin-bottom: 12px;
-	}
-
 	& input {
-		font-size: 16px;
 		height: 50px;
 		margin-bottom: 4px;
+	}
+
+	& input:focus {
+		outline: none !important;
+		border-color: #94caf3;
+		box-shadow: 0 0 0px 4px #d6edfc;
 	}
 
 	& p {
