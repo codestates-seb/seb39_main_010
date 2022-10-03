@@ -20,12 +20,12 @@ interface ButtonOptions {
 
 const ButtonOptions: ButtonOptions = {
 	basic: {
-		bgColor: '#3563E9',
+		bgColor: `${theme.colors.blueMain}`,
 		color: 'white',
 	},
 	login: {
 		bgColor: 'white',
-		color: '#3563E9',
+		color: `${theme.colors.blueMain}`,
 	},
 };
 
@@ -53,7 +53,7 @@ const BasicButton = ({
 export default BasicButton;
 
 const StyledButton = styled.button<Props>`
-	border: 1px solid #3563e9;
+	border: 1px solid ${theme.colors.blueMain};
 	border-radius: 10px;
 	padding: 10px 20px;
 	width: 100%;
