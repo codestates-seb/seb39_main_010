@@ -16,6 +16,7 @@ public class QuestionOneCommentResponse {
     private Long parentId;
     private Long answerId;
     private String comment;
+    private int likeCount;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Long memberId;
@@ -25,12 +26,13 @@ public class QuestionOneCommentResponse {
 
     @QueryProjection
     public QuestionOneCommentResponse(Long parentId, Long answerId, String comment,
-                                      LocalDateTime createdAt, LocalDateTime updatedAt,
+                                      int likeCount, LocalDateTime createdAt, LocalDateTime updatedAt,
                                       Long memberId, String nickname, DeleteStatus isDeleted) {
 
         this.parentId = parentId;
         this.answerId = answerId;
         this.comment = comment;
+        this.likeCount = likeCount;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.memberId = memberId;

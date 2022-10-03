@@ -16,19 +16,21 @@ public class QuestionResponseDto {
     private String title;
     private String content;
     private int viewCount;
+    private int likeCount;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Long memberId;
     private String nickname;
 
     @QueryProjection
-    public QuestionResponseDto(Long questionId, String title, String content, int viewCount, LocalDateTime createdAt,
-                               LocalDateTime updatedAt, Long memberId, String nickname) {
+    public QuestionResponseDto(Long questionId, String title, String content, int viewCount, int likeCount,
+                               LocalDateTime createdAt, LocalDateTime updatedAt, Long memberId, String nickname) {
 
         this.questionId = questionId;
         this.title = title;
         this.content = content;
         this.viewCount = viewCount;
+        this.likeCount = likeCount;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.memberId = memberId;
@@ -40,6 +42,7 @@ public class QuestionResponseDto {
         this.title = question.getTitle();
         this.content = question.getContent();
         this.viewCount = question.getViewCount();
+        this.likeCount = question.getLikeCount();
         this.createdAt = question.getCreatedAt();
         this.updatedAt = question.getUpdatedAt();
         this.memberId = question.getMember().getMemberId();

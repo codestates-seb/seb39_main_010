@@ -8,6 +8,7 @@ import com.team10.preproject.member.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,6 +29,9 @@ public class Question extends Auditable {
     @Lob  // 대용량 데이터
     private String content;
 
+    @Column(name = "like_count", columnDefinition = "int default 0")
+    private int likeCount;
+
     @ManyToOne
     @JoinColumn(name = "member_id")
     @JsonIgnoreProperties({"password","createdAt","updatedAt","email","username","roles","roleList"})
@@ -40,4 +44,19 @@ public class Question extends Auditable {
 
     @Column(name = "view_count", columnDefinition = "int default 0")
     private int viewCount;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<QuestionLike> questionLikeList = new ArrayList<>();
+
+    public void mappingQuestionLike(QuestionLike questionLike) {
+        this.questionLikeList.add(questionLike);
+    }
+
+    public void updateLikeCount() {
+        this.likeCount = this.questionLikeList.size();
+    }
+
+    public void discountLike(QuestionLike questionLike) {
+        this.questionLikeList.remove(questionLike);
+    }
 }

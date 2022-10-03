@@ -9,7 +9,6 @@ import com.team10.preproject.question.dto.QuestionResponseDto;
 import com.team10.preproject.question.entity.Question;
 import com.team10.preproject.question.mapper.QuestionMapper;
 import com.team10.preproject.question.service.QuestionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -29,11 +28,13 @@ import java.util.List;
 @RequestMapping("/api/v1/questions")
 public class QuestionController {
 
-    @Autowired
     private QuestionService questionService;
-
-    @Autowired
     private QuestionMapper mapper;
+
+    public QuestionController(QuestionService questionService, QuestionMapper mapper) {
+        this.questionService = questionService;
+        this.mapper = mapper;
+    }
 
     @PostMapping
     public ResponseEntity questionWrite(@Valid @RequestBody QuestionDto.Post requestBody,
@@ -52,7 +53,7 @@ public class QuestionController {
 
     @GetMapping
     public ResponseEntity questionList(@PageableDefault(size=5, sort="questionId", direction = Sort.Direction.DESC)
-                                               Pageable pageable, String searchType, String keyword){
+                                               Pageable pageable, String searchType, String keyword) {
 
         Page<Question> questions = null;
         if(searchType == null || keyword == null){
@@ -74,6 +75,7 @@ public class QuestionController {
             }
         }
         Page<QuestionResponseDto> pageDto = questions.map(QuestionResponseDto::new);
+
         return new ResponseEntity<>(pageDto, HttpStatus.OK);
     }
 
@@ -98,7 +100,7 @@ public class QuestionController {
 
     @PutMapping("/{question-id}")
     public ResponseEntity questionUpdate(@PathVariable("question-id") Long questionId,
-                                         @Valid @RequestBody QuestionDto.Put requestBody){
+                                         @Valid @RequestBody QuestionDto.Put requestBody) {
 
         Question question = questionService.questionUpdate(questionId, mapper.questionPutToQuesiton(requestBody));
         QuestionResponseDto questionResponseDto = mapper.questionToQuestionResponse(question);
@@ -107,5 +109,14 @@ public class QuestionController {
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(questionResponseDto), HttpStatus.OK);
+    }
+
+    @PostMapping("/{question-id}/sympathy")
+    public ResponseEntity questionLike(@PathVariable("question-id") Long questionId,
+                                       @AuthenticationPrincipal PrincipalDetails principal) {
+
+        questionService.questionLike(questionId, principal.getMember().getMemberId());
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

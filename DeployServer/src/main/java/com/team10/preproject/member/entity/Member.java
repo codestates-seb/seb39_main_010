@@ -1,11 +1,12 @@
 package com.team10.preproject.member.entity;
 
+import com.team10.preproject.answer.entity.AnswerLike;
 import com.team10.preproject.global.audit.Auditable;
+import com.team10.preproject.question.entity.QuestionLike;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @NoArgsConstructor
@@ -47,6 +48,12 @@ public class Member extends Auditable{
 
     private boolean enabled;
 
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<QuestionLike> questionLikeList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<AnswerLike> answerLikeList = new ArrayList<>();
+
 //    @Enumerated(value = EnumType.STRING)
 //    @Column(length = 20, nullable = false)
 //    private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
@@ -65,6 +72,14 @@ public class Member extends Auditable{
         this.selfIntroductions = selfIntroductions;
         this.enabled = enabled;
         this.verificationCode = verificationCode;
+    }
+
+    public void mappingQuestionLike(QuestionLike questionLike) {
+        this.questionLikeList.add(questionLike);
+    }
+
+    public void mappingAnswerLike(AnswerLike answerLike) {
+        this.answerLikeList.add(answerLike);
     }
 
     public void updatePicture(String picture){

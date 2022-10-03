@@ -18,6 +18,7 @@ public class QuestionOneResponse {
     private String title;
     private String content;
     private int viewCount;
+    private int likeCount;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Long memberId;
@@ -28,13 +29,14 @@ public class QuestionOneResponse {
 
     @QueryProjection
     public QuestionOneResponse(Long questionId, String title, String content,
-                               int viewCount, LocalDateTime createdAt, LocalDateTime updatedAt,
+                               int viewCount, int likeCount, LocalDateTime createdAt, LocalDateTime updatedAt,
                                Long memberId, String nickname) {
 
         this.questionId = questionId;
         this.title = title;
         this.content = content;
         this.viewCount = viewCount;
+        this.likeCount = likeCount;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.memberId = memberId;
