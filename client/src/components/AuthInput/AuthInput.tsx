@@ -1,7 +1,8 @@
-import React, { HTMLInputTypeAttribute, InputHTMLAttributes } from 'react';
+import React, { HTMLInputTypeAttribute } from 'react';
+import { InputProps } from 'components/common/Input/Input';
 import styled from 'styled-components';
 
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface AuthInputProps extends InputProps {
 	type?: HTMLInputTypeAttribute;
 	placeholder: string;
 	name?: string;
@@ -9,9 +10,30 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	label?: string;
 	errorMessage?: string;
+	mode?: 'signup' | 'login';
+	bgColor?: string;
+	border?: string;
 }
 
-const AuthInput = React.forwardRef<HTMLInputElement, InputProps>(
+interface AuthInputOptions {
+	[key: string]: {
+		bgColor: AuthInputProps['bgColor'];
+		border: AuthInputProps['border'];
+	};
+}
+
+const AuthInputOptions: AuthInputOptions = {
+	signup: {
+		bgColor: 'white',
+		border: '1px solid #d2d5da',
+	},
+	login: {
+		bgColor: '#F8F8F8',
+		border: 'none',
+	},
+};
+
+const AuthInput = React.forwardRef<HTMLInputElement, AuthInputProps>(
 	(
 		{
 			type = 'text',
@@ -21,10 +43,13 @@ const AuthInput = React.forwardRef<HTMLInputElement, InputProps>(
 			onChange,
 			label,
 			errorMessage,
+			mode = 'signup',
 			...props
-		}: InputProps,
+		}: AuthInputProps,
 		ref
 	) => {
+		const { bgColor, border } = AuthInputOptions[mode];
+
 		return (
 			<InputContainer>
 				{label && <label>{label}</label>}
@@ -34,6 +59,9 @@ const AuthInput = React.forwardRef<HTMLInputElement, InputProps>(
 					name={name}
 					value={value}
 					onChange={onChange}
+					mode={mode}
+					bgColor={bgColor}
+					border={border}
 					ref={ref}
 					{...props}
 				/>
@@ -54,7 +82,7 @@ const InputContainer = styled.div`
 
 	& label {
 		font-size: 18px;
-		margin-bottom: 18px;
+		margin-bottom: 12px;
 	}
 
 	& p {
@@ -63,21 +91,13 @@ const InputContainer = styled.div`
 	}
 `;
 
-const StyledInput = styled.input<InputProps>`
+const StyledInput = styled.input<AuthInputProps>`
 	width: 100%;
-	height: 66px;
-	margin-bottom: '18px';
 	padding: 10px 20px;
-	border: 1px solid #d2d5da;
-	background-color: white;
-	font-size: 18px;
+	border: ${(props) => props.border};
+	background-color: ${(props) => props.bgColor};
+	font-size: 16px;
 	border-radius: 10px;
-
-	:focus {
-		outline: none !important;
-		border-color: #94caf3;
-		box-shadow: 0 0 0px 4px #d6edfc;
-	}
 
 	& ::placeholder {
 		color: #949494;
