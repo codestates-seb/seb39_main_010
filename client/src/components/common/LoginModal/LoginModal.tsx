@@ -7,10 +7,12 @@ import { loginModalAtom } from 'recoil/atom';
 import AuthInput from 'components/AuthInput/AuthInput';
 import BasicButton from '../BasicButton/BasicButton';
 import SocialButton from '../SocialButtons/SocialButtons';
+import { useNavigate } from 'react-router-dom';
 
 const LoginModal = () => {
 	const setIsLoginMoal = useSetRecoilState(loginModalAtom);
 	const containerRef = useRef<HTMLDivElement>(null);
+	const navigate = useNavigate();
 
 	const modalCloseHandler = (event: React.MouseEvent<HTMLDivElement>) => {
 		if (containerRef.current === event.target) setIsLoginMoal(false);
@@ -45,7 +47,14 @@ const LoginModal = () => {
 				<SubContainer>
 					<hr />
 					<span>회원이 아니신가요?</span>
-					<BasicButton className="login-button" mode="login">
+					<BasicButton
+						className="login-button"
+						mode="login"
+						onClick={() => {
+							setIsLoginMoal(false);
+							navigate('/signup');
+						}}
+					>
 						회원가입
 					</BasicButton>
 				</SubContainer>
