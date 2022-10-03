@@ -3,9 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { HeaderContainer, LogoandNav, MypageImg } from './style';
 import { FiUser } from 'react-icons/fi';
 import { idText } from 'typescript';
+import { useRecoilState } from 'recoil';
+import { loginModalAtom } from 'recoil/atom';
+import LoginModal from '../LoginModal/LoginModal';
 
 const Header = () => {
 	const [tab, setTab] = useState('');
+	const [isLoginModal, setIsLoginMoal] = useRecoilState(loginModalAtom);
 
 	const navigate = useNavigate();
 	const getclick = (e: React.FormEvent) => {
@@ -14,6 +18,7 @@ const Header = () => {
 	};
 	return (
 		<HeaderContainer>
+			{isLoginModal && <LoginModal />}
 			<LogoandNav>
 				<div onClick={() => navigate('/')}></div>
 				<ul>
@@ -47,6 +52,7 @@ const Header = () => {
 					>
 						면접 후기
 					</li>
+					<li onClick={() => setIsLoginMoal(!isLoginModal)}>로그인</li>
 				</ul>
 			</LogoandNav>
 
