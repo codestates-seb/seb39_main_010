@@ -1,24 +1,27 @@
-# Team10 : main-project
+# Weply -면접 정보 공유 사이트
 
-## Weply-면접 정보 공유 사이트
+[로고이미지]
 
-[배포 예정](http://weply.s3-website.ap-northeast-2.amazonaws.com)
+> **면접 정보를 나눠요! 📝Weply!**
+- 개발기간: 2022.09.07 ~ 
+- [배포 링크](http://weply.s3-website.ap-northeast-2.amazonaws.com) (배포예정)
+<br/>
 
-### Features
+## 프로젝트 소개
+> *Weply에서는...*
+- 직군 별 💡**면접 예상 질문과 답변**을 주고 받을 수 있습니다.
+- 답변에 또 다른 댓글을 달아 🙋‍♂️**의견**을 공유해 주세요!
+- ✏️**실제 면접 후기**를 남겨 예비 지원자들에게 도움을 줄 수 있습니다.
+- 더 궁금한 내용이 있다면 💬**댓글**을 달아 질문해 주세요!
+- 🧭**같은 목표**를 향해 나아갈 스터디에 참여할 수 있습니다.
+- 원하는 스터디가 없으신가요? 👨‍👩‍👧**새로운 스터디**를 만들어 보세요!
+<br/>
 
-- 회원가입, 로그인, 로그아웃, 회원 정보 수정(메일, 닉네임, 비밀번호 변경 등)을 할 수 있습니다.
-- 전체 게시글 목록 조회, 개별 게시글 상세 내용 조회를 할 수 있습니다.
-- 질문 등록, 답변 등록, 질문 수정, 답변 수정, 질문 삭제, 답변 삭제를 할 수 있습니다.
-- Oauth인증으로 Naver, Google, Kakao 계정 정보를 이용하여 로그인 할 수 있습니다.
-- 회원 가입 시 기입된 이메일 주소로 인증 메일을 발송하여 인증 링크를 클릭하여 가입 완료하며, 인증된 이메일로 비밀번호 찾기를 할 수 있습니다.
-
-
----
-
-### Contributors
-
-- FE: 안태경([TaekyungAn](https://github.com/TaekyungAn)), 정혜선([seonnn](https://github.com/seonnn))
-- BE: 민지원([x2d7751347m](https://github.com/x2d7751347m)), 장민욱([black2code](https://github.com/black2code))
+## 팀텐(Team10) 멤버
+|안태경(FE)|정혜선(FE)|민지원(BE)|장민욱(BE)|김민주(Design)|
+|:---:|:---:|:---:|:---:|:---:|
+|<img src="https://user-images.githubusercontent.com/102157884/193764463-6f5a0afe-a0ef-47e1-a955-02d9fa191080.png" width="200">|<img src="https://user-images.githubusercontent.com/102157884/193764539-be726237-2227-4c29-9365-1ccd5cadee83.png" width="200">|<img src="https://user-images.githubusercontent.com/102157884/193764338-de5d7117-2430-4fac-b73f-22c1ce004ca4.png" width="200">|<img src="https://user-images.githubusercontent.com/102157884/193764664-cf6dfcb4-0a27-43f2-8614-293b1d9baeb9.png" width="200">|<img src="https://user-images.githubusercontent.com/102157884/193764463-6f5a0afe-a0ef-47e1-a955-02d9fa191080.png" width="200">
+|[TaekyungAn](https://github.com/TaekyungAn)|[seonnn](https://github.com/seonnn)|[x2d7751347m](https://github.com/x2d7751347m)|[black2code](https://github.com/black2code)|[KimMinju](#)
 
 ---
 
