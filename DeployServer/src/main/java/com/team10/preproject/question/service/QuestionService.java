@@ -1,6 +1,10 @@
 package com.team10.preproject.question.service;
 
 import com.team10.preproject.answer.repository.AnswerRepository;
+import com.team10.preproject.category.entity.Category;
+import com.team10.preproject.category.entity.Subcategory;
+import com.team10.preproject.category.repository.CategoryRepository;
+import com.team10.preproject.category.repository.SubcategoryRepository;
 import com.team10.preproject.global.exception.BusinessLogicException;
 import com.team10.preproject.global.exception.ExceptionCode;
 import com.team10.preproject.member.entity.Member;
@@ -32,20 +36,40 @@ public class QuestionService {
     private AnswerRepository answerRepository;
     private MemberRepository memberRepository;
     private QuestionLikeRepository questionLikeRepository;
+    private CategoryRepository categoryRepository;
+    private SubcategoryRepository subcategoryRepository;
 
     public QuestionService(QuestionRepository questionRepository, AnswerRepository answerRepository,
-                           MemberRepository memberRepository, QuestionLikeRepository questionLikeRepository) {
+                           MemberRepository memberRepository, QuestionLikeRepository questionLikeRepository,
+                           CategoryRepository categoryRepository, SubcategoryRepository subcategoryRepository) {
         this.questionRepository = questionRepository;
         this.answerRepository = answerRepository;
         this.memberRepository = memberRepository;
         this.questionLikeRepository = questionLikeRepository;
+        this.categoryRepository = categoryRepository;
+        this.subcategoryRepository = subcategoryRepository;
     }
 
     // 글 작성
     @Transactional
-    public Question questionwrite(Question question, Member member) {
+    public Question questionwrite(Question question, Long memberId, Long categoryId, Long tagId) {
 
-        question.setMember(member);
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> {
+                    return new IllegalArgumentException("글 작성 실패 : 없는 사용자 입니다.");
+                });
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() ->{
+                    return new IllegalArgumentException("글 작성 실패 : 없는 카테고리 입니다.");
+                });
+        Subcategory subcategory = subcategoryRepository.findById(tagId)
+                .orElseThrow(() ->{
+                    return new IllegalArgumentException("글 작성 실패 : 없는 태그 입니다.");
+                });
+
+        question.changeMember(member);
+        question.changeCategory(category);
+        question.changeSubcategory(subcategory);
 
         return questionRepository.save(question);
     }
@@ -86,9 +110,20 @@ public class QuestionService {
                 .orElseThrow(() ->{
                     return new IllegalArgumentException("글 찾기 실패 : 해당 글을 찾을 수 없습니다.");
                 });
+        Category category = categoryRepository.findById(requestQuestion.getCategory().getCategoryId())
+                .orElseThrow(() ->{
+                    return new IllegalArgumentException("글 작성 실패 : 없는 카테고리 입니다.");
+                });
 
-        question.setTitle(requestQuestion.getTitle());
-        question.setContent(requestQuestion.getContent());
+        Subcategory subcategory = subcategoryRepository.findById(requestQuestion.getTag().getSubcategoryId())
+                .orElseThrow(() ->{
+                    return new IllegalArgumentException("글 작성 실패 : 없는 태그 입니다.");
+                });
+
+        question.changeTitle(requestQuestion.getTitle());
+        question.changeContent(requestQuestion.getContent());
+        question.changeCategory(category);
+        question.changeSubcategory(subcategory);
 
         return questionRepository.save(question);
     }
@@ -186,5 +221,4 @@ public class QuestionService {
 
         return  questionRepository.findWriterQuestion(writer, pageable);
     }
-
 }

@@ -7,7 +7,7 @@ import com.team10.preproject.question.dto.QuestionDto;
 import com.team10.preproject.question.dto.QuestionOneResponse;
 import com.team10.preproject.question.dto.QuestionResponseDto;
 import com.team10.preproject.question.entity.Question;
-import com.team10.preproject.question.mapper.QuestionMapper;
+import com.team10.preproject.question.mapper.QuestionMapperClass;
 import com.team10.preproject.question.service.QuestionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,9 +29,9 @@ import java.util.List;
 public class QuestionController {
 
     private QuestionService questionService;
-    private QuestionMapper mapper;
+    private QuestionMapperClass mapper;
 
-    public QuestionController(QuestionService questionService, QuestionMapper mapper) {
+    public QuestionController(QuestionService questionService, QuestionMapperClass mapper) {
         this.questionService = questionService;
         this.mapper = mapper;
     }
@@ -40,12 +40,11 @@ public class QuestionController {
     public ResponseEntity questionWrite(@Valid @RequestBody QuestionDto.Post requestBody,
                                         @AuthenticationPrincipal PrincipalDetails principal) {
 
+        requestBody.setMember(principal.getMember());
         Question question = mapper.questionPostToQuestion(requestBody);
-        Question createQuestion = questionService.questionwrite(question, principal.getMember());
-        QuestionResponseDto questionResponseDto = mapper.questionToQuestionResponse(createQuestion);
-
-        questionResponseDto.setMemberId(principal.getMember().getMemberId());
-        questionResponseDto.setNickname(principal.getMember().getNickname());
+        QuestionResponseDto questionResponseDto
+                = mapper.questionToResponseDto(questionService.questionwrite(question, principal.getMemberId(),
+                requestBody.getCategoryId(), requestBody.getTagId()));
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(questionResponseDto), HttpStatus.CREATED);
@@ -58,7 +57,7 @@ public class QuestionController {
         Page<Question> questions = null;
         if(searchType == null || keyword == null){
             questions = questionService.questionList(pageable);
-        } else{
+        } else {
             switch (searchType) {
                 case "title":
                     questions = questionService.questionSearchTitle(keyword, pageable);
@@ -74,8 +73,10 @@ public class QuestionController {
                     return new ResponseEntity<>(question, HttpStatus.OK);
             }
         }
-        Page<QuestionResponseDto> pageDto = questions.map(QuestionResponseDto::new);
-
+        Page<QuestionResponseDto> pageDto = questions.map(entity -> {
+            QuestionResponseDto dto = mapper.questionToResponseDto(entity);
+            return dto;
+        });
         return new ResponseEntity<>(pageDto, HttpStatus.OK);
     }
 
@@ -100,15 +101,16 @@ public class QuestionController {
 
     @PutMapping("/{question-id}")
     public ResponseEntity questionUpdate(@PathVariable("question-id") Long questionId,
-                                         @Valid @RequestBody QuestionDto.Put requestBody) {
+                                         @Valid @RequestBody QuestionDto.Put requestBody,
+                                         @AuthenticationPrincipal PrincipalDetails principal) {
 
-        Question question = questionService.questionUpdate(questionId, mapper.questionPutToQuesiton(requestBody));
-        QuestionResponseDto questionResponseDto = mapper.questionToQuestionResponse(question);
-        questionResponseDto.setMemberId(question.getMember().getMemberId());
-        questionResponseDto.setNickname(question.getMember().getNickname());
+        requestBody.setMember(principal.getMember());
+        Question question = mapper.questionPutToQuestion(requestBody);
+        QuestionResponseDto questionResponseDto = mapper.questionToResponseDto(
+                questionService.questionUpdate(questionId, question));
 
         return new ResponseEntity<>(
-                new SingleResponseDto<>(questionResponseDto), HttpStatus.OK);
+                new SingleResponseDto<>(questionResponseDto),HttpStatus.OK);
     }
 
     @PostMapping("/{question-id}/sympathy")

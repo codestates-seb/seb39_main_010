@@ -3,6 +3,8 @@ package com.team10.preproject.question.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.team10.preproject.answer.entity.Answer;
+import com.team10.preproject.category.entity.Category;
+import com.team10.preproject.category.entity.Subcategory;
 import com.team10.preproject.global.audit.Auditable;
 import com.team10.preproject.member.entity.Member;
 import lombok.*;
@@ -11,9 +13,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Builder
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -31,6 +32,14 @@ public class Question extends Auditable {
 
     @Column(name = "like_count", columnDefinition = "int default 0")
     private int likeCount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subcategory_id")
+    private Subcategory tag;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -58,5 +67,24 @@ public class Question extends Auditable {
 
     public void discountLike(QuestionLike questionLike) {
         this.questionLikeList.remove(questionLike);
+    }
+
+    public void changeCategory(Category category) {
+        this.category = category;
+    }
+    public void changeSubcategory(Subcategory tag) {
+        this.tag = tag;
+    }
+
+    public void changeMember(Member member) {
+        this.member = member;
+    }
+
+    public void changeTitle(String title) {
+        this.title = title;
+    }
+
+    public void changeContent(String content) {
+        this.content = content;
     }
 }

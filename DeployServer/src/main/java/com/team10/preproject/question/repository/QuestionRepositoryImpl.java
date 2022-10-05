@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 import static com.team10.preproject.question.entity.QQuestion.*;
 import static com.team10.preproject.member.entity.QMember.*;
 import static com.team10.preproject.answer.entity.QAnswer.*;
+import static com.team10.preproject.category.entity.QCategory.*;
+import static com.team10.preproject.category.entity.QSubcategory.*;
 
 @RequiredArgsConstructor
 public class QuestionRepositoryImpl implements CustomQuestionRepository{
@@ -26,6 +28,8 @@ public class QuestionRepositoryImpl implements CustomQuestionRepository{
                         question.questionId,
                         question.title,
                         question.content,
+                        category.jobDomain,
+                        subcategory.tag,
                         question.viewCount,
                         question.likeCount,
                         question.createdAt,
@@ -34,6 +38,8 @@ public class QuestionRepositoryImpl implements CustomQuestionRepository{
                         member.nickname))
                 .from(question)
                 .innerJoin(question.member, member)
+                .innerJoin(question.category, category)
+                .innerJoin(question.tag, subcategory)
                 .where(question.questionId.eq(questionId))
                 .fetchOne());
 
@@ -95,6 +101,8 @@ public class QuestionRepositoryImpl implements CustomQuestionRepository{
                         question.questionId,
                         question.title,
                         question.content,
+                        category.jobDomain,
+                        subcategory.tag,
                         question.viewCount,
                         question.likeCount,
                         question.createdAt,
@@ -102,6 +110,8 @@ public class QuestionRepositoryImpl implements CustomQuestionRepository{
                         question.member.memberId,
                         question.member.nickname))
                 .from(question)
+                .innerJoin(question.category, category)
+                .innerJoin(question.tag, subcategory)
                 .where(question.member.nickname.contains(keyWord))
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())
