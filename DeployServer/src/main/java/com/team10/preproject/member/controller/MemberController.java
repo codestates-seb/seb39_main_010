@@ -69,21 +69,21 @@ public class MemberController {
         }
     }
 
-    @GetMapping("/exists-username")
+    @PostMapping("/exists-username")
     public void existsUsername(
             @Valid @RequestBody MemberDto.Patch requestBody) {
         Member member = mapper.memberPatchToMember(requestBody);
         memberService.verifyExistsUsername(member.getUsername());
     }
 
-    @GetMapping("/exists-email")
+    @PostMapping("/exists-email")
     public void existsEmail(
             @Valid @RequestBody MemberDto.Patch requestBody) {
         Member member = mapper.memberPatchToMember(requestBody);
         memberService.verifyExistsUsername(member.getEmail());
     }
 
-    @GetMapping("/exists-nickname")
+    @PostMapping("/exists-nickname")
     public void existsNickname(
             @Valid @RequestBody MemberDto.Patch requestBody) {
         Member member = mapper.memberPatchToMember(requestBody);
