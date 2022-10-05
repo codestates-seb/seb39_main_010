@@ -63,6 +63,9 @@ public class SecurityConfig {
                         "/api/v1/users/verification",
                         "/api/v1/users/forgot-password",
                         "/token/**",
+                        "/api/v1/users/exists-username",
+                        "/api/v1/users/exists-email",
+                        "/api/v1/users/exists-nickname",
                         "/",
                         "/h2/**")
                 .permitAll()
