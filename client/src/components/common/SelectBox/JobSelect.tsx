@@ -47,10 +47,17 @@ interface Props {
 }
 
 const Filtering = ({ options }: Props) => {
+	function selectBoxchange(event: React.FormEvent<HTMLSelectElement>) {
+		const value = event.currentTarget.value;
+		console.log(value); // 선택 옵션 잘나옴
+		// parentFunction(value);
+		return value;
+	}
+
 	return (
 		<SortingContainer>
 			<form onFocus={() => SortingContainer}>
-				<select required>
+				<select required onChange={selectBoxchange}>
 					<option value="" disabled selected>
 						직무 카테고리 선택
 					</option>

@@ -4,7 +4,7 @@ import { Signup } from 'pages/Signup';
 import { Study, StudyDetail, StudyWrite } from 'pages/Study';
 import { Question, Review, ReviewWrite } from 'pages/Interveiw';
 import { Mypage } from 'pages/Mypage';
-import { Header } from 'components/common';
+import { Footer, Header } from 'components/common';
 
 const Router = () => {
 	return (
@@ -28,6 +28,7 @@ const Router = () => {
 					<Route path="write" element={<StudyWrite />} />
 				</Route>
 			</Routes>
+			<Footer />
 		</React.Fragment>
 	);
 };

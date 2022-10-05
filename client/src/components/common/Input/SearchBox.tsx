@@ -5,7 +5,6 @@ import { isPropertySignature } from 'typescript';
 
 export const SearchContainer = styled.div`
 	display: flex;
-	flex-direction: row;
 	align-items: center;
 	padding: 9px 20px;
 	gap: 10px;

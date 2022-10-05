@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { theme } from 'styles/theme';
 
 // Card 시작
 
@@ -46,6 +47,10 @@ export const Middle = styled.div`
 			letter-spacing: -0.4px;
 
 			margin: 6px 0;
+			&:hover {
+				cursor: pointer;
+				color: #94caf3;
+			}
 		}
 		div {
 			font-family: 'Apple SD Gothic Neo';
