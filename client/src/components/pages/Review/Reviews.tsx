@@ -8,10 +8,6 @@ const Reviews = () => {
 	return (
 		<ReviewsContainer>
 			<Accordion />
-			<Accordion />
-			<Accordion />
-			<Accordion />
-			<Accordion />
 		</ReviewsContainer>
 	);
 };
