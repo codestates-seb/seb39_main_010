@@ -114,9 +114,6 @@ public class MemberController {
 
         memberService.checkOwnerShip(request, memberId);
         requestBody.setMemberId(memberId);
-        memberService.verifyExistsEmail(requestBody.getEmail());
-        memberService.verifyExistsUsername(requestBody.getUsername());
-        memberService.verifyExistsNickname(requestBody.getNickname());
         Member member =
                 memberService.updateMember(mapper.memberPatchToMember(requestBody));
 
