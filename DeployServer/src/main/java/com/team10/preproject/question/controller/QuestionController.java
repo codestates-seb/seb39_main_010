@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,10 +83,16 @@ public class QuestionController {
 
     @GetMapping("/{question-id}")
     public QuestionOneResponse questionView(@PathVariable("question-id") Long questionId,
-                                            HttpServletRequest request, HttpServletResponse response) {
+                                            HttpServletRequest request, HttpServletResponse response,
+                                            @Nullable @AuthenticationPrincipal PrincipalDetails principal) {
 
         questionService.updateViewCount(questionId, request, response);
-        QuestionOneResponse questionOneResponse = questionService.questionView(questionId);
+        QuestionOneResponse questionOneResponse = null;
+        if(principal != null){
+            questionOneResponse = questionService.questionloginView(questionId, principal.getMemberId());
+        } else {
+            questionOneResponse = questionService.questionView(questionId);
+        }
 
         return questionOneResponse;
     }

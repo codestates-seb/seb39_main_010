@@ -29,6 +29,8 @@ public class Answer extends Auditable {
 
     private int likeCount;
 
+    private boolean userLike;
+
     @Enumerated(value = EnumType.STRING)
     private DeleteStatus isDeleted;
 

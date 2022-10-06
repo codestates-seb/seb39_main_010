@@ -78,9 +78,7 @@ public class Member extends Auditable{
         this.questionLikeList.add(questionLike);
     }
 
-    public void mappingAnswerLike(AnswerLike answerLike) {
-        this.answerLikeList.add(answerLike);
-    }
+    public void mappingAnswerLike(AnswerLike answerLike) { this.answerLikeList.add(answerLike); }
 
     public void updatePicture(String picture){
         this.picture = picture;

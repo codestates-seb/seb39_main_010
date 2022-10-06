@@ -15,6 +15,7 @@ import java.util.List;
 
 @Builder
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -32,6 +33,8 @@ public class Question extends Auditable {
 
     @Column(name = "like_count", columnDefinition = "int default 0")
     private int likeCount;
+
+    private boolean userLike;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
@@ -72,6 +75,7 @@ public class Question extends Auditable {
     public void changeCategory(Category category) {
         this.category = category;
     }
+
     public void changeSubcategory(Subcategory tag) {
         this.tag = tag;
     }
@@ -87,4 +91,6 @@ public class Question extends Auditable {
     public void changeContent(String content) {
         this.content = content;
     }
+
+    public void userliked(boolean userLike){ this.userLike = userLike; }
 }

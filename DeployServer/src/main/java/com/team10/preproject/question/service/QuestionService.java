@@ -1,5 +1,6 @@
 package com.team10.preproject.question.service;
 
+import com.team10.preproject.answer.repository.AnswerLikeRepository;
 import com.team10.preproject.answer.repository.AnswerRepository;
 import com.team10.preproject.category.entity.Category;
 import com.team10.preproject.category.entity.Subcategory;
@@ -10,6 +11,7 @@ import com.team10.preproject.global.exception.ExceptionCode;
 import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.member.repository.MemberRepository;
 import com.team10.preproject.question.dto.CommentsChildrenResponse;
+import com.team10.preproject.question.dto.QuestionOneCommentResponse;
 import com.team10.preproject.question.dto.QuestionOneResponse;
 import com.team10.preproject.question.dto.QuestionResponseDto;
 import com.team10.preproject.question.entity.Question;
@@ -19,6 +21,7 @@ import com.team10.preproject.question.repository.QuestionLikeRepository;
 import com.team10.preproject.question.repository.QuestionRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,16 +41,19 @@ public class QuestionService {
     private QuestionLikeRepository questionLikeRepository;
     private CategoryRepository categoryRepository;
     private SubcategoryRepository subcategoryRepository;
+    private AnswerLikeRepository answerLikeRepository;
 
     public QuestionService(QuestionRepository questionRepository, AnswerRepository answerRepository,
                            MemberRepository memberRepository, QuestionLikeRepository questionLikeRepository,
-                           CategoryRepository categoryRepository, SubcategoryRepository subcategoryRepository) {
+                           CategoryRepository categoryRepository, SubcategoryRepository subcategoryRepository,
+                           AnswerLikeRepository answerLikeRepository) {
         this.questionRepository = questionRepository;
         this.answerRepository = answerRepository;
         this.memberRepository = memberRepository;
         this.questionLikeRepository = questionLikeRepository;
         this.categoryRepository = categoryRepository;
         this.subcategoryRepository = subcategoryRepository;
+        this.answerLikeRepository = answerLikeRepository;
     }
 
     // 글 작성
@@ -87,15 +93,33 @@ public class QuestionService {
 
         QuestionOneResponse questionOneResponse = questionRepository.findOneQuestionById(questionId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NoSuchElementException));
-        commentsExtractor(questionId, questionOneResponse);
+
+        Long memberId = null;
+        commentsExtractor(questionId, questionOneResponse, memberId);
 
         return questionOneResponse;
     }
 
-    private void commentsExtractor(Long questionId, QuestionOneResponse questionOneResponse) {
+    @Transactional
+    public QuestionOneResponse questionloginView(Long questionId, Long memberId) {
+
+        QuestionOneResponse questionOneResponse = questionRepository.findOneQuestionById(questionId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NoSuchElementException));
+
+        if(questionLikeRepository.likeView(questionId,memberId)){
+            questionOneResponse.changeUserLike(true);
+        }
+        commentsExtractor(questionId, questionOneResponse, memberId);
+
+        return questionOneResponse;
+    }
+
+    private void commentsExtractor(Long questionId, QuestionOneResponse questionOneResponse, @Nullable Long memberId) {
 
         questionOneResponse.getAnswers()
                 .forEach(comment -> {
+                    if(answerLikeRepository.likeView(comment.getAnswerId(), memberId))
+                        comment.changeUserLike(true);
                     List<CommentsChildrenResponse> comments =
                             answerRepository.findQuestionAnswers(questionId, comment.getAnswerId());
                     comment.setChildren(comments);

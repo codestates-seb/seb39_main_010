@@ -1,7 +1,6 @@
 package com.team10.preproject.question.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
-import com.team10.preproject.question.entity.Question;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +20,7 @@ public class QuestionResponseDto {
     private String tag;
     private int viewCount;
     private int likeCount;
+    private boolean userLike;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Long memberId;
@@ -28,7 +28,7 @@ public class QuestionResponseDto {
 
     @QueryProjection
     public QuestionResponseDto(Long questionId, String title, String content, String category, String tag,
-                               int viewCount, int likeCount, LocalDateTime createdAt, LocalDateTime updatedAt,
+                               int viewCount, int likeCount, boolean userLike, LocalDateTime createdAt, LocalDateTime updatedAt,
                                Long memberId, String nickname) {
 
         this.questionId = questionId;
@@ -38,23 +38,10 @@ public class QuestionResponseDto {
         this.tag = tag;
         this.viewCount = viewCount;
         this.likeCount = likeCount;
+        this.userLike = userLike;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.memberId = memberId;
         this.nickname = nickname;
-    }
-
-    public QuestionResponseDto(Question question) {
-        this.questionId = question.getQuestionId();
-        this.title = question.getTitle();
-        this.content = question.getContent();
-        this.category = question.getCategory().getJobDomain();
-        this.tag = question.getTag().getTag();
-        this.viewCount = question.getViewCount();
-        this.likeCount = question.getLikeCount();
-        this.createdAt = question.getCreatedAt();
-        this.updatedAt = question.getUpdatedAt();
-        this.memberId = question.getMember().getMemberId();
-        this.nickname = question.getMember().getNickname();
     }
 }

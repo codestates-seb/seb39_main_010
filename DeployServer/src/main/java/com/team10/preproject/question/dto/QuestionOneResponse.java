@@ -21,6 +21,7 @@ public class QuestionOneResponse {
     private String tag;
     private int viewCount;
     private int likeCount;
+    private boolean userLike;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Long memberId;
@@ -31,8 +32,8 @@ public class QuestionOneResponse {
 
     @QueryProjection
     public QuestionOneResponse(Long questionId, String title, String content, String category, String tag,
-                               int viewCount, int likeCount, LocalDateTime createdAt, LocalDateTime updatedAt,
-                               Long memberId, String nickname) {
+                               int viewCount, int likeCount, boolean userLike, LocalDateTime createdAt,
+                               LocalDateTime updatedAt, Long memberId, String nickname) {
 
         this.questionId = questionId;
         this.title = title;
@@ -41,9 +42,14 @@ public class QuestionOneResponse {
         this.tag = tag;
         this.viewCount = viewCount;
         this.likeCount = likeCount;
+        this.userLike = userLike;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.memberId = memberId;
         this.nickname = nickname;
+    }
+
+    public void changeUserLike(boolean userLike) {
+        this.userLike = userLike;
     }
 }
