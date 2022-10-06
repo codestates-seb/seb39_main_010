@@ -77,7 +77,7 @@ public class MemberService {
 
     public void verifyExistsEmail(String email) {
 
-        Member existMember = memberRepository.findByUsername(email);
+        Member existMember = memberRepository.findByEmail(email);
         if (existMember != null)
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
