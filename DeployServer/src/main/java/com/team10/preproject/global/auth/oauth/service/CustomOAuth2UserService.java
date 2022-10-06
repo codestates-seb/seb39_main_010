@@ -1,7 +1,7 @@
-package com.team10.preproject.member.oauth.service;
+package com.team10.preproject.global.auth.oauth.service;
 
-import com.team10.preproject.member.oauth.dto.SessionUser;
-import com.team10.preproject.member.oauth.dto.OAuthAttributes;
+import com.team10.preproject.global.auth.oauth.dto.OAuthAttributes;
+import com.team10.preproject.global.auth.oauth.dto.SessionUser;
 import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
