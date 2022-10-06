@@ -1,21 +1,48 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { theme } from 'styles/theme';
 import { IoClose } from 'react-icons/io5';
 import { useSetRecoilState } from 'recoil';
-import { loginModalAtom } from 'recoil/atom';
+import { loginModalAtom, userAtom } from 'recoil/atom';
 import AuthInput from 'components/AuthInput/AuthInput';
 import BasicButton from '../BasicButton/BasicButton';
 import SocialButton from '../SocialButtons/SocialButtons';
 import { useNavigate } from 'react-router-dom';
+import { ReactComponent as LogoImg } from 'assets/images/logo.svg';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { LoginSubmitForm } from 'types';
+import { loginApi } from 'apis/apiClient';
+import { cookie } from 'utils/cookie';
 
 const LoginModal = () => {
+	const { register, handleSubmit } = useForm<LoginSubmitForm>();
+	const [loginError, setLoginError] = useState(false);
 	const setIsLoginMoal = useSetRecoilState(loginModalAtom);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const navigate = useNavigate();
+	const setUserInfo = useSetRecoilState(userAtom);
 
 	const modalCloseHandler = (event: React.MouseEvent<HTMLDivElement>) => {
 		if (containerRef.current === event.target) setIsLoginMoal(false);
+	};
+
+	const onSubmit: SubmitHandler<LoginSubmitForm> = async (data) => {
+		const response = await loginApi(data);
+
+		console.log(response);
+		if (!response.headers.authorization) {
+			setLoginError(true);
+			return;
+		}
+		const accessToken = response.headers.authorization.split(' ')[1];
+		const refreshToken = response.headers.refresh;
+
+		cookie.setItem('accessToken', accessToken, { maxAge: 3600 });
+		cookie.setItem('refreshToken', refreshToken, { maxAge: 3600 });
+
+		setUserInfo(response.data);
+		setIsLoginMoal(false);
+		setLoginError(false);
 	};
 
 	return (
@@ -28,15 +55,24 @@ const LoginModal = () => {
 				>
 					<IoClose />
 				</button>
-				<div className="logo">WEPLY</div>
-				<LoginForm>
-					<AuthInput placeholder="아이디를 입력해주세요." mode="login" />
+				<LogoImg className="logo" />
+				<LoginForm onSubmit={handleSubmit(onSubmit)}>
+					<AuthInput
+						placeholder="아이디를 입력해주세요."
+						mode="login"
+						{...register('username', {
+							required: true,
+						})}
+					/>
 					<AuthInput
 						className="password"
 						placeholder="비밀번호를 입력해주세요."
 						mode="login"
 						type="password"
-						// errorMessage="로그인 정보를 다시 확인해주세요."
+						{...register('password', {
+							required: true,
+						})}
+						errorMessage={loginError ? '로그인 정보를 다시 확인해주세요.' : ''}
 					/>
 					<LoginOption>
 						<span>자동로그인</span>
@@ -108,18 +144,12 @@ const Modal = styled.div`
 		top: 17px;
 		right: 25px;
 		font-size: 38px;
-		/* x 버튼 색 #666666 -> gray500으로 적용해도 될지 확인 */
-		color: #666666;
+		color: ${theme.colors.gray500};
 	}
 
 	& .logo {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		color: ${theme.colors.blueMain};
-		width: 205px;
-		height: 50px;
-		border: 1px solid ${theme.colors.blueMain};
+		width: 120px;
+		height: 38.5px;
 	}
 
 	& .login-button {
