@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Banner from 'components/pages/Question/Banner';
 import styled from 'styled-components';
 import { SearchBar } from 'components/pages';
 import QuestionCards from 'components/pages/Question/QuestionCards';
+import apiClient from 'apis/apiClient';
 
 const Question = () => {
+	const getQuestions = async () => {
+		try {
+			const response = await apiClient.get('/api/v1/questions');
+			console.log(response);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	useEffect(() => {
+		getQuestions();
+	}, []);
+
 	return (
 		<QuestionContainer>
 			<Banner />
