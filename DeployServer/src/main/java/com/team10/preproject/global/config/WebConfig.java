@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@PropertySource("classpath:/secrets.properties")
 public class WebConfig implements WebMvcConfigurer {
 
     @Value("${spring.config.domain}")
@@ -16,8 +17,8 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
 
         registry.addMapping("/**")
+                .exposedHeaders("authorization", "refresh")
                 .allowCredentials(true)
-                .exposedHeaders("authorization")
                 .allowedOriginPatterns(domain)
                 .allowedMethods("GET", "PUT", "POST", "DELETE", "PATCH", "OPTIONS");
     }

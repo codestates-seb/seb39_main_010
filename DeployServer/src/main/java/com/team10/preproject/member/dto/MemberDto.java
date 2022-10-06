@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -50,6 +49,10 @@ public class MemberDto {
 
         private long memberId;
 
+        @NotSpace
+        @Length(max = 20)
+        private String username;
+
         @NotSpace(message = "Nickname cannot be null")
         @Length(max = 20)
         private String nickname;
@@ -71,7 +74,7 @@ public class MemberDto {
 
         @Length(max = 200)
         private String selfIntroductions;
-        private Member.MemberStatus memberStatus;
+//        private Member.MemberStatus memberStatus;
 
         public void setMemberId(long memberId) {
 
@@ -89,7 +92,7 @@ public class MemberDto {
         private String picture;
         private String favoriteCompany;
         private String selfIntroductions;
-        private Member.MemberStatus memberStatus;
-        public String getMemberStatus() { return memberStatus.getStatus(); }
+//        private Member.MemberStatus memberStatus;
+//        public String getMemberStatus() { return memberStatus.getStatus(); }
     }
 }

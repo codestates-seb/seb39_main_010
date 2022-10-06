@@ -8,7 +8,7 @@ import com.team10.preproject.answer.dto.AnswerResponseDto;
 import com.team10.preproject.answer.entity.Answer;
 import com.team10.preproject.answer.mapper.AnswerMapper;
 import com.team10.preproject.answer.service.AnswerService;
-import com.team10.preproject.global.dto.SingleResponseDto;
+import com.team10.preproject.global.response.dto.SingleResponseDto;
 import com.team10.preproject.global.auth.PrincipalDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,14 +1,11 @@
 package com.team10.preproject.global.filter;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.global.auth.PrincipalDetails;
-import com.team10.preproject.token.entity.Token;
-import com.team10.preproject.token.service.TokenService;
+import com.team10.preproject.global.token.entity.Token;
+import com.team10.preproject.global.token.service.TokenService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,7 +17,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -48,9 +44,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
-        //  Jackson Factory
-        //        ObjectMapper objectMapper = new ObjectMapper();
-        //        objectMapper.findAndRegisterModules();
         System.out.println("successfulAuthentication");
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
         Long memberId = principalDetails.getMemberId();
@@ -59,7 +52,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String email = principalDetails.getEmail();
         String json =
                 "{\"memberId\":" + memberId + ",\n\"username\":\"" + username + "\",\n\"email\":\"" + email + "\",\n\"nickname\":\"" + nickname + "\"}";
-        Token jwtToken = tokenService.generateToken(memberId, email, nickname);
+        Token jwtToken = tokenService.generateToken(email);
         response.addHeader("Authorization", jwtToken.getAccessToken());
         response.addHeader("Refresh", jwtToken.getRefreshToken());
         response.setContentType("application/json");

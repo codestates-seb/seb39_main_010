@@ -4,7 +4,6 @@ import com.team10.preproject.global.exception.ExceptionCode;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
-
 import javax.validation.ConstraintViolation;
 import java.util.List;
 import java.util.Set;
@@ -59,9 +58,9 @@ public class ErrorResponse {
     @Getter
     public static class FieldError {
 
-        private String field;
-        private Object rejectedValue;
-        private String reason;
+        private final String field;
+        private final Object rejectedValue;
+        private final String reason;
 
         private FieldError(String field, Object rejectedValue, String reason) {
 
