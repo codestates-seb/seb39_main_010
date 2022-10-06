@@ -1,11 +1,11 @@
-package com.team10.preproject.member.oauth.service;
+package com.team10.preproject.global.auth.oauth.service;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.member.repository.MemberRepository;
-import com.team10.preproject.member.token.entity.Token;
-import com.team10.preproject.member.token.service.TokenService;
+import com.team10.preproject.global.token.entity.Token;
+import com.team10.preproject.global.token.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -26,7 +26,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     private final ObjectMapper objectMapper;
 
-    private  final MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)

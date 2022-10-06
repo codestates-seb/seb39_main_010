@@ -1,4 +1,4 @@
-package com.team10.preproject.global.dto;
+package com.team10.preproject.global.response.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.team10.preproject.member.controller;
 
-import com.team10.preproject.global.dto.SingleResponseDto;
+import com.team10.preproject.global.response.dto.SingleResponseDto;
 import com.team10.preproject.member.dto.MemberDto;
 import com.team10.preproject.member.dto.PasswordForgotDto;
 import com.team10.preproject.member.entity.Member;

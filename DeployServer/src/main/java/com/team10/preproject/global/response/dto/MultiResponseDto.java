@@ -1,4 +1,4 @@
-package com.team10.preproject.global.dto;
+package com.team10.preproject.global.response.dto;
 
 import lombok.Getter;
 import org.springframework.data.domain.Page;

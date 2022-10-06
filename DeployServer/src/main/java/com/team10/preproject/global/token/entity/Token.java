@@ -1,4 +1,4 @@
-package com.team10.preproject.member.token.entity;
+package com.team10.preproject.global.token.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
