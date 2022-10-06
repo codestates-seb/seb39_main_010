@@ -1,5 +1,6 @@
 package com.team10.preproject.member.dto;
 
+import com.team10.preproject.member.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

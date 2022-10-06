@@ -27,6 +27,10 @@ public class Answer extends Auditable {
     @Column(nullable = false)
     private String comment;
 
+    private int likeCount;
+
+    private boolean userLike;
+
     @Enumerated(value = EnumType.STRING)
     private DeleteStatus isDeleted;
 
@@ -47,6 +51,9 @@ public class Answer extends Auditable {
     @OneToMany(mappedBy = "parent", orphanRemoval = true)
     private List<Answer> children = new ArrayList<>();
 
+    @OneToMany(mappedBy = "answer", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<AnswerLike> answerLikeList = new ArrayList<>();
+
     public static Answer createAnswer(String comment, Question question, Member member, Answer parent){
 
         Answer answer = new Answer();
@@ -63,4 +70,15 @@ public class Answer extends Auditable {
         this.isDeleted = deleteStatus;
     }
 
+    public void mappingAnswerLike(AnswerLike answerLike) {
+        this.answerLikeList.add(answerLike);
+    }
+
+    public void updateLikeCount() {
+        this.likeCount = this.answerLikeList.size();
+    }
+
+    public void discountLike(AnswerLike answerLike) {
+        this.answerLikeList.remove(answerLike);
+    }
 }
