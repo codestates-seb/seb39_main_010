@@ -9,16 +9,18 @@ const CommentContainer = styled.div`
 	align-items: center;
 
 	margin-bottom: 25px;
+
 	.nameandtext {
 		display: flex;
 		flex-direction: column;
 		gap: 6px;
 
-		width: 988px;
+		width: 100%;
 
 		div:nth-child(1) {
 			font-weight: bold;
 		}
+
 		div:nth-child(2) {
 			color: #4d4d4d;
 		}
@@ -46,7 +48,7 @@ const CommentContainer = styled.div`
 const Comment = () => {
 	return (
 		<CommentContainer>
-			<AvatarImg />
+			<AvatarImg className="avatar-svg" />
 			<div className="nameandtext">
 				<div>닉네임</div>
 				<div>내용이 여기에 들어갑니다</div>
