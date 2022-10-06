@@ -8,7 +8,7 @@ const CommentIntroContainer = styled.div`
 	align-items: center;
 	margin-top: 40px;
 
-	width: 1100px;
+	width: 100%;
 	height: 144px;
 
 	background-color: #eff3fd;

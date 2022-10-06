@@ -3,17 +3,21 @@ import styled from 'styled-components';
 import { RiSendPlaneFill } from 'react-icons/ri';
 import Comment from './Comment';
 import CommentIntro from './CommentIntro';
-const CommentsContainer = styled.div`
-	width: 1100px;
+import { ReactComponent as AvatarImg } from 'assets/images/avatar.svg';
 
-	.profilepic {
+const CommentsContainer = styled.div`
+	/* width: 1100px; */
+	width: 100%;
+
+	.avatar-svg {
 		width: 80px;
 		height: 80px;
+		margin-right: 28px;
 	}
 
 	.commentsinput {
 		display: flex;
-		justify-content: space-between;
+		/* justify-content: space-between; */
 		align-items: center;
 		margin: 40px 0;
 
@@ -22,7 +26,7 @@ const CommentsContainer = styled.div`
 			align-items: center;
 			padding: 0px 36px;
 
-			width: 988px;
+			width: 100%;
 			height: 80px;
 
 			background: #f5f6f8;
@@ -35,10 +39,10 @@ const CommentsContainer = styled.div`
 				justify-content: space-between;
 				align-items: center;
 
-				width: 988px;
+				width: 100%;
 
 				input {
-					width: 870px;
+					width: 100%;
 
 					background: none;
 					border: none;
@@ -58,7 +62,7 @@ const Comments = () => {
 				content={`비방글 혹은 글 내용과 상관없는 댓글을 작성할 시 삭제될 수 있습니다.`}
 			/>
 			<div className="commentsinput">
-				<div className="profilepic">사진</div>
+				<AvatarImg className="avatar-svg" />
 				<div>
 					<form>
 						<input type="text" placeholder="댓글을 남겨 보세요" />
