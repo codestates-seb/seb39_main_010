@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { questionDummy } from '../../../assets/data/questionDummy';
 import QuestionCard from './QuestionCard';
@@ -7,7 +8,7 @@ const QuestionCards = () => {
 	return (
 		<CardsContainer>
 			{questionDummy.map((el) => (
-				<QuestionCard key={el.id} data={el} />
+				<QuestionCard key={el.questionId} data={el} />
 			))}
 		</CardsContainer>
 	);

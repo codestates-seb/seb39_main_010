@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { HeaderContainer, LogoandNav, MypageImg } from './style';
 import { FiUser } from 'react-icons/fi';
 import { idText } from 'typescript';
 import { useRecoilState } from 'recoil';
 import { loginModalAtom } from 'recoil/atom';
 import LoginModal from '../LoginModal/LoginModal';
+import { ReactComponent as LogoImg } from 'assets/images/logo.svg';
 
 const Header = () => {
 	const [tab, setTab] = useState('');
@@ -20,7 +21,9 @@ const Header = () => {
 		<HeaderContainer>
 			{isLoginModal && <LoginModal />}
 			<LogoandNav>
-				<div onClick={() => navigate('/')}></div>
+				<Link to="/">
+					<LogoImg />
+				</Link>
 				<ul>
 					<li
 						id="question"

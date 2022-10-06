@@ -1,7 +1,8 @@
 import { Cookies } from 'react-cookie';
 
 interface ICookieOption {
-	path: string;
+	path?: string;
+	maxAge?: number;
 }
 
 const cookies = new Cookies();
