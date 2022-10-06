@@ -4,9 +4,11 @@ buildscript {
 	}
 }
 
+
 plugins {
 	id 'org.springframework.boot' version '2.7.3'
 	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
+	//querydsl 추가
 	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 	id 'java'
 }
@@ -41,17 +43,18 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'com.auth0:java-jwt:3.19.2'
-	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
-	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 	implementation 'com.google.code.findbugs:jsr305:3.0.2'
 	implementation 'com.google.code.gson:gson'
 	implementation 'mysql:mysql-connector-java'
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+	//querydsl 추가
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 }
 
-//querydsl설정
-
+//querydsl 추가 시작
 def querydslDir = "$buildDir/generated/querydsl"
 
 querydsl {
@@ -70,6 +73,14 @@ configurations {
 	}
 	querydsl.extendsFrom compileClasspath
 }
+
+/* comileQuerydsl.doFirst 추가: 재컴파일 시 q파일을 모두 지우도록 */
+compileQuerydsl.doFirst {
+	if(file(querydslDir).exists())
+		delete(file(querydslDir))
+}
+//querydsl 추가 끝
+
 
 tasks.named('test') {
 	useJUnitPlatform()
