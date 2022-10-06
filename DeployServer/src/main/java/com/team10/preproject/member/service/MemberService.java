@@ -41,8 +41,8 @@ public class MemberService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-//    @Autowired
-//    private JavaMailSender mailSender;
+    @Autowired
+    private JavaMailSender mailSender;
 
     private final ApplicationEventPublisher publisher;
 
@@ -61,7 +61,7 @@ public class MemberService {
         String randomCode = RandomString.make(64);
         member.setVerificationCode(randomCode);
         member.setEnabled(false);
-//        sendSignupVerificationEmail(member, getSiteURL(request));
+        sendSignupVerificationEmail(member, getSiteURL(request));
         Member savedMember = memberRepository.save(member);
         publisher.publishEvent(new MemberRegistrationApplicationEvent(this, savedMember));
 
@@ -82,29 +82,29 @@ public class MemberService {
         return siteURL.replace(request.getServletPath(), "");
     }
 
-//    private void sendSignupVerificationEmail(Member member, String siteURL)
-//            throws MessagingException, UnsupportedEncodingException {
-//
-//        String toAddress = member.getEmail();
-//        String fromAddress = "CS@Weply.com";
-//        String senderName = "Weply";
-//        String subject = "Please verify your registration";
-//        String content = "Dear [[name]],<br>"
-//                + "Please click the link below to verify your registration:<br>"
-//                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
-//                + "Thank you,<br>"
-//                + "Weply.";
-//        MimeMessage message = mailSender.createMimeMessage();
-//        MimeMessageHelper helper = new MimeMessageHelper(message);
-//        helper.setFrom(fromAddress, senderName);
-//        helper.setTo(toAddress);
-//        helper.setSubject(subject);
-//        content = content.replace("[[name]]", member.getNickname());
-//        String verifyURL = siteURL + "/api/v1/users/signup-verification?code=" + member.getVerificationCode();
-//        content = content.replace("[[URL]]", verifyURL);
-//        helper.setText(content, true);
-//        mailSender.send(message);
-//    }
+    private void sendSignupVerificationEmail(Member member, String siteURL)
+            throws MessagingException, UnsupportedEncodingException {
+
+        String toAddress = member.getEmail();
+        String fromAddress = "CS@Weply.com";
+        String senderName = "Weply";
+        String subject = "Please verify your registration";
+        String content = "Dear [[name]],<br>"
+                + "Please click the link below to verify your registration:<br>"
+                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
+                + "Thank you,<br>"
+                + "Weply.";
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+        content = content.replace("[[name]]", member.getNickname());
+        String verifyURL = siteURL + "/api/v1/users/signup-verification?code=" + member.getVerificationCode();
+        content = content.replace("[[URL]]", verifyURL);
+        helper.setText(content, true);
+        mailSender.send(message);
+    }
 
     public boolean signupVerify(String verificationCode) {
 
@@ -129,7 +129,7 @@ public class MemberService {
         // 비밀번호 변경
         memberRepository.save(member);
         // 비밀번호 변경 메일 발송
-//        sendTempPasswordEmail(member, randomPasswordCode);
+        sendTempPasswordEmail(member, randomPasswordCode);
     }
 
     private Member findExistsEmail(String email) {
@@ -141,28 +141,28 @@ public class MemberService {
         return member;
     }
 
-//    private void sendTempPasswordEmail(Member member, String randomPasswordCode)
-//            throws MessagingException, UnsupportedEncodingException {
-//
-//        String toAddress = member.getEmail();
-//        String fromAddress = "CS@Weply.com";
-//        String senderName = "Weply";
-//        String subject = "Password Recovery";
-//        String content = "Dear [[name]],<br>"
-//                + "Please change your password after the first login<br>"
-//                + "Password : [[TempPw]]<br>"
-//                + "Thank you,<br>"
-//                + "Weply.";
-//        MimeMessage message = mailSender.createMimeMessage();
-//        MimeMessageHelper helper = new MimeMessageHelper(message);
-//        helper.setFrom(fromAddress, senderName);
-//        helper.setTo(toAddress);
-//        helper.setSubject(subject);
-//        content = content.replace("[[name]]", member.getNickname());
-//        content = content.replace("[[TempPw]]", randomPasswordCode);
-//        helper.setText(content, true);
-//        mailSender.send(message);
-//    }
+    private void sendTempPasswordEmail(Member member, String randomPasswordCode)
+            throws MessagingException, UnsupportedEncodingException {
+
+        String toAddress = member.getEmail();
+        String fromAddress = "CS@Weply.com";
+        String senderName = "Weply";
+        String subject = "Password Recovery";
+        String content = "Dear [[name]],<br>"
+                + "Please change your password after the first login<br>"
+                + "Password : [[TempPw]]<br>"
+                + "Thank you,<br>"
+                + "Weply.";
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+        content = content.replace("[[name]]", member.getNickname());
+        content = content.replace("[[TempPw]]", randomPasswordCode);
+        helper.setText(content, true);
+        mailSender.send(message);
+    }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public Member updateMember(Member member) {
@@ -180,8 +180,8 @@ public class MemberService {
                 .ifPresent(findMember::setFavoriteCompany);
         Optional.ofNullable(member.getSelfIntroductions())
                 .ifPresent(findMember::setSelfIntroductions);
-//        Optional.ofNullable(member.getMemberStatus())
-//                .ifPresent(memberStatus -> findMember.setMemberStatus(memberStatus));
+        Optional.ofNullable(member.getMemberStatus())
+                .ifPresent(memberStatus -> findMember.setMemberStatus(memberStatus));
 
         return memberRepository.save(findMember);
     }

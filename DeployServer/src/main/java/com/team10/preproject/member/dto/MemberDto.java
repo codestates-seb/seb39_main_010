@@ -1,6 +1,7 @@
 package com.team10.preproject.member.dto;
 
 import com.team10.preproject.global.validator.NotSpace;
+import com.team10.preproject.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -70,7 +71,7 @@ public class MemberDto {
 
         @Length(max = 200)
         private String selfIntroductions;
-//        private Member.MemberStatus memberStatus;
+        private Member.MemberStatus memberStatus;
 
         public void setMemberId(long memberId) {
 
@@ -88,7 +89,7 @@ public class MemberDto {
         private String picture;
         private String favoriteCompany;
         private String selfIntroductions;
-//        private Member.MemberStatus memberStatus;
-//        public String getMemberStatus() { return memberStatus.getStatus(); }
+        private Member.MemberStatus memberStatus;
+        public String getMemberStatus() { return memberStatus.getStatus(); }
     }
 }

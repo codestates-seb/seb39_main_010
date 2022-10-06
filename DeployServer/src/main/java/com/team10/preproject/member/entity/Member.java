@@ -54,9 +54,9 @@ public class Member extends Auditable{
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<AnswerLike> answerLikeList = new ArrayList<>();
 
-//    @Enumerated(value = EnumType.STRING)
-//    @Column(length = 20, nullable = false)
-//    private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
+    @Enumerated(value = EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
     @Builder
     public Member(Long memberId, String username, String email, Role role, boolean enabled, String verificationCode, String nickname, String password, String picture, String favoriteCompany, String selfIntroductions) {
@@ -96,15 +96,15 @@ public class Member extends Auditable{
         return new ArrayList<>();
     }
 
-//    public enum  MemberStatus {
-//        MEMBER_ACTIVE("활동중"),
-//        MEMBER_SLEEP("휴면 상태"),
-//        MEMBER_QUIT("탈퇴 상태");
-//
-//        @Getter
-//        private String status;
-//
-//        MemberStatus(String status) { this.status = status; }
-//    }
+    public enum  MemberStatus {
+        MEMBER_ACTIVE("활동중"),
+        MEMBER_SLEEP("휴면 상태"),
+        MEMBER_QUIT("탈퇴 상태");
+
+        @Getter
+        private String status;
+
+        MemberStatus(String status) { this.status = status; }
+    }
 }
 

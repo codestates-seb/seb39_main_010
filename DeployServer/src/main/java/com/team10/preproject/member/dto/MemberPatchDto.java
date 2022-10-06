@@ -1,6 +1,7 @@
 package com.team10.preproject.member.dto;
 
 import com.team10.preproject.global.validator.NotSpace;
+import com.team10.preproject.member.entity.Member;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
@@ -32,7 +33,7 @@ public class MemberPatchDto {
 
     @Length(max = 200)
     private String selfIntroductions;
-//    private Member.MemberStatus memberStatus;
+    private Member.MemberStatus memberStatus;
 
     public void setMemberId(long memberId) {
 

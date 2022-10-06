@@ -1,5 +1,6 @@
 package com.team10.preproject.member.dto;
 
+import com.team10.preproject.member.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,8 +16,8 @@ public class MemberResponseDto {
     private String picture;
     private String favoriteCompany;
     private String selfIntroductions;
-//    private Member.MemberStatus memberStatus;
-//    public String getMemberStatus() { return memberStatus.getStatus(); }
+    private Member.MemberStatus memberStatus;
+    public String getMemberStatus() { return memberStatus.getStatus(); }
 
     public void setMemberId(long memberId) {
 

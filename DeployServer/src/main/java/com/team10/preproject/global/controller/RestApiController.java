@@ -23,15 +23,15 @@ public class RestApiController {
         return "<h1>main page</h1>";
     }
 
-//    @Secured("ROLE_ADMIN")
-//    @GetMapping("/admintools")
-//    public @ResponseBody String admintools() {
-//        return "admintools";
-//    }
-//
-//    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-//    @GetMapping("/data")
-//    public @ResponseBody String data() {
-//        return "data";
-//    }
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/admintools")
+    public @ResponseBody String admintools() {
+        return "admintools";
+    }
+
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
+    @GetMapping("/data")
+    public @ResponseBody String data() {
+        return "data";
+    }
 }
