@@ -4,30 +4,65 @@ import { theme } from 'styles/theme';
 import { ReactComponent as AvatarImg } from 'assets/images/avatar.svg';
 import { AiOutlineEye } from 'react-icons/ai';
 import { BiCommentDetail } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
 
-interface QuestionComment {
-	author: string;
+// interface QuestionComment {
+// 	author: string;
+// }
+
+// interface QuestionData {
+// 	id: number;
+// 	category: string;
+// 	tag: string;
+// 	title: string;
+// 	content: string;
+// 	author: string;
+// 	view: number;
+// 	comments: QuestionComment[];
+// 	createdAt: number;
+// }
+
+// interface Props {
+// 	data: QuestionData;
+// }
+
+interface NestedQuestionComment {
+	answerId: number;
+	comment: string;
+	createdAt: string;
+	nickname: string;
 }
 
-interface QuestionData {
-	id: number;
-	category: string;
-	tag: string;
+interface QuestionComment extends NestedQuestionComment {
+	likeCount: number;
+	userLike: boolean; // 추가 요청
+	children: NestedQuestionComment[];
+}
+
+interface Question {
+	questionId: number;
 	title: string;
+	category: string; // number
+	tag: string[]; // number
 	content: string;
-	author: string;
-	view: number;
-	comments: QuestionComment[];
-	createdAt: number;
+	viewCount: number;
+	likeCount: number;
+	createdAt: string;
+	nickname: string;
+	userLike: boolean; // 추가 요청 필요
+	answers: QuestionComment[];
 }
 
 interface Props {
-	data: QuestionData;
+	data: Question;
 }
 
 const QuestionCard = ({ data }: Props) => {
+	const navigate = useNavigate();
 	return (
-		<CardContainer>
+		<CardContainer
+			onClick={() => navigate(`/interview/question/${data.questionId}`)}
+		>
 			<CategoryInfo>
 				<div className="tag-box">
 					<Tag className="category">#{data.category}</Tag>
@@ -42,16 +77,16 @@ const QuestionCard = ({ data }: Props) => {
 			<AuthorInfo>
 				<div className="author">
 					<AvatarImg className="avatar-svg" />
-					<span>{data.author}</span>
+					<span>{data.nickname}</span>
 				</div>
 				<div className="info-counts">
 					<span className="view">
 						<AiOutlineEye className="view-svg" />
-						<span>{data.view}</span>
+						<span>{data.viewCount}</span>
 					</span>
 					<span className="comment">
 						<BiCommentDetail className="comment-svg" />
-						<span>{data.comments.length}</span>
+						<span>{data.answers.length}</span>
 					</span>
 				</div>
 			</AuthorInfo>
