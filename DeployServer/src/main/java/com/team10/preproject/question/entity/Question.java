@@ -57,6 +57,7 @@ public class Question extends Auditable {
     @Column(name = "view_count", columnDefinition = "int default 0")
     private int viewCount;
 
+    @Builder.Default
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<QuestionLike> questionLikeList = new ArrayList<>();
 
