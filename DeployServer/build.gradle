@@ -80,7 +80,6 @@ compileQuerydsl.doFirst {
 }
 //querydsl 추가 끝
 
-
 tasks.named('test') {
 	useJUnitPlatform()
 }
