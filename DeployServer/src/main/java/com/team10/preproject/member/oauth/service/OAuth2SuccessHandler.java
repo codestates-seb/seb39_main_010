@@ -3,6 +3,7 @@ package com.team10.preproject.member.oauth.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team10.preproject.member.entity.Member;
+import com.team10.preproject.member.repository.MemberRepository;
 import com.team10.preproject.member.token.entity.Token;
 import com.team10.preproject.member.token.service.TokenService;
 import lombok.RequiredArgsConstructor;
@@ -25,31 +26,36 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     private final ObjectMapper objectMapper;
 
+    private  final MemberRepository memberRepository;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
 
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
-        Member member = Member.builder()
-                .email(oAuth2User.getAttribute("email"))
-                .memberId(oAuth2User.getAttribute("memberId"))
-                .nickname(oAuth2User.getAttribute("nickname"))
-                .build();
+        String email = oAuth2User.getAttribute("email");
+        Member member = memberRepository.findByEmail(email);
         Token token = tokenService.generateToken(member.getEmail());
         log.info("{}", token);
-        writeTokenResponse(response, token);
+        writeTokenResponse(response, token, member);
     }
 
-    private void writeTokenResponse(HttpServletResponse response, Token token)
+    private void writeTokenResponse(HttpServletResponse response, Token token, Member member)
             throws IOException {
 
-        response.setContentType("text/html;charset=UTF-8");
         response.addHeader("Authorization", token.getAccessToken());
         response.addHeader("Refresh", token.getRefreshToken());
         response.setContentType("application/json;charset=UTF-8");
+        Long memberId = member.getMemberId();
+        String username = member.getUsername();
+        String email = member.getEmail();
+        String nickname = member.getNickname();
+        String json =
+                "{\"memberId\":" + memberId + ",\n\"username\":\"" + username + "\",\n\"email\":\"" + email + "\",\n\"nickname\":\"" + nickname + "\"}";
 
         var writer = response.getWriter();
         writer.println(objectMapper.writeValueAsString(token));
+        writer.write(json);
         writer.flush();
     }
 }
