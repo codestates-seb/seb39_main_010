@@ -20,7 +20,7 @@ spring.security.oauth2.client.registration.kakao.client-id= ${{ secrets.KAKAO_CL
 
 spring.security.oauth2.client.registration.kakao.client-secret= ${{ secrets.KAKAO_CLIENT_SECRET }}
 
-secrets.properties
+# secrets.properties
 
  Mail secrets
  
