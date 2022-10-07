@@ -1,34 +1,78 @@
-# Team10 : main-project
+# 📝 Weply -면접 정보 공유 사이트
+<br/>
 
-## Weply-면접 정보 공유 사이트
+<p align="center"><img src="https://user-images.githubusercontent.com/102157884/193828178-ba70057d-5fcf-48ae-820e-16d1f42f8452.svg"></p>
 
-배포 예정
+> *면접 정보를 나눠요! Weply!*
+- 개발기간: 2022.09.07 ~ 
+- [배포 링크](http://weply.s3-website.ap-northeast-2.amazonaws.com) (배포예정)
 
-### Features
+<br/>
 
-- 회원가입, 로그인, 로그아웃, 회원 정보 수정(메일, 닉네임, 비밀번호 변경 등)을 할 수 있습니다.
-- 전체 게시글 목록 조회, 개별 게시글 상세 내용 조회를 할 수 있습니다.
-- 질문 등록, 답변 등록, 질문 수정, 답변 수정, 질문 삭제, 답변 삭제를 할 수 있습니다.
-- Oauth인증으로 Naver, Google, Kakao 계정 정보를 이용하여 로그인 할 수 있습니다.
-- 회원 가입 시 기입된 이메일 주소로 인증 메일을 발송하여 인증 링크를 클릭하여 가입 완료하며, 인증된 이메일로 비밀번호 찾기를 할 수 있습니다.
+## 💡 프로젝트 소개
+> *Weply에서는...*
 
+### 면접 예상 질문
+- 직군 별 **면접 예상 질문과 답변**을 주고 받을 수 있습니다.
+- 답변에 또 다른 댓글을 달아 **의견**을 공유해 주세요!
 
----
+### 면접 후기
+- **실제 면접 후기**를 남겨 예비 지원자들에게 도움을 줄 수 있습니다.
+- 더 궁금한 내용이 있다면 **댓글**을 달아 질문해 주세요!
 
-### Contributors
+### 스터디 참여
+- **같은 목표**를 향해 나아갈 스터디에 참여할 수 있습니다.
+- 원하는 스터디가 없으신가요? **새로운 스터디**를 만들어 보세요!
 
-- FE: 안태경([TaekyungAn](https://github.com/TaekyungAn)), 정혜선([seonnn](https://github.com/seonnn))
-- BE: 민지원([x2d7751347m](https://github.com/x2d7751347m)), 장민욱([black2code](https://github.com/black2code))
+<br/>
 
----
+## 💡 프로젝트 주요 기능
+> 간편로그인
+> [이미지를 등록해 주세요]
 
-### Skills
+> 게시물 등록
+> [이미지를 등록해 주세요]
 
-- Back-end : Java, Spring Framework, Spring Framework, AWS, Git, MySQL, Github, JPA
+> 댓글/대댓글
+> [이미지를 등록해 주세요]
 
----
+> 프로필조회
+> [이미지를 등록해 주세요]
 
-### Project Wiki
+> 개인설정
+> [이미지를 등록해 주세요]
 
-프로젝트 팀 정보, 기획, 아키텍쳐에 대한 자세한 안내입니다.
-(https://github.com/codestates-seb/seb39_main_010/wiki)
+<br/>
+
+## 💡 기술 스택
+
+> *Front-end* 
+
+<img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=white"/> <img src="https://img.shields.io/badge/Typescript-3178C6?style=flat&logo=typescript&logoColor=white"/> <img src="https://img.shields.io/badge/ReactQuery-FF4154?style=flat&logo=reactquery&logoColor=white"/> <img src="https://img.shields.io/badge/Axios-5A29E4?style=flat&logo=axios&logoColor=white"/> <img src="https://img.shields.io/badge/Recoil-3578E5?style=flat&logoColor=white"/> <img src="https://img.shields.io/badge/styled%20components-DB7093?style=flat&logo=styledcomponents&logoColor=white"/> <img src="https://img.shields.io/badge/npm-CB3837?style=flat&logo=npm&logoColor=white"/> <img src="https://img.shields.io/badge/Pritter-F7B93E?style=flat&logo=prettier&logoColor=white"/> <img src="https://img.shields.io/badge/ESLint-4B32C3?style=flat&logo=eslint&logoColor=white"/>
+
+> *Back-end* 
+
+<img src="https://img.shields.io/badge/Java-4E7896?style=fla&logoColor=white"/> <img src="https://img.shields.io/badge/Spring%20Data%20JPA-6DB33F?style=fla&logoColor=white"/> <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=spring&logoColor=white"/> <img src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=flat&logo=springboot&logoColor=white"/> <img src="https://img.shields.io/badge/Spring%20Security-6DB33F?style=flat&logo=springsecurity&logoColor=white"/> <img src="https://img.shields.io/badge/AWS-232F3E?style=flat&logo=amazonaws&logoColor=white"/> <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/git-F05032?style=flat&logo=git&logoColor=white"/>
+
+> *Cooperation Tool*
+
+<img src="https://img.shields.io/badge/Figma-F24E1E?style=flat&logo=figma&logoColor=white"/> <img src="https://img.shields.io/badge/github-181717?style=flat&logo=github&logoColor=white"/> <img src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=discord&logoColor=white"/>
+
+<br/>
+
+## 💡 Project Wiki
+
+> *프로젝트 팀 정보, 기획, 아키텍쳐 등 더 자세한 내용이 궁금하다면...*
+- [Wiki 바로가기](https://github.com/codestates-seb/seb39_main_010/wiki)
+
+<br/>
+
+## 💡 팀텐(Team10) 멤버
+> *Weply와 함께한 사람들*
+
+|안태경(FE)|정혜선(FE)|민지원(BE)|장민욱(BE)|김민주(Design)|
+|:---:|:---:|:---:|:---:|:---:|
+|<img src="https://user-images.githubusercontent.com/102157884/193764463-6f5a0afe-a0ef-47e1-a955-02d9fa191080.png" width="200">|<img src="https://user-images.githubusercontent.com/102157884/193764539-be726237-2227-4c29-9365-1ccd5cadee83.png" width="200">|<img src="https://user-images.githubusercontent.com/102157884/193764338-de5d7117-2430-4fac-b73f-22c1ce004ca4.png" width="200">|<img src="https://user-images.githubusercontent.com/102157884/193764664-cf6dfcb4-0a27-43f2-8614-293b1d9baeb9.png" width="200">|<img src="https://user-images.githubusercontent.com/102157884/193764463-6f5a0afe-a0ef-47e1-a955-02d9fa191080.png" width="200">
+|[TaekyungAn](https://github.com/TaekyungAn)|[seonnn](https://github.com/seonnn)|[x2d7751347m](https://github.com/x2d7751347m)|[black2code](https://github.com/black2code)|[KimMinju](#)
+
+<br/>

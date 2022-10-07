@@ -36,6 +36,8 @@ public class AnswerRepositoryImpl implements CustomAnswerRepository{
                         answer.parent.answerId,
                         answer.answerId,
                         answer.comment,
+                        answer.createdAt,
+                        answer.updatedAt,
                         member.memberId,
                         member.nickname, answer.isDeleted))
                 .from(answer)
