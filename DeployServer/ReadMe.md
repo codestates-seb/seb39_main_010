@@ -1,6 +1,6 @@
 #Required Secrets
 
-#application-secrets.properties
+##application-secrets.properties
 
 #spring.datasource.username= ${{ secrets.MYSQL_USERNAME }}
 #spring.datasource.password= ${{ secrets.MYSQL_PASSWORD }}
@@ -12,10 +12,10 @@
 #spring.security.oauth2.client.registration.kakao.client-id= ${{ secrets.KAKAO_CLIENT_ID }}
 #spring.security.oauth2.client.registration.kakao.client-secret= ${{ secrets.KAKAO_CLIENT_SECRET }}
 
-#secrets.properties
+##secrets.properties
 
-## Mail secrets
+# Mail secrets
 #spring.mail.username= ${{ secrets.MAIL_SENDER_ID }}
 #spring.mail.password= ${{ secrets.MAIL_SENDER_PW }}
-## Accepted domain
+# Accepted domain
 #spring.config.domain= ${{ secrets.AWS_S3_Endpoint }}
