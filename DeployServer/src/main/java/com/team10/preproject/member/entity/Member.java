@@ -1,6 +1,8 @@
 package com.team10.preproject.member.entity;
 
+import com.team10.preproject.answer.entity.AnswerLike;
 import com.team10.preproject.global.audit.Auditable;
+import com.team10.preproject.question.entity.QuestionLike;
 import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -43,6 +45,12 @@ public class Member extends Auditable{
     private String selfIntroductions;
 
     private boolean enabled;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<QuestionLike> questionLikeList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<AnswerLike> answerLikeList = new ArrayList<>();
 
 //    @Enumerated(value = EnumType.STRING)
 //    @Column(length = 20, nullable = false)
@@ -111,6 +119,12 @@ public class Member extends Auditable{
         }
         return new ArrayList<>();
     }
+
+    public void mappingQuestionLike(QuestionLike questionLike) {
+        this.questionLikeList.add(questionLike);
+    }
+
+    public void mappingAnswerLike(AnswerLike answerLike) { this.answerLikeList.add(answerLike); }
 
 //    public enum  MemberStatus {
 //        MEMBER_ACTIVE("활동중"),

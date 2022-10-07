@@ -63,9 +63,9 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 String email = tokenService.getEmail(refreshToken);
                 tokenService.generateToken(email);
                 Token newToken = tokenService.generateToken(email);
-                String json = tokenService.addToken(newToken.getAccessToken(), newToken.getRefreshToken(), response);
+                tokenService.addToken(newToken.getAccessToken(), newToken.getRefreshToken(), response);
                 response.setContentType("application/json;charset=UTF-8");
-                response.getWriter().write(json);
+                response.getWriter().write("Happy New Token!");
             }else {
                 System.out.println("Expired JWT Refresh token. Please log in.");
             }

@@ -6,10 +6,10 @@ import lombok.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
-
 public class QuestionDto {
 
     @Getter
+    @Setter
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Post {
@@ -21,13 +21,19 @@ public class QuestionDto {
         @NotBlank(message = "내용은 공백이 불가능 합니다.")
         private String content;
 
+        private Long categoryId;
+
+        private Long tagId;
+
         private LocalDateTime createdAt;
+
         private LocalDateTime updatedAt;
 
         private Member member;
     }
 
     @Getter
+    @Setter
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Put {
@@ -38,6 +44,13 @@ public class QuestionDto {
 
         @NotBlank(message = "내용은 공백이 불가능 합니다.")
         private String content;
-    }
 
+        private Long categoryId;
+
+        private Long tagId;
+
+        private LocalDateTime updatedAt;
+
+        private Member member;
+    }
 }
