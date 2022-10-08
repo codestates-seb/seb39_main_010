@@ -1,4 +1,4 @@
-package com.team10.preproject.global.qnacategory.entity;
+package com.team10.preproject.global.qnaCategory.entity;
 
 
 import lombok.AllArgsConstructor;

@@ -2,10 +2,10 @@ package com.team10.preproject.question.service;
 
 import com.team10.preproject.answer.repository.AnswerLikeRepository;
 import com.team10.preproject.answer.repository.AnswerRepository;
-import com.team10.preproject.global.qnacategory.entity.Category;
-import com.team10.preproject.global.qnacategory.entity.Subcategory;
-import com.team10.preproject.global.qnacategory.repository.CategoryRepository;
-import com.team10.preproject.global.qnacategory.repository.SubcategoryRepository;
+import com.team10.preproject.global.qnaCategory.entity.Category;
+import com.team10.preproject.global.qnaCategory.entity.Subcategory;
+import com.team10.preproject.global.qnaCategory.repository.CategoryRepository;
+import com.team10.preproject.global.qnaCategory.repository.SubcategoryRepository;
 import com.team10.preproject.global.exception.BusinessLogicException;
 import com.team10.preproject.global.exception.ExceptionCode;
 import com.team10.preproject.member.entity.Member;
