@@ -80,14 +80,14 @@ public class MemberController {
     public void existsEmail(
             @Valid @RequestBody MemberDto.Patch requestBody) {
         Member member = mapper.memberPatchToMember(requestBody);
-        memberService.verifyExistsUsername(member.getEmail());
+        memberService.verifyExistsEmail(member.getEmail());
     }
 
     @PostMapping("/exists-nickname")
     public void existsNickname(
             @Valid @RequestBody MemberDto.Patch requestBody) {
         Member member = mapper.memberPatchToMember(requestBody);
-        memberService.verifyExistsUsername(member.getNickname());
+        memberService.verifyExistsNickname(member.getNickname());
     }
 
     @GetMapping("/logout")
