@@ -39,12 +39,12 @@ public class TokenService {
         return "HAPPY NEW TOKEN";
     }
 
-    public boolean expiredToken(String jwtToken) {
+    public boolean validateToken(String jwtToken) {
 
         try {
-            Date claim = (Date) JWT.require(Algorithm.HMAC512("cos_jwt_token")).build().verify(jwtToken).getClaim("exp");
+            Date claim = JWT.require(Algorithm.HMAC512("cos_jwt_token")).build().verify(jwtToken).getClaim("exp").asDate();
 
-            return claim.before(new Date());
+            return claim.after(new Date());
 
             } catch (Exception e) {
                 return false;

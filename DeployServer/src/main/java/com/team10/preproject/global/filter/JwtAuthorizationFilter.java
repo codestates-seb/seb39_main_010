@@ -57,17 +57,20 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
         catch (TokenExpiredException ex) {
 
+            response.setStatus(401);
+            response.setContentType("application/json;charset=UTF-8");
             System.out.println("Expired JWT Access token");
             String refreshToken = request.getHeader("Refresh");
-            if(!tokenService.expiredToken(refreshToken)) {
+            if (tokenService.validateToken(refreshToken)) {
                 String email = tokenService.getEmail(refreshToken);
                 tokenService.generateToken(email);
                 Token newToken = tokenService.generateToken(email);
                 tokenService.addToken(newToken.getAccessToken(), newToken.getRefreshToken(), response);
-                response.setContentType("application/json;charset=UTF-8");
-                response.getWriter().write("Happy New Token!");
+                response.getWriter().write("Expired JWT Access token. Happy New Token!");
+            } else if(refreshToken == null){
+                response.getWriter().write("Expired JWT Access token. Required Refresh token is missing");
             }else {
-                System.out.println("Expired JWT Refresh token. Please log in.");
+                response.getWriter().write("Invalid or Expired JWT Refresh token. Please log in.");
             }
         }
     }
