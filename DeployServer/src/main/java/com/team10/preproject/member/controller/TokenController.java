@@ -1,4 +1,4 @@
-package com.team10.preproject.global.token.controller;
+package com.team10.preproject.member.controller;
 
 import com.team10.preproject.global.token.entity.Token;
 import com.team10.preproject.global.token.service.TokenService;
@@ -20,7 +20,7 @@ public class TokenController {
 
         String token = request.getHeader("Refresh");
 
-        if (token != null && !tokenService.expiredToken(token)) {
+        if (token != null && tokenService.validateToken(token)) {
 
             String email = tokenService.getEmail(token);
             Token newToken = tokenService.generateToken(email);
