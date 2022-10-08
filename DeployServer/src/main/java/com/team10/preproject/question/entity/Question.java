@@ -3,8 +3,8 @@ package com.team10.preproject.question.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.team10.preproject.answer.entity.Answer;
-import com.team10.preproject.category.entity.Category;
-import com.team10.preproject.category.entity.Subcategory;
+import com.team10.preproject.global.qnacategory.entity.Category;
+import com.team10.preproject.global.qnacategory.entity.Subcategory;
 import com.team10.preproject.global.audit.Auditable;
 import com.team10.preproject.member.entity.Member;
 import lombok.*;

@@ -1,4 +1,4 @@
-package com.team10.preproject.category.entity;
+package com.team10.preproject.global.qnacategory.entity;
 
 
 import lombok.AllArgsConstructor;
@@ -8,16 +8,17 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+
 @Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Subcategory {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long subcategoryId;
+    private Long categoryId;
 
-    private String tag;
+    private String jobDomain;
 }
