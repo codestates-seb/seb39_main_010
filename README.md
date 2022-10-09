@@ -27,10 +27,22 @@
 <br/>
 
 ## 💡 프로젝트 주요 기능
-> 간편로그인
-> [이미지를 등록해 주세요]
+> **회원가입**
+![weply-signup](https://user-images.githubusercontent.com/102157884/194744948-6220f76d-c4a6-4d9c-947a-0d33b461bdaa.gif)
 
-> 게시물 등록
+> **로그인**
+![weply-login](https://user-images.githubusercontent.com/102157884/194744984-ec74f1c3-a5b9-4bbd-804a-42bc93fdeedb.gif)
+
+> **상세페이지 및 글 좋아요**
+![weply-questionDetail](https://user-images.githubusercontent.com/102157884/194744994-98ac1b0a-066c-4df6-88ad-b6c06c33ef00.gif)
+
+> **게시물 등록**
+![weply-write](https://user-images.githubusercontent.com/102157884/194745029-339194bc-1092-401a-9eec-c6def7579da7.gif)
+
+> **게시물 수정**
+![weply-edit](https://user-images.githubusercontent.com/102157884/194745042-522dd75a-755c-438a-bc13-18c2fe9efd9b.gif)
+
+> 게시물 삭제
 > [이미지를 등록해 주세요]
 
 > 댓글/대댓글
