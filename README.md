@@ -42,17 +42,17 @@
 > **게시물 수정**
 ![weply-edit](https://user-images.githubusercontent.com/102157884/194745042-522dd75a-755c-438a-bc13-18c2fe9efd9b.gif)
 
-> 게시물 삭제
-> [이미지를 등록해 주세요]
+> **게시물 삭제**
+![weply-delete](https://user-images.githubusercontent.com/102157884/194747840-ac0e8017-733f-468f-8b02-ea7ec015b849.gif)
 
-> 댓글/대댓글
-> [이미지를 등록해 주세요]
+> **댓글 작성**
+![weply-comment](https://user-images.githubusercontent.com/102157884/194747845-135af3f4-7179-4694-8ce9-31f1ad29400a.gif)
 
-> 프로필조회
-> [이미지를 등록해 주세요]
+> **댓글 수정**
+![weply-comment-edit](https://user-images.githubusercontent.com/102157884/194747875-a44bc1fe-28af-45c1-b0b7-6baeac0e48ec.gif)
 
-> 개인설정
-> [이미지를 등록해 주세요]
+> **로그아웃**
+![weply-logout](https://user-images.githubusercontent.com/102157884/194747886-bec4aaa2-7b6a-4c96-8bad-ab28f5b03041.gif)
 
 <br/>
 
