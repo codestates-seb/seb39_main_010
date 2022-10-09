@@ -2,12 +2,17 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { questionDummy } from '../../../assets/data/questionDummy';
-import QuestionCard from './QuestionCard';
+import QuestionCard, { Question } from './QuestionCard';
 
-const QuestionCards = () => {
+interface Prop {
+	questionList?: Question[];
+}
+
+const QuestionCards = ({ questionList }: Prop) => {
+	if (!questionList) return <div>Loading...</div>;
 	return (
 		<CardsContainer>
-			{questionDummy.map((el) => (
+			{questionList.map((el) => (
 				<QuestionCard key={el.questionId} data={el} />
 			))}
 		</CardsContainer>
