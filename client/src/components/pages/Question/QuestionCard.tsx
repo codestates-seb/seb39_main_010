@@ -33,17 +33,17 @@ interface NestedQuestionComment {
 	nickname: string;
 }
 
-interface QuestionComment extends NestedQuestionComment {
+export interface QuestionComment extends NestedQuestionComment {
 	likeCount: number;
 	userLike: boolean; // 추가 요청
 	children: NestedQuestionComment[];
 }
 
-interface Question {
+export interface Question {
 	questionId: number;
 	title: string;
 	category: string; // number
-	tag: string[]; // number
+	tag: string; // number
 	content: string;
 	viewCount: number;
 	likeCount: number;
@@ -68,11 +68,17 @@ const QuestionCard = ({ data }: Props) => {
 					<Tag className="category">#{data.category}</Tag>
 					<Tag className="tag">#{data.tag}</Tag>
 				</div>
-				<span className="created-at">{data.createdAt}</span>
+				<span className="created-at">
+					{data.createdAt.slice(0, 19).replace('T', ' ')}
+				</span>
 			</CategoryInfo>
 			<Content>
 				<h3>{data.title}</h3>
-				<p>{data.content.slice(0, 43)}...</p>
+				<p>
+					{data.content.length > 42
+						? `${data.content.slice(0, 43)}...`
+						: data.content}
+				</p>
 			</Content>
 			<AuthorInfo>
 				<div className="author">
@@ -86,7 +92,7 @@ const QuestionCard = ({ data }: Props) => {
 					</span>
 					<span className="comment">
 						<BiCommentDetail className="comment-svg" />
-						<span>{data.answers.length}</span>
+						<span>{data.answers ? data.answers.length : 0}</span>
 					</span>
 				</div>
 			</AuthorInfo>

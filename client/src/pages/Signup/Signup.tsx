@@ -28,6 +28,10 @@ const Signup = () => {
 		signupApi({ email, username, password, nickname });
 	};
 
+	const handleSocialButtonClick = (type: string) => {
+		window.location.href = `${process.env.REACT_APP_BASE_URL}/oauth2/authorization/${type}?redirect_uri=http://localhost:3000/login/oauth`;
+	};
+
 	return (
 		<Container>
 			<FormContainer>
@@ -35,9 +39,21 @@ const Signup = () => {
 				<SocialSignup>
 					<span>SNS계정으로 간편 가입</span>
 					<SocialButtons>
-						<SocialButton mode="naver" />
-						<SocialButton mode="kakao" className="kakao" />
-						<SocialButton mode="google" />
+						<SocialButton
+							mode="naver"
+							className="svg"
+							onClick={() => handleSocialButtonClick('naver')}
+						/>
+						<SocialButton
+							mode="kakao"
+							className="kakao"
+							onClick={() => handleSocialButtonClick('kakao')}
+						/>
+						<SocialButton
+							mode="google"
+							className="svg"
+							onClick={() => handleSocialButtonClick('google')}
+						/>
 					</SocialButtons>
 				</SocialSignup>
 				<SignupForm onSubmit={handleSubmit(onSubmit)}>

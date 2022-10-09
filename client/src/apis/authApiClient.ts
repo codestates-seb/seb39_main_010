@@ -41,12 +41,15 @@ export const postQuestionApi = async (data: NewQuestionSubmitData) => {
 };
 
 // putQuestion
-export const putQuestionApi = async (data: EditedQuestionSubmitData) => {
+export const putQuestionApi = async (
+	data: EditedQuestionSubmitData,
+	id?: string
+) => {
 	try {
-		const response = await authApiClient.put('/api/v1/questions', data);
+		const response = await authApiClient.put(`/api/v1/questions/${id}`, data);
 
 		if (response.status === 200) {
-			refreshPutApi('/api/v1/questions', data);
+			refreshPutApi(`/api/v1/questions/${id}`, data);
 		}
 
 		return response;
