@@ -20,3 +20,9 @@ export const userAtom = atom({
 	default: null,
 	effects_UNSTABLE: [persistUserAtom],
 });
+
+// profile
+export const profileModalAtom = atom({
+	key: 'profileMoalAtom',
+	default: false,
+});
