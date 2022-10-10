@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 
@@ -53,7 +54,7 @@ public class QuestionController {
 
     @GetMapping
     public ResponseEntity questionList(@PageableDefault(size=5, sort="questionId", direction = Sort.Direction.DESC)
-                                               Pageable pageable, String searchType, String keyword) {
+                                                   Pageable pageable, String searchType, String keyword) {
 
         Page<Question> questions = null;
         if(searchType == null || keyword == null){

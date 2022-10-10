@@ -33,7 +33,7 @@ public class AnswerService {
     }
 
     @Transactional
-    public AnswerDto anwserWrite(Member member, Long questionId, AnswerCreateRequestDto requestDto) {
+    public AnswerDto anwserWrite(Long memberId, Long questionId, AnswerCreateRequestDto requestDto) {
 
         questionRepository.findById(questionId).orElseThrow(() -> {
             return new IllegalArgumentException("게시글 id를 찾을 수 없습니다.");
@@ -42,7 +42,7 @@ public class AnswerService {
         Answer answer = answerRepository.save(
                 Answer.createAnswer(requestDto.getComment(),
                         questionRepository.findById(questionId).orElseThrow(IllegalArgumentException::new),
-                        memberRepository.findById(member.getMemberId()).orElseThrow(IllegalArgumentException::new),
+                        memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new),
                         requestDto.getParentId() != null ?
                                 answerRepository.findById(requestDto.getParentId()).orElseThrow(IllegalArgumentException::new) : null)
         );
@@ -66,18 +66,22 @@ public class AnswerService {
     @Transactional
     public void answerDelete(Long answerId) {
 
-        Answer answer = answerRepository.findAnswerByIdWithParent(answerId).orElseThrow(() -> {
+        Answer answer = answerRepository.findById(answerId).orElseThrow(() -> {
             return new IllegalArgumentException("댓글을 찾을 수 없습니다.");
         });
 
-        if (answer == null &&
+        if (answer.getParent() == null &&
                 answerRepository.findByIsDeleted(answer.getAnswerId()).size() == 0) {
 
             answerRepository.delete(answer);
 
-        } else if (answer.getParent().getIsDeleted() == DeleteStatus.Y &&
+        } else if (answer.getIsDeleted() == DeleteStatus.Y &&
                 answerRepository.findByIsDeletedNotIn(answer.getParent().getAnswerId(), answerId)
                         .size() == 0) {
+
+            answerRepository.delete(answer.getParent());
+
+        } else if (answer.getParent() != null && answerRepository.findByLast(answer.getParent().getAnswerId())){
 
             answerRepository.delete(answer.getParent());
 
@@ -91,7 +95,7 @@ public class AnswerService {
 
         Answer answer = answerRepository.findById(answerId)
                 .orElseThrow(() -> {
-                    return new IllegalArgumentException("댓글 찾기 실패 : 해당 글을 찾을 수 없습니다.");
+                    return new IllegalArgumentException("좋아요 댓글 찾기 실패 : 해당 글을 찾을 수 없습니다.");
                 });
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() ->{

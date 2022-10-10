@@ -14,8 +14,8 @@ public class AnswerResponseDto {
 
     private Long answerId;
     private String comment;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String createdAt;
+    private String updatedAt;
     private String nickname;
 
 

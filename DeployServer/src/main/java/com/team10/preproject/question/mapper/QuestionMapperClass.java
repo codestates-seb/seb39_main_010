@@ -62,7 +62,7 @@ public class QuestionMapperClass {
                 .tag(question.getTag().getTag())
                 .viewCount(question.getViewCount())
                 .likeCount(question.getLikeCount())
-                .memberId(question.getQuestionId())
+                .memberId(question.getMember().getMemberId())
                 .nickname(question.getMember().getNickname())
                 .createdAt(question.getCreatedAt())
                 .updatedAt(question.getUpdatedAt())

@@ -1,14 +1,17 @@
 package com.team10.preproject.question.repository;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.team10.preproject.question.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.team10.preproject.category.entity.QCategory.category;
 import static com.team10.preproject.question.entity.QQuestion.*;
 import static com.team10.preproject.member.entity.QMember.*;
 import static com.team10.preproject.answer.entity.QAnswer.*;
@@ -62,7 +65,7 @@ public class QuestionRepositoryImpl implements CustomQuestionRepository{
                         answer.isDeleted))
                 .from(answer)
                 .innerJoin(answer.question, question)
-                .innerJoin(question.member, member)
+                .innerJoin(answer.member, member)
                 .where(question.questionId.eq(questionId).and(answer.parent.isNull()))
                 .orderBy(answer.answerId.asc())
                 .fetch();
@@ -122,4 +125,61 @@ public class QuestionRepositoryImpl implements CustomQuestionRepository{
 
         return response;
     }
+
+//    @Override
+//    public Optional<QuestionResponseDto> findCategoryQuestion(String title, String content, String writer,
+//                                                              String category, String orderCriteria, Pageable pageable) {
+//
+//        Optional<QuestionOneResponse> response = Optional.ofNullable(queryFactory
+//                .select(new QQuestionResponseDto(
+//                        question.questionId,
+//                        question.title,
+//                        question.content,
+//                        question.category.jobDomain,
+//                        question.tag.tag,
+//                        question.viewCount,
+//                        question.likeCount,
+//                        question.userLike,
+//                        question.createdAt,
+//                        question.updatedAt,
+//                        question.member.memberId,
+//                        question.member.nickname))
+//                .from(question)
+//                .innerJoin(question.category)
+//                .innerJoin(question.tag, subcategory)
+//                .where(eqCategory(category), eqTitle(title), eqContent(content),)
+//
+//
+//        return Optional.empty();
+//    }
+//
+//    private BooleanExpression eqTitle(String title) {
+//        if (StringUtils.isEmpty(title)) {
+//            return null;
+//        }
+//        return question.title.contains(title);
+//    }
+//
+//    private BooleanExpression eqContent(String content) {
+//        if (StringUtils.isEmpty(content)) {
+//            return null;
+//        }
+//        return question.content.contains(content);
+//    }
+//
+//    private BooleanExpression eqCategory(String category) {
+//        if (StringUtils.isEmpty(category)) {
+//            return null;
+//        }
+//        return question.category.jobDomain.eq(category);
+//    }
+//
+//    private BooleanExpression eqTitleAndContent(String title, String content) {
+//        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(content)) {
+//            return null;
+//        }
+//        return question.title.contains(title).or(question.content.contains(content));
+//    }
+
+
 }

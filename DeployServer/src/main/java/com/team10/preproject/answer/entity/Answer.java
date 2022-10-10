@@ -51,7 +51,7 @@ public class Answer extends Auditable {
     @OneToMany(mappedBy = "parent", orphanRemoval = true)
     private List<Answer> children = new ArrayList<>();
 
-    @OneToMany(mappedBy = "answer", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "answer", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<AnswerLike> answerLikeList = new ArrayList<>();
 
     public static Answer createAnswer(String comment, Question question, Member member, Answer parent){

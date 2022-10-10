@@ -12,4 +12,7 @@ public interface CustomQuestionRepository {
     Optional<QuestionOneResponse> findOneQuestionById(Long QuestionId);
     List<QuestionResponseDto> findWriterQuestion(String keyWord, Pageable pageable);
 
+//    Optional<QuestionResponseDto> findCategoryQuestion(String title, String content, String writer, String category,
+//                                                       String orderCriteria, Pageable pageable);
+
 }

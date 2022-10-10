@@ -13,7 +13,7 @@ public class TokenService {
 
     public Token generateToken(String email) {
 
-        long accessTokenPeriod = 1000L * 6;
+        long accessTokenPeriod = 1000L * 60L * 10L;
 //        0L * 10L;
         long refreshTokenPeriod = 1000L * 60L * 60L;
 
