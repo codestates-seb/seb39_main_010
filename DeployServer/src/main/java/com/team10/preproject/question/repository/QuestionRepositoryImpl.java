@@ -1,17 +1,15 @@
 package com.team10.preproject.question.repository;
 
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.team10.preproject.question.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.team10.preproject.category.entity.QCategory.category;
+import static com.team10.preproject.global.qnaCategory.entity.QCategory.category;
 import static com.team10.preproject.question.entity.QQuestion.*;
 import static com.team10.preproject.member.entity.QMember.*;
 import static com.team10.preproject.answer.entity.QAnswer.*;
