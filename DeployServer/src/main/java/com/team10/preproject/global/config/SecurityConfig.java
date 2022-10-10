@@ -69,7 +69,7 @@ public class SecurityConfig {
                         "/",
                         "/h2/**")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/v1/users/**",
+                .antMatchers(HttpMethod.GET,"/api/v1/users/**",
                         "/api/v1/questions/**")
                 .permitAll()
                 .anyRequest().authenticated()

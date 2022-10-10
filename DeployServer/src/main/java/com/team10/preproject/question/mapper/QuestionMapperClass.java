@@ -1,7 +1,7 @@
 package com.team10.preproject.question.mapper;
 
-import com.team10.preproject.category.entity.Category;
-import com.team10.preproject.category.entity.Subcategory;
+import com.team10.preproject.global.qnaCategory.entity.Category;
+import com.team10.preproject.global.qnaCategory.entity.Subcategory;
 import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.question.dto.QuestionDto;
 import com.team10.preproject.question.dto.QuestionResponseDto;

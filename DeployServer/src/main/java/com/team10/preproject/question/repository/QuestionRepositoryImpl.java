@@ -15,8 +15,8 @@ import static com.team10.preproject.category.entity.QCategory.category;
 import static com.team10.preproject.question.entity.QQuestion.*;
 import static com.team10.preproject.member.entity.QMember.*;
 import static com.team10.preproject.answer.entity.QAnswer.*;
-import static com.team10.preproject.category.entity.QCategory.*;
-import static com.team10.preproject.category.entity.QSubcategory.*;
+import static com.team10.preproject.global.qnaCategory.entity.QCategory.*;
+import static com.team10.preproject.global.qnaCategory.entity.QSubcategory.*;
 
 @RequiredArgsConstructor
 public class QuestionRepositoryImpl implements CustomQuestionRepository{
