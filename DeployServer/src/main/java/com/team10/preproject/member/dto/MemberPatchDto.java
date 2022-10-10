@@ -13,7 +13,7 @@ public class MemberPatchDto {
 
     @NotSpace
     @Length(max = 20)
-    private String username;
+    private final String username;
 
     @NotSpace(message = "NickName cannot be null")
     @Length(max = 20)
