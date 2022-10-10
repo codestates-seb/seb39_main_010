@@ -36,11 +36,12 @@ public class AnswerController {
                                                     @AuthenticationPrincipal PrincipalDetails principal) {
 
         return new ResponseEntity<>(new SingleResponseDto<>
-                (answerService.anwserWrite(principal.getMember(), questionId, requestDto)), HttpStatus.CREATED);
+                (answerService.anwserWrite(principal.getMember().getMemberId(), questionId, requestDto)), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{question-id}/answers/{answer-id}")
-    public ResponseEntity answerDelete(@PathVariable("answer-id") Long answerId) {
+    public ResponseEntity answerDelete(@PathVariable("answer-id") Long answerId,
+                                       @AuthenticationPrincipal PrincipalDetails principal) {
 
         answerService.answerDelete(answerId);
 

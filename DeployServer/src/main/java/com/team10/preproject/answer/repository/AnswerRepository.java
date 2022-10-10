@@ -12,8 +12,15 @@ import java.util.Optional;
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer,Long>, CustomAnswerRepository {
 
-    @Query("select c from Answer c left join fetch c.parent where c.answerId = :answerId")
-    Optional<Answer> findAnswerByIdWithParent(@Param("answerId") Long answerId);
+//    @Query("select c from Answer c left join fetch c.parent where c.answerId = :answerId")
+//    Optional<Answer> findAnswerByIdWithParent(@Param("answerId") Long answerId);
+
+//    @Query(value = "select c.parent_id from answer c where answer_id = :answerId", nativeQuery = true)
+//    Optional<Answer> findAnswerByIdWithParent(@Param("answerId") Long answerId);
+
+    @Query(value = "select case when count(a.answer_id) = 1 then 'true' else 'false' end " +
+            "from answer a where parent_id =:parentId and is_deleted = 'N'", nativeQuery = true)
+    boolean findByLast(@Param("parentId") Long parentId);
 
     @Query(value = "select a1.* from answer a1 where parent_id = :parentId and answer_id not in (:answerId)" +
             "and is_deleted = 'N'", nativeQuery = true)

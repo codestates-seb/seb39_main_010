@@ -19,7 +19,9 @@ import com.team10.preproject.question.entity.QuestionLike;
 import com.team10.preproject.question.repository.QuestionLikeRepository;
 import com.team10.preproject.question.repository.QuestionRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,6 +88,41 @@ public class QuestionService {
         return questionRepository.findAll(pageable);
     }
 
+
+//    public Page<QuestionResponseDto> getPageList(Pageable pageable, int pageNo,
+//                                                 String category, String orderCriteria,
+//                                                 String searchType, String keyword) {
+//
+//        pageable = PageRequest.of(pageNo, 8, Sort.by(Sort.Direction.DESC, orderCriteria));
+//        Page<Question> page = questionRepository.findByCategory(category, pageable);
+
+//        public List<T> lista(Sort sort)
+//        {
+//            sort = sort.and(new Sort(Sort.Direction.DESC, "count"));
+//            List<T> tList = jpaRepository.findAll(sort);
+//            return tList;
+//        }
+
+//        Page<QuestionResponseDto> questionPageList = page.map(
+//                question -> new QuestionResponseDto(
+//                        question.getQuestionId(),
+//                        question.getTitle(),
+//                        question.getContent(),
+//                        question.getCategory().getJobDomain(),
+//                        question.getTag().getTag(),
+//                        question.getViewCount(),
+//                        question.getLikeCount(),
+//                        question.isUserLike(),
+//                        question.getCreatedAt(),
+//                        question.getUpdatedAt(),
+//                        question.getMember().getMemberId(),
+//                        question.getMember().getNickname()
+//                )
+//        );
+//        return questionPageList;
+//    }
+
+
     // 글 상세보기
     @Transactional
     public QuestionOneResponse questionView(Long questionId) {
@@ -117,8 +154,10 @@ public class QuestionService {
 
         questionOneResponse.getAnswers()
                 .forEach(comment -> {
-                    if(answerLikeRepository.likeView(comment.getAnswerId(), memberId))
-                        comment.changeUserLike(true);
+                    if(memberId != null){
+                        if(answerLikeRepository.likeView(comment.getAnswerId(), memberId))
+                            comment.changeUserLike(true);
+                    }
                     List<CommentsChildrenResponse> comments =
                             answerRepository.findQuestionAnswers(questionId, comment.getAnswerId());
                     comment.setChildren(comments);
@@ -244,4 +283,8 @@ public class QuestionService {
 
         return  questionRepository.findWriterQuestion(writer, pageable);
     }
+
+//    public Page<Question> questionCategorySearch(String title, String content, String writer, String category, String orderCriteria, Pageable pageable){
+//        return
+//    }
 }

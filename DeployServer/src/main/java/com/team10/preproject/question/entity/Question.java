@@ -49,7 +49,7 @@ public class Question extends Auditable {
     @JsonIgnoreProperties({"password","createdAt","updatedAt","email","username","roles","roleList"})
     private Member member;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY) // mappedBy - FK가 아니고 컬럼 생성 X
+    @OneToMany(mappedBy = "question", orphanRemoval = true, fetch = FetchType.LAZY) // mappedBy - FK가 아니고 컬럼 생성 X
     @JsonIgnoreProperties("question") // 무한 참조 방지
 //    @OrderBy("id desc")
     private List<Answer> answer;
