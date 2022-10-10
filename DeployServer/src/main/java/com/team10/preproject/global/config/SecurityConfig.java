@@ -66,6 +66,7 @@ public class SecurityConfig {
                         "/api/v1/users/exists-username",
                         "/api/v1/users/exists-email",
                         "/api/v1/users/exists-nickname",
+                        "/login/oauth2/code/google/**",
                         "/",
                         "/h2/**")
                 .permitAll()
