@@ -2,8 +2,10 @@ import React from 'react';
 import { BsFillPersonFill, BsChatLeftDots, BsSuitHeart } from 'react-icons/bs';
 import { CardContainer, Top, Middle, Bottom } from './style';
 import dummy from '../../../../../assets/data/dummy.json';
+import { useNavigate } from 'react-router-dom';
 
 const CardDone = () => {
+	const navigate = useNavigate();
 	const sortedCard = dummy.study
 		.slice(0)
 		.filter((item) => item.state === '모집완료');
@@ -18,7 +20,9 @@ const CardDone = () => {
 						</Top>
 						<Middle>
 							<div>
-								<h3>{item.title}</h3>
+								<h3 onClick={() => navigate(`/study/${item.id}`)}>
+									{item.title}
+								</h3>
 								<div>{item.tag}</div>
 							</div>
 							<p>{item.content}</p>
