@@ -1,13 +1,16 @@
-import { Input } from 'components/common';
+import { BasicButton, Input } from 'components/common';
 import JobSelect from 'components/common/SelectBox/JobSelect';
 import TextArea from 'components/common/Textarea/Textarea';
-// import { ContentsContainer } from 'components/pages/Study/Write/ContentsS';
-import React from 'react';
+import { ContentsContainer } from 'components/pages/Study/Write/ContentsS';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { theme } from 'styles/theme';
 import Carrer from './Carrer';
 
 const ContentsRContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	width: 1200px;
 	margin: 44px 0;
 	font-size: 18px;
@@ -31,6 +34,10 @@ const ContentsRContainer = styled.div`
 
 	textarea {
 		margin-top: 26px;
+	}
+
+	button {
+		width: 500px;
 	}
 `;
 
@@ -70,6 +77,32 @@ const ContentsR = () => {
 		{ value: 'new', name: '2018년 상반기' },
 	];
 
+	const titleRef = useRef<HTMLInputElement>(null);
+	const textRef = useRef<HTMLTextAreaElement>(null);
+
+	// function parentFunction(props: unknown) {
+	// 	console.log(props);
+	// }
+
+	function handleSubmitClick() {
+		const title = titleRef.current?.value; // 값 잘 받아짐
+		const text = textRef.current?.value; // 값 잘 받아짐
+		console.log({
+			title: title,
+			text: text,
+		});
+
+		return {
+			title: title,
+			text: text,
+		};
+	}
+	const [countlength, setCountlength] = useState(0);
+
+	const handleonChange = (e: { target: { value: string } }) => {
+		const long = e.target.value;
+		setCountlength(long.length);
+	};
 	return (
 		<ContentsRContainer>
 			<div>
@@ -89,13 +122,18 @@ const ContentsR = () => {
 				</div>
 				<div className="text">
 					<span>회사명</span>
-					<span className="gray">0/50</span>
+					<span className="gray">{countlength}/50</span>
 				</div>
-				<Input placeholder={'제목을 입력해 주세요.'} />
+				<Input
+					placeholder={'제목을 입력해 주세요.'}
+					onChange={handleonChange}
+					maxLength={50}
+				/>
 				<TextArea
 					placeholder={`면접 후기와 관련된 내용을 자유롭게 적어주세요.`}
 				/>
 			</div>
+			<BasicButton onClick={handleSubmitClick}>등록하기</BasicButton>
 		</ContentsRContainer>
 	);
 };
