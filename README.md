@@ -6,6 +6,7 @@
 > *면접 정보를 나눠요! Weply!*
 - 개발기간: 2022.09.07 ~ 
 - [배포 링크](http://www.weply.ga) (배포예정)
+[서버 주소](https://server.weply.ga)
 
 <br/>
 
