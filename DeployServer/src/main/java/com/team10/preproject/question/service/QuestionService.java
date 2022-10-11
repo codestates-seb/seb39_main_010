@@ -18,10 +18,7 @@ import com.team10.preproject.question.entity.Question;
 import com.team10.preproject.question.entity.QuestionLike;
 import com.team10.preproject.question.repository.QuestionLikeRepository;
 import com.team10.preproject.question.repository.QuestionRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,39 +85,15 @@ public class QuestionService {
         return questionRepository.findAll(pageable);
     }
 
+    //글 검색
+    @Transactional
+    public Page<QuestionResponseDto> searchPageList(Pageable pageable,String searchType,
+                                                    String keyword, String category,
+                                                    String orderCriteria) {
 
-//    public Page<QuestionResponseDto> getPageList(Pageable pageable, int pageNo,
-//                                                 String category, String orderCriteria,
-//                                                 String searchType, String keyword) {
-//
-//        pageable = PageRequest.of(pageNo, 8, Sort.by(Sort.Direction.DESC, orderCriteria));
-//        Page<Question> page = questionRepository.findByCategory(category, pageable);
-
-//        public List<T> lista(Sort sort)
-//        {
-//            sort = sort.and(new Sort(Sort.Direction.DESC, "count"));
-//            List<T> tList = jpaRepository.findAll(sort);
-//            return tList;
-//        }
-
-//        Page<QuestionResponseDto> questionPageList = page.map(
-//                question -> new QuestionResponseDto(
-//                        question.getQuestionId(),
-//                        question.getTitle(),
-//                        question.getContent(),
-//                        question.getCategory().getJobDomain(),
-//                        question.getTag().getTag(),
-//                        question.getViewCount(),
-//                        question.getLikeCount(),
-//                        question.isUserLike(),
-//                        question.getCreatedAt(),
-//                        question.getUpdatedAt(),
-//                        question.getMember().getMemberId(),
-//                        question.getMember().getNickname()
-//                )
-//        );
-//        return questionPageList;
-//    }
+        pageable = PageRequest.of(0, 8, Sort.Direction.DESC, orderCriteria);
+        return new PageImpl<>(questionRepository.findCategoryQuestion(category, searchType, keyword, pageable));
+    }
 
 
     // 글 상세보기
@@ -283,8 +256,4 @@ public class QuestionService {
 
         return  questionRepository.findWriterQuestion(writer, pageable);
     }
-
-//    public Page<Question> questionCategorySearch(String title, String content, String writer, String category, String orderCriteria, Pageable pageable){
-//        return
-//    }
 }

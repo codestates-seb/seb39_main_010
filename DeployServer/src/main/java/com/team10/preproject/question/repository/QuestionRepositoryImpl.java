@@ -1,19 +1,27 @@
 package com.team10.preproject.question.repository;
 
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.team10.preproject.global.qnaCategory.entity.QCategory;
 import com.team10.preproject.question.dto.*;
+import com.team10.preproject.question.entity.Question;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.team10.preproject.global.qnaCategory.entity.QCategory.category;
+import static com.team10.preproject.global.qnaCategory.entity.QCategory.*;
 import static com.team10.preproject.question.entity.QQuestion.*;
 import static com.team10.preproject.member.entity.QMember.*;
 import static com.team10.preproject.answer.entity.QAnswer.*;
-import static com.team10.preproject.global.qnaCategory.entity.QCategory.*;
 import static com.team10.preproject.global.qnaCategory.entity.QSubcategory.*;
 
 @RequiredArgsConstructor
@@ -111,11 +119,12 @@ public class QuestionRepositoryImpl implements CustomQuestionRepository{
                         question.userLike,
                         question.createdAt,
                         question.updatedAt,
-                        question.member.memberId,
-                        question.member.nickname))
+                        member.memberId,
+                        member.nickname))
                 .from(question)
                 .innerJoin(question.category, category)
                 .innerJoin(question.tag, subcategory)
+                .innerJoin(question.member, member)
                 .where(question.member.nickname.contains(keyWord))
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())
@@ -124,60 +133,69 @@ public class QuestionRepositoryImpl implements CustomQuestionRepository{
         return response;
     }
 
-//    @Override
-//    public Optional<QuestionResponseDto> findCategoryQuestion(String title, String content, String writer,
-//                                                              String category, String orderCriteria, Pageable pageable) {
-//
-//        Optional<QuestionOneResponse> response = Optional.ofNullable(queryFactory
-//                .select(new QQuestionResponseDto(
-//                        question.questionId,
-//                        question.title,
-//                        question.content,
-//                        question.category.jobDomain,
-//                        question.tag.tag,
-//                        question.viewCount,
-//                        question.likeCount,
-//                        question.userLike,
-//                        question.createdAt,
-//                        question.updatedAt,
-//                        question.member.memberId,
-//                        question.member.nickname))
-//                .from(question)
-//                .innerJoin(question.category)
-//                .innerJoin(question.tag, subcategory)
-//                .where(eqCategory(category), eqTitle(title), eqContent(content),)
-//
-//
-//        return Optional.empty();
-//    }
-//
-//    private BooleanExpression eqTitle(String title) {
-//        if (StringUtils.isEmpty(title)) {
-//            return null;
-//        }
-//        return question.title.contains(title);
-//    }
-//
-//    private BooleanExpression eqContent(String content) {
-//        if (StringUtils.isEmpty(content)) {
-//            return null;
-//        }
-//        return question.content.contains(content);
-//    }
-//
-//    private BooleanExpression eqCategory(String category) {
-//        if (StringUtils.isEmpty(category)) {
-//            return null;
-//        }
-//        return question.category.jobDomain.eq(category);
-//    }
-//
-//    private BooleanExpression eqTitleAndContent(String title, String content) {
-//        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(content)) {
-//            return null;
-//        }
-//        return question.title.contains(title).or(question.content.contains(content));
-//    }
+    @Override
+    public List<QuestionResponseDto> findCategoryQuestion(String category, String searchType,
+                                               String keyword, Pageable pageable) {
 
+        List<QuestionResponseDto> response = queryFactory
+                .select(new QQuestionResponseDto(
+                        question.questionId,
+                        question.title,
+                        question.content,
+                        QCategory.category.jobDomain,
+                        subcategory.tag,
+                        question.viewCount,
+                        question.likeCount,
+                        question.userLike,
+                        question.createdAt,
+                        question.updatedAt,
+                        member.memberId,
+                        member.nickname))
+                .from(question)
+                .innerJoin(question.category, QCategory.category)
+                .innerJoin(question.tag, subcategory)
+                .innerJoin(question.member, member)
+                .where(eqCategory(category), eqsearchType(searchType, keyword))
+                .orderBy(getOrderSpecifier(pageable.getSort()).stream().toArray(OrderSpecifier[]::new))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
 
+        return response;
+    }
+
+    private BooleanExpression eqCategory(String category) {
+        if(StringUtils.isEmpty(category)) {
+            return null;
+        }
+        return QCategory.category.jobDomain.eq(category);
+    }
+
+    private BooleanExpression eqsearchType(String searchType, String keyword) {
+        if(StringUtils.isEmpty(searchType)) {
+            return null;
+        } else if(searchType.contains("title")) {
+            return question.title.contains(keyword);
+        } else if(searchType.contains("content")) {
+            return question.content.contains(keyword);
+        } else if(searchType.contains("tc")) {
+            return question.title.contains(keyword).or(question.content.contains(keyword));
+        } else if(searchType.contains("writer")) {
+            return question.member.nickname.eq(keyword);
+        } else {
+            return null;
+        }
+    }
+
+    private List<OrderSpecifier> getOrderSpecifier(Sort sort) {
+        List<OrderSpecifier> orders = new ArrayList<>();
+
+        sort.stream().forEach(order ->  {
+            Order direction = order.isAscending() ? Order.ASC : Order.DESC;
+            String prop = order.getProperty();
+            PathBuilder orderByExpression = new PathBuilder(Question.class, "question");
+            orders.add(new OrderSpecifier(direction, orderByExpression.get(prop)));
+        });
+        return orders;
+    }
 }

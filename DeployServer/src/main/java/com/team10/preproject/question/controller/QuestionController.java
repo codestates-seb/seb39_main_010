@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
-import java.util.List;
 
 
 @RestController
@@ -52,29 +50,25 @@ public class QuestionController {
                 new SingleResponseDto<>(questionResponseDto), HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public ResponseEntity questionList(@PageableDefault(size=5, sort="questionId", direction = Sort.Direction.DESC)
-                                                   Pageable pageable, String searchType, String keyword) {
+    @GetMapping("/search")
+    public  ResponseEntity questionList(@RequestParam(required = false, defaultValue = "questionId", value = "orderby") String orderCriteria,
+                                        @RequestParam("searchType") String searchType,
+                                        @RequestParam("keyword") String keyword,
+                                        @RequestParam(required = false) String category,
+                                        Pageable pageable) {
 
-        Page<Question> questions = null;
-        if(searchType == null || keyword == null){
-            questions = questionService.questionList(pageable);
-        } else {
-            switch (searchType) {
-                case "title":
-                    questions = questionService.questionSearchTitle(keyword, pageable);
-                    break;
-                case "content":
-                    questions = questionService.questionSearchContent(keyword, pageable);
-                    break;
-                case "tc":
-                    questions = questionService.questionSearchTitleContent(keyword, keyword, pageable);
-                    break;
-                case "writer":
-                    List<QuestionResponseDto> question = questionService.questionSearchWriter(keyword, pageable);
-                    return new ResponseEntity<>(question, HttpStatus.OK);
-            }
-        }
+        Page<QuestionResponseDto> pageDto =
+                questionService.searchPageList(pageable, searchType, keyword, category, orderCriteria);
+
+        return new ResponseEntity<>(pageDto, HttpStatus.OK);
+
+    }
+
+    @GetMapping
+    public ResponseEntity questionList(@PageableDefault(size=8, sort="questionId", direction = Sort.Direction.DESC)
+                                                   Pageable pageable) {
+
+        Page<Question> questions = questionService.questionList(pageable);
         Page<QuestionResponseDto> pageDto = questions.map(entity -> {
             QuestionResponseDto dto = mapper.questionToResponseDto(entity);
             return dto;

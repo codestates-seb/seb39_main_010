@@ -31,11 +31,6 @@ public class Question extends Auditable {
     @Lob  // 대용량 데이터
     private String content;
 
-    @Column(name = "like_count", columnDefinition = "int default 0")
-    private int likeCount;
-
-    private boolean userLike;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
@@ -43,6 +38,14 @@ public class Question extends Auditable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subcategory_id")
     private Subcategory tag;
+
+    @Column(name = "view_count", columnDefinition = "int default 0")
+    private int viewCount;
+
+    @Column(name = "like_count", columnDefinition = "int default 0")
+    private int likeCount;
+
+    private boolean userLike;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -53,9 +56,6 @@ public class Question extends Auditable {
     @JsonIgnoreProperties("question") // 무한 참조 방지
 //    @OrderBy("id desc")
     private List<Answer> answer;
-
-    @Column(name = "view_count", columnDefinition = "int default 0")
-    private int viewCount;
 
     @Builder.Default
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
