@@ -20,8 +20,4 @@ public interface QuestionRepository extends JpaRepository<Question,Long>, Custom
     @Modifying
     @Query("update Question set view_count = view_count + 1 where questionId = :questionId")
     int updateView(@Param(value = "questionId") Long questionId);
-
-//    Page<Question> findByCategory(String category, Pageable pageable);
-
-
 }
