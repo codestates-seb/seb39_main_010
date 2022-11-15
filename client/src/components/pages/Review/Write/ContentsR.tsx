@@ -1,5 +1,4 @@
-import { BasicButton, Input } from 'components/common';
-import JobSelect from 'components/common/SelectBox/JobSelect';
+import { BasicButton, Input, JobSelect } from 'components/common';
 import TextArea from 'components/common/Textarea/Textarea';
 import { ContentsContainer } from 'components/pages/Study/Write/ContentsS';
 import React, { useRef, useState } from 'react';
@@ -42,23 +41,6 @@ const ContentsRContainer = styled.div`
 `;
 
 const ContentsR = () => {
-	const OPTIONS = [
-		{ value: 'sales', name: '영업/고객상담' },
-		{ value: 'business', name: '경영/사무' },
-		{ value: 'marketing', name: '마케팅/광고/홍보' },
-		{ value: 'produce', name: '생산/제조' },
-		{ value: 'research', name: '연구개발/설계' },
-		{ value: 'internet', name: 'IT/인터넷' },
-		{ value: 'service', name: '서비스' },
-		{ value: 'trade', name: '무역/유통' },
-		{ value: 'medical', name: '의료' },
-		{ value: 'structure', name: '건설' },
-		{ value: 'education', name: '교육' },
-		{ value: 'design', name: '디자인' },
-		{ value: 'profession', name: '전문/특수직' },
-		{ value: 'media', name: '미디어' },
-	];
-
 	const CARRER = [
 		{ value: 'new', name: '신입' },
 		{ value: 'old', name: '경력' },
@@ -79,6 +61,7 @@ const ContentsR = () => {
 
 	const titleRef = useRef<HTMLInputElement>(null);
 	const textRef = useRef<HTMLTextAreaElement>(null);
+	const [categoryId, setCategoryId] = useState<number>();
 
 	// function parentFunction(props: unknown) {
 	// 	console.log(props);
@@ -109,7 +92,7 @@ const ContentsR = () => {
 				<div className="job">
 					<div>
 						<div className="text">직무선택</div>
-						<JobSelect options={OPTIONS} />
+						<JobSelect setState={setCategoryId} />
 					</div>
 					<div>
 						<div className="text">경력 여부</div>
