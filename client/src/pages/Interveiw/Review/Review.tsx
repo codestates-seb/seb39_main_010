@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Intro } from 'components/common';
-import { Reviews, SearchBar } from 'components/pages';
+import { Reviews, FilterAndSearchBar } from 'components/pages';
 
 export const ReviewContainer = styled.div`
 	display: flex;
@@ -53,7 +53,7 @@ const Review = () => {
 				content={`소중한 면접 경험을 같이 공유해 주세요.`}
 			/>
 
-			<SearchBar
+			<FilterAndSearchBar
 				placeholder="궁금한 기업을 찾아보세요"
 				navigate="/interview/review/write"
 			/>
