@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AiOutlineEye } from 'react-icons/ai';
+import { ReactComponent as AvatarImg } from 'assets/images/avatar.svg';
 
 const TitleContainer = styled.div`
 	display: flex;
@@ -11,6 +12,11 @@ const TitleContainer = styled.div`
 
 	width: 1100px;
 	height: 210px;
+
+	.avatar-svg {
+		width: 50px;
+		height: 50px;
+	}
 
 	.title {
 		display: flex;
@@ -57,7 +63,7 @@ const Title = () => {
 			</div>
 			<div className="detail">
 				<div>
-					<div className="profilepic">img</div>
+					<AvatarImg className="avatar-svg" />
 					<span>닉네임</span>
 					<span>2일 전</span>
 				</div>

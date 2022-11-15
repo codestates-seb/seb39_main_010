@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CardContentAll, CardContentDone, CardContentOn } from './Cards';
-import SearchBar from './SearchBar';
+import SearchBar from './FilterAndSearchBar';
 
 export const CategoryContainer = styled.div`
 	width: 1200px;

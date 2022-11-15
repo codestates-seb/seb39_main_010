@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { IOptions } from 'pages/Study/Study';
 
 export const SortingContainer = styled.div`
 	display: flex;
@@ -8,7 +7,7 @@ export const SortingContainer = styled.div`
 	align-items: center;
 	padding: 10px 20px;
 
-	width: 576px;
+	width: 100%;
 	height: 66px;
 
 	border: 1px solid #d2d5da;
@@ -42,31 +41,55 @@ export const SortingContainer = styled.div`
 	}
 `;
 
-interface Props {
-	options: IOptions[];
+interface JobOptions {
+	value: number;
+	name: string;
 }
 
-const Filtering = ({ options }: Props) => {
-	function selectBoxchange(event: React.FormEvent<HTMLSelectElement>) {
-		const value = event.currentTarget.value;
-		console.log(value); // 선택 옵션 잘나옴
-		// parentFunction(value);
-		return value;
-	}
+interface Prop {
+	setState: React.Dispatch<React.SetStateAction<number | undefined>>;
+	category?: number;
+}
+
+export const jobOptions = [
+	{ value: 1, name: '영업/고객상담' },
+	{ value: 2, name: '경영/사무' },
+	{ value: 3, name: '마케팅/광고/홍보' },
+	{ value: 4, name: '생산/제조' },
+	{ value: 5, name: '연구개발/설계' },
+	{ value: 6, name: 'IT/인터넷' },
+	{ value: 7, name: '서비스' },
+	{ value: 8, name: '무역/유통' },
+	{ value: 9, name: '의료' },
+	{ value: 10, name: '건설' },
+	{ value: 11, name: '교육' },
+	{ value: 12, name: '디자인' },
+	{ value: 13, name: '전문/특수직' },
+	{ value: 14, name: '미디어' },
+];
+
+const JobSelect = ({ setState, category }: Prop) => {
+	const onJobSelectChange = (event: React.FormEvent<HTMLSelectElement>) => {
+		setState(+event.currentTarget.value);
+	};
 
 	return (
 		<SortingContainer>
 			<form onFocus={() => SortingContainer}>
-				<select required onChange={selectBoxchange}>
-					<option value="" disabled selected>
+				<select required onChange={onJobSelectChange}>
+					<option value="" disabled defaultValue={category ? category : ''}>
 						직무 카테고리 선택
 					</option>
-					{options.map((option: IOptions) => {
-						return <option key={option.value}>{option.name}</option>;
+					{jobOptions.map((option: JobOptions) => {
+						return (
+							<option key={option.value} value={option.value}>
+								{option.name}
+							</option>
+						);
 					})}
 				</select>
 			</form>
 		</SortingContainer>
 	);
 };
-export default Filtering;
+export default JobSelect;

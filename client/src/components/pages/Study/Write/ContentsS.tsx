@@ -40,23 +40,8 @@ const JobandTag = styled.div`
 `;
 
 const ContentsS = () => {
-	const OPTIONS = [
-		{ value: 'sales', name: '영업/고객상담' },
-		{ value: 'business', name: '경영/사무' },
-		{ value: 'marketing', name: '마케팅/광고/홍보' },
-		{ value: 'produce', name: '생산/제조' },
-		{ value: 'research', name: '연구개발/설계' },
-		{ value: 'internet', name: 'IT/인터넷' },
-		{ value: 'service', name: '서비스' },
-		{ value: 'trade', name: '무역/유통' },
-		{ value: 'medical', name: '의료' },
-		{ value: 'structure', name: '건설' },
-		{ value: 'education', name: '교육' },
-		{ value: 'design', name: '디자인' },
-		{ value: 'profession', name: '전문/특수직' },
-		{ value: 'media', name: '미디어' },
-	];
 	const [countlength, setCountlength] = useState(0);
+	const [categoryId, setCategoryId] = useState<number>();
 
 	const handleonChange = (e: { target: { value: string } }) => {
 		const long = e.target.value;
@@ -68,7 +53,7 @@ const ContentsS = () => {
 			<JobandTag>
 				<div>
 					<div className="text">직무선택</div>
-					<JobSelect options={OPTIONS} />
+					<JobSelect setState={setCategoryId} />
 				</div>
 				<div>
 					<div className="text">
