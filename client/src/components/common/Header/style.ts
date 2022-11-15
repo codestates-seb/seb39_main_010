@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { theme } from 'styles/theme';
 
 export const HeaderContainer = styled.div`
 	display: flex;
@@ -13,6 +14,20 @@ export const HeaderContainer = styled.div`
 
 	/* background: #ffffff; */
 	box-shadow: inset 0px -1px 1px rgba(0, 0, 0, 0.1);
+
+	.avatar-svg {
+		width: 50px;
+		height: 50px;
+	}
+
+	.login {
+		color: ${theme.colors.gray700};
+		font-weight: 600;
+	}
+
+	.login:hover {
+		cursor: pointer;
+	}
 `;
 export const LogoandNav = styled.div`
 	display: flex;
@@ -47,14 +62,4 @@ export const LogoandNav = styled.div`
 			font-weight: bold;
 		}
 	}
-`;
-export const MypageImg = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 50px;
-	height: 50px;
-
-	background: #f5f5f5; //gray500
-	border-radius: 30px;
 `;
