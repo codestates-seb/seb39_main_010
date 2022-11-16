@@ -65,7 +65,7 @@ public class QuestionController {
     }
 
     @GetMapping
-    public ResponseEntity questionList(@PageableDefault(size=8, sort="questionId", direction = Sort.Direction.DESC)
+    public ResponseEntity questionList(@PageableDefault(size = 8, sort = "questionId", direction = Sort.Direction.DESC)
                                                    Pageable pageable) {
 
         Page<Question> questions = questionService.questionList(pageable);
@@ -79,14 +79,16 @@ public class QuestionController {
     @GetMapping("/{question-id}")
     public QuestionOneResponse questionView(@PathVariable("question-id") Long questionId,
                                             HttpServletRequest request, HttpServletResponse response,
-                                            @Nullable @AuthenticationPrincipal PrincipalDetails principal) {
+                                            @Nullable @AuthenticationPrincipal PrincipalDetails principal,
+                                            @RequestParam(required = false, defaultValue = "answerId",
+                                                    value = "orderby") String orderCriteria) {
 
         questionService.updateViewCount(questionId, request, response);
         QuestionOneResponse questionOneResponse = null;
         if(principal != null){
-            questionOneResponse = questionService.questionloginView(questionId, principal.getMemberId());
+            questionOneResponse = questionService.questionloginView(questionId, principal.getMemberId(), orderCriteria);
         } else {
-            questionOneResponse = questionService.questionView(questionId);
+            questionOneResponse = questionService.questionView(questionId, orderCriteria);
         }
 
         return questionOneResponse;
@@ -122,5 +124,18 @@ public class QuestionController {
         questionService.questionLike(questionId, principal.getMember().getMemberId());
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/member-questionlist")
+    public ResponseEntity memberQuestionList(@PageableDefault(size = 5, direction = Sort.Direction.DESC) Pageable pageable,
+                                             @AuthenticationPrincipal PrincipalDetails principal) {
+
+        Page<Question> questions = questionService.memberQuestionList(principal.getMember().getMemberId(), pageable);
+
+        Page<QuestionResponseDto> pageDto = questions.map(entity -> {
+            QuestionResponseDto dto = mapper.questionToResponseDto(entity);
+            return dto;
+        });
+        return new ResponseEntity<>(pageDto, HttpStatus.OK);
     }
 }

@@ -30,7 +30,7 @@ public class QuestionRepositoryImpl implements CustomQuestionRepository{
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Optional<QuestionOneResponse> findOneQuestionById(Long questionId) {
+    public Optional<QuestionOneResponse> findOneQuestionById(Long questionId, String orderCriteria) {
 
         Optional<QuestionOneResponse> response = Optional.ofNullable(queryFactory
                 .select(new QQuestionOneResponse(
@@ -73,7 +73,7 @@ public class QuestionRepositoryImpl implements CustomQuestionRepository{
                 .innerJoin(answer.question, question)
                 .innerJoin(answer.member, member)
                 .where(question.questionId.eq(questionId).and(answer.parent.isNull()))
-                .orderBy(answer.answerId.asc())
+                .orderBy(eqOrderCriteria(orderCriteria))
                 .fetch();
 
         List<CommentsChildrenResponse> childComments = queryFactory
@@ -100,35 +100,6 @@ public class QuestionRepositoryImpl implements CustomQuestionRepository{
                 });
 
         response.get().setAnswers(answers);
-
-        return response;
-    }
-
-    @Override
-    public List<QuestionResponseDto> findWriterQuestion(String keyWord, Pageable pageable) {
-
-        List<QuestionResponseDto> response = queryFactory
-                .select(new QQuestionResponseDto(
-                        question.questionId,
-                        question.title,
-                        question.content,
-                        category.jobDomain,
-                        subcategory.tag,
-                        question.viewCount,
-                        question.likeCount,
-                        question.userLike,
-                        question.createdAt,
-                        question.updatedAt,
-                        member.memberId,
-                        member.nickname))
-                .from(question)
-                .innerJoin(question.category, category)
-                .innerJoin(question.tag, subcategory)
-                .innerJoin(question.member, member)
-                .where(question.member.nickname.contains(keyWord))
-                .limit(pageable.getPageSize())
-                .offset(pageable.getOffset())
-                .fetch();
 
         return response;
     }
@@ -162,6 +133,14 @@ public class QuestionRepositoryImpl implements CustomQuestionRepository{
                 .fetch();
 
         return response;
+    }
+
+    private OrderSpecifier<?> eqOrderCriteria(String orderCriteria) {
+        if(orderCriteria.contains("likeCount")) {
+            return answer.likeCount.desc();
+        }else {
+            return answer.answerId.asc();
+        }
     }
 
     private BooleanExpression eqCategory(String category) {
