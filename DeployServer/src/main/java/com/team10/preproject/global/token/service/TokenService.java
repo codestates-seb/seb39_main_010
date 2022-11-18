@@ -34,6 +34,7 @@ public class TokenService {
 
         response.addHeader("Authorization", accessToken);
         response.addHeader("Refresh", refreshToken);
+        response.setStatus(201);
 
         return "HAPPY NEW TOKEN";
     }
