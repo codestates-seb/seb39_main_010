@@ -236,7 +236,7 @@ public class MemberService {
 
     public void checkOwnerShip(HttpServletRequest request, Long memberId) {
 
-        String jwtToken = request.getHeader("Refresh");
+        String jwtToken = request.getHeader("Authorization");
         String email = JWT.require(Algorithm.HMAC512("cos_jwt_token")).build().verify(jwtToken).getClaim("email").asString();
         Member member = memberRepository.findByEmail(email);
         if(!Objects.equals(member.getMemberId(), memberId)) {
