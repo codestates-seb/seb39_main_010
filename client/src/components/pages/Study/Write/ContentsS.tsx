@@ -1,6 +1,6 @@
 import { Input, JobSelect } from 'components/common';
 import TextArea from 'components/common/Textarea/Textarea';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { theme } from 'styles/theme';
 import { Tag } from './Tag';
@@ -23,6 +23,9 @@ export const ContentsContainer = styled.div`
 
 	textarea {
 		margin-top: 26px;
+	}
+	> div:nth-child(2) {
+		margin-top: 35px;
 	}
 `;
 const JobandTag = styled.div`
@@ -53,6 +56,13 @@ const ContentsS = () => {
 		{ value: 'profession', name: '전문/특수직' },
 		{ value: 'media', name: '미디어' },
 	];
+	const [countlength, setCountlength] = useState(0);
+
+	const handleonChange = (e: { target: { value: string } }) => {
+		const long = e.target.value;
+		setCountlength(long.length);
+	};
+
 	return (
 		<ContentsContainer>
 			<JobandTag>
@@ -79,9 +89,13 @@ const ContentsS = () => {
 			<div>
 				<div className="text">
 					<span>글제목</span>
-					<span className="gray">0/50</span>
+					<span className="gray">{countlength}/50</span>
 				</div>
-				<Input placeholder={'제목을 입력해 주세요.'} />
+				<Input
+					placeholder={'제목을 입력해 주세요.'}
+					onChange={handleonChange}
+					maxLength={50}
+				/>
 				<TextArea
 					placeholder={`스터디 모집글을 아래 양식을 참고해 작성해주세요.
 꼼꼼히 작성하면 멋진 스터디 팀원을 만나실 수 있을거예요.

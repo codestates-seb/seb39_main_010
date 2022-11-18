@@ -5,7 +5,7 @@
 
 > *면접 정보를 나눠요! Weply!*
 - 개발기간: 2022.09.07 ~ 
-- [배포 링크](http://weply.s3-website.ap-northeast-2.amazonaws.com) (배포예정)
+- [배포 링크](http://weply.ga) (배포예정)
 
 <br/>
 
@@ -27,20 +27,32 @@
 <br/>
 
 ## 💡 프로젝트 주요 기능
-> 간편로그인
-> [이미지를 등록해 주세요]
+> **회원가입**
+![weply-signup](https://user-images.githubusercontent.com/102157884/194744948-6220f76d-c4a6-4d9c-947a-0d33b461bdaa.gif)
 
-> 게시물 등록
-> [이미지를 등록해 주세요]
+> **로그인**
+![weply-login](https://user-images.githubusercontent.com/102157884/194744984-ec74f1c3-a5b9-4bbd-804a-42bc93fdeedb.gif)
 
-> 댓글/대댓글
-> [이미지를 등록해 주세요]
+> **상세페이지 및 글 좋아요**
+![weply-questionDetail](https://user-images.githubusercontent.com/102157884/194744994-98ac1b0a-066c-4df6-88ad-b6c06c33ef00.gif)
 
-> 프로필조회
-> [이미지를 등록해 주세요]
+> **게시물 등록**
+![weply-write](https://user-images.githubusercontent.com/102157884/194745029-339194bc-1092-401a-9eec-c6def7579da7.gif)
 
-> 개인설정
-> [이미지를 등록해 주세요]
+> **게시물 수정**
+![weply-edit](https://user-images.githubusercontent.com/102157884/194745042-522dd75a-755c-438a-bc13-18c2fe9efd9b.gif)
+
+> **게시물 삭제**
+![weply-delete](https://user-images.githubusercontent.com/102157884/194747840-ac0e8017-733f-468f-8b02-ea7ec015b849.gif)
+
+> **댓글 작성**
+![weply-comment](https://user-images.githubusercontent.com/102157884/194747845-135af3f4-7179-4694-8ce9-31f1ad29400a.gif)
+
+> **댓글 수정**
+![weply-comment-edit](https://user-images.githubusercontent.com/102157884/194747875-a44bc1fe-28af-45c1-b0b7-6baeac0e48ec.gif)
+
+> **로그아웃**
+![weply-logout](https://user-images.githubusercontent.com/102157884/194747886-bec4aaa2-7b6a-4c96-8bad-ab28f5b03041.gif)
 
 <br/>
 

@@ -14,15 +14,15 @@ public class CommentsChildrenResponse {
     private Long parentId;
     private Long answerId;
     private String comment;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String createdAt;
+    private String updatedAt;
     private Long memberId;
     private String nickname;
     private DeleteStatus isDeleted;
 
     @QueryProjection
     public CommentsChildrenResponse(Long parentId, Long answerId, String comment,
-                                    LocalDateTime createdAt, LocalDateTime updatedAt, Long memberId,
+                                    String createdAt, String updatedAt, Long memberId,
                                     String nickname, DeleteStatus isDeleted) {
 
         this.parentId = parentId;

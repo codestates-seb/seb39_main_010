@@ -27,10 +27,16 @@ export const SortingContainer = styled.div`
 `;
 
 const Filtering = () => {
+	function selectBoxchange(event: React.FormEvent<HTMLSelectElement>) {
+		const value = event.currentTarget.value; // 선택 옵션 잘나옴
+		console.log(value);
+		return value;
+	}
+
 	return (
 		<SortingContainer>
 			<form>
-				<select>
+				<select onChange={selectBoxchange}>
 					<option>최신순</option>
 					<option>좋아요순</option>
 				</select>

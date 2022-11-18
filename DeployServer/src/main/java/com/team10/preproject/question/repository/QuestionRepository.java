@@ -13,11 +13,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface QuestionRepository extends JpaRepository<Question,Long>, CustomQuestionRepository {
 
-    Page<Question> findByTitleContaining(String title, Pageable pageable);
-    Page<Question> findByContentContaining(String content, Pageable pageable);
-    Page<Question> findByTitleContainingOrContentContaining(String title, String content, Pageable pageable);
-
     @Modifying
     @Query("update Question set view_count = view_count + 1 where questionId = :questionId")
     int updateView(@Param(value = "questionId") Long questionId);
+
+    @Query(value = "select * from question where member_id = :memberId",
+            countQuery = "select count(*) from question q where member_id = :memberId", nativeQuery = true)
+    Page<Question> findByQuestionAndMember(@Param(value = "memberId") Long memberId, Pageable pageable);
 }

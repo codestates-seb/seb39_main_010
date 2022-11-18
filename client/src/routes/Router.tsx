@@ -2,9 +2,16 @@ import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Signup } from 'pages/Signup';
 import { Study, StudyDetail, StudyWrite } from 'pages/Study';
-import { Question, Review, ReviewWrite } from 'pages/Interveiw';
+import {
+	Question,
+	QuestionDetail,
+	QuestionWrite,
+	Review,
+	ReviewWrite,
+} from 'pages/Interveiw';
 import { Mypage } from 'pages/Mypage';
-import { Header } from 'components/common';
+import { Footer, Header } from 'components/common';
+import QuestionEdit from 'pages/Interveiw/Question/QuestionEdit';
 
 const Router = () => {
 	return (
@@ -17,7 +24,9 @@ const Router = () => {
 				<Route path="/profile/:id" element={<div>Profile</div>} />
 				<Route path="/interview">
 					<Route path="question" element={<Question />} />
-					<Route path="question/:id" element={<div>QuestionDetail</div>} />
+					<Route path="question/:id" element={<QuestionDetail />} />
+					<Route path="question/write" element={<QuestionWrite />} />
+					<Route path="question/edit/:id" element={<QuestionEdit />} />
 					<Route path="review" element={<Review />} />
 					<Route path="review/:id" element={<div>ReviewDetail</div>} />
 					<Route path="review/write" element={<ReviewWrite />} />
@@ -28,6 +37,7 @@ const Router = () => {
 					<Route path="write" element={<StudyWrite />} />
 				</Route>
 			</Routes>
+			<Footer />
 		</React.Fragment>
 	);
 };

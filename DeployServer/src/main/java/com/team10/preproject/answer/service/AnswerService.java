@@ -3,14 +3,20 @@ package com.team10.preproject.answer.service;
 
 import com.team10.preproject.answer.dto.AnswerCreateRequestDto;
 import com.team10.preproject.answer.dto.AnswerDto;
+import com.team10.preproject.answer.dto.AnswerListResponseDto;
 import com.team10.preproject.answer.entity.Answer;
 import com.team10.preproject.answer.entity.AnswerLike;
 import com.team10.preproject.answer.entity.DeleteStatus;
 import com.team10.preproject.answer.repository.AnswerLikeRepository;
 import com.team10.preproject.answer.repository.AnswerRepository;
+import com.team10.preproject.global.exception.BusinessLogicException;
+import com.team10.preproject.global.exception.ExceptionCode;
 import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.member.repository.MemberRepository;
 import com.team10.preproject.question.repository.QuestionRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +39,7 @@ public class AnswerService {
     }
 
     @Transactional
-    public AnswerDto anwserWrite(Member member, Long questionId, AnswerCreateRequestDto requestDto) {
+    public AnswerDto anwserWrite(Long memberId, Long questionId, AnswerCreateRequestDto requestDto) {
 
         questionRepository.findById(questionId).orElseThrow(() -> {
             return new IllegalArgumentException("게시글 id를 찾을 수 없습니다.");
@@ -42,7 +48,7 @@ public class AnswerService {
         Answer answer = answerRepository.save(
                 Answer.createAnswer(requestDto.getComment(),
                         questionRepository.findById(questionId).orElseThrow(IllegalArgumentException::new),
-                        memberRepository.findById(member.getMemberId()).orElseThrow(IllegalArgumentException::new),
+                        memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new),
                         requestDto.getParentId() != null ?
                                 answerRepository.findById(requestDto.getParentId()).orElseThrow(IllegalArgumentException::new) : null)
         );
@@ -66,18 +72,22 @@ public class AnswerService {
     @Transactional
     public void answerDelete(Long answerId) {
 
-        Answer answer = answerRepository.findAnswerByIdWithParent(answerId).orElseThrow(() -> {
+        Answer answer = answerRepository.findById(answerId).orElseThrow(() -> {
             return new IllegalArgumentException("댓글을 찾을 수 없습니다.");
         });
 
-        if (answer == null &&
+        if (answer.getParent() == null &&
                 answerRepository.findByIsDeleted(answer.getAnswerId()).size() == 0) {
 
             answerRepository.delete(answer);
 
-        } else if (answer.getParent().getIsDeleted() == DeleteStatus.Y &&
+        } else if (answer.getIsDeleted() == DeleteStatus.Y &&
                 answerRepository.findByIsDeletedNotIn(answer.getParent().getAnswerId(), answerId)
                         .size() == 0) {
+
+            answerRepository.delete(answer.getParent());
+
+        } else if (answer.getParent() != null && answerRepository.findByLast(answer.getParent().getAnswerId())){
 
             answerRepository.delete(answer.getParent());
 
@@ -91,7 +101,7 @@ public class AnswerService {
 
         Answer answer = answerRepository.findById(answerId)
                 .orElseThrow(() -> {
-                    return new IllegalArgumentException("댓글 찾기 실패 : 해당 글을 찾을 수 없습니다.");
+                    return new IllegalArgumentException("좋아요 댓글 찾기 실패 : 해당 글을 찾을 수 없습니다.");
                 });
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() ->{
@@ -115,6 +125,14 @@ public class AnswerService {
                     answerLikeRepository.save(answerLike);
                 }
         );
+    }
 
+    public Page<AnswerListResponseDto> memberAnswerList(Long memberId, Pageable pageable) {
+
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> {
+            return new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
+        });
+
+        return new PageImpl<>(answerRepository.findAnswerMember(member.getMemberId(), pageable));
     }
 }

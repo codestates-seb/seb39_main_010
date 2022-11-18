@@ -19,40 +19,31 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	// style?: StyleProps;
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-	(
-		{
-			type = 'text',
-			placeholder,
-			name,
-			value,
-			onChange,
-			label,
-			errorMessage,
-			...props
-		}: InputProps,
-		ref
-	) => {
-		return (
-			<InputContainer>
-				{label && <label>{label}</label>}
-				<StyledInput
-					type={type}
-					placeholder={placeholder}
-					name={name}
-					value={value}
-					onChange={onChange}
-					ref={ref}
-					{...props}
-				/>
-				<p>{errorMessage}</p>
-			</InputContainer>
-		);
-	}
-);
-
-Input.displayName = 'Input';
-
+const Input = ({
+	type = 'text',
+	placeholder,
+	name,
+	value,
+	onChange,
+	label,
+	errorMessage,
+	...props
+}: InputProps) => {
+	return (
+		<InputContainer>
+			{label && <label>{label}</label>}
+			<StyledInput
+				type={type}
+				placeholder={placeholder}
+				name={name}
+				value={value}
+				onChange={onChange}
+				{...props}
+			/>
+			<p>{errorMessage}</p>
+		</InputContainer>
+	);
+};
 export default Input;
 
 const InputContainer = styled.div`

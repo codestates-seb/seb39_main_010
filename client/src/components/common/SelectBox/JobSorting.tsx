@@ -2,10 +2,14 @@ import React from 'react';
 import { SortingContainer } from './PopularSorting';
 
 const JobSorting = () => {
+	function selectBoxchange(event: React.FormEvent<HTMLSelectElement>) {
+		console.log(event.currentTarget.value); // 선택 옵션 잘나옴
+	}
+
 	return (
 		<SortingContainer>
 			<form>
-				<select>
+				<select onChange={selectBoxchange}>
 					<option>직무전체</option>
 					<option>영업/고객상담</option>
 					<option>경영/사무</option>

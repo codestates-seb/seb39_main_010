@@ -18,8 +18,8 @@ public class QuestionOneCommentResponse {
     private String comment;
     private int likeCount;
     private boolean userLike;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String createdAt;
+    private String updatedAt;
     private Long memberId;
     private String nickname;
     private DeleteStatus isDeleted;
@@ -27,7 +27,7 @@ public class QuestionOneCommentResponse {
 
     @QueryProjection
     public QuestionOneCommentResponse(Long parentId, Long answerId, String comment, int likeCount,
-                                      boolean userLike, LocalDateTime createdAt, LocalDateTime updatedAt,
+                                      boolean userLike, String createdAt, String updatedAt,
                                       Long memberId, String nickname, DeleteStatus isDeleted) {
 
         this.parentId = parentId;
