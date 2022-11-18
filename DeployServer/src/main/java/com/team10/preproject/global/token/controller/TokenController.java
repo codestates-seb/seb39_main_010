@@ -15,7 +15,7 @@ public class TokenController {
 
     private final TokenService tokenService;
 
-    @PostMapping("api/v1/token/refresh")
+    @PostMapping("/api/v1/token/refresh")
     public String refreshAuth(HttpServletRequest request, HttpServletResponse response) {
 
         String token = request.getHeader("Refresh");
