@@ -2,6 +2,7 @@ package com.team10.preproject.member.entity;
 
 import com.team10.preproject.answer.entity.AnswerLike;
 import com.team10.preproject.global.audit.Auditable;
+import com.team10.preproject.question.entity.Question;
 import com.team10.preproject.question.entity.QuestionLike;
 import lombok.*;
 import javax.persistence.*;
@@ -51,6 +52,9 @@ public class Member extends Auditable{
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<AnswerLike> answerLikeList = new ArrayList<>();
+
+    @OneToOne(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private Question question;
 
 //    @Enumerated(value = EnumType.STRING)
 //    @Column(length = 20, nullable = false)
