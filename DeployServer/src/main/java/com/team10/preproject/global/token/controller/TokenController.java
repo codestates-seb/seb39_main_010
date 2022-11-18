@@ -24,6 +24,7 @@ public class TokenController {
 
             String email = tokenService.getEmail(token);
             Token newToken = tokenService.generateToken(email);
+            response.setStatus(201);
 
             return tokenService.addToken(newToken.getAccessToken(), newToken.getRefreshToken(), response);
         }
