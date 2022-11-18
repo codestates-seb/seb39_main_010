@@ -1,4 +1,4 @@
-package com.team10.preproject.member.controller;
+package com.team10.preproject.global.token.controller;
 
 import com.team10.preproject.global.token.entity.Token;
 import com.team10.preproject.global.token.service.TokenService;
