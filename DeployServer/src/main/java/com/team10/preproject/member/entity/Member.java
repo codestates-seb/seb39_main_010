@@ -53,8 +53,8 @@ public class Member extends Auditable{
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<AnswerLike> answerLikeList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private Question question;
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Question> questionList = new ArrayList<>();
 
 //    @Enumerated(value = EnumType.STRING)
 //    @Column(length = 20, nullable = false)
