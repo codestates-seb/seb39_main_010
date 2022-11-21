@@ -43,7 +43,7 @@ public class QuestionController {
         requestBody.setMember(principal.getMember());
         Question question = mapper.questionPostToQuestion(requestBody);
         QuestionResponseDto questionResponseDto
-                = mapper.questionToResponseDto(questionService.questionwrite(question, principal.getMemberId(),
+                = mapper.questionToResponseDto(questionService.questionWrite(question, principal.getMemberId(),
                 requestBody.getCategoryId(), requestBody.getTagId()));
 
         return new ResponseEntity<>(

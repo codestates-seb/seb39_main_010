@@ -56,7 +56,7 @@ public class QuestionService {
 
     // 글 작성
     @Transactional
-    public Question questionwrite(Question question, Long memberId, Long categoryId, Long tagId) {
+    public Question questionWrite(Question question, Long memberId, Long categoryId, Long tagId) {
 
         Member member = memberRepository.findById(memberId).orElseThrow(() -> {
             return new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
