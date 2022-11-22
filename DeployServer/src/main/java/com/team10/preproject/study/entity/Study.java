@@ -49,9 +49,9 @@ public class Study extends Auditable {
     @JsonIgnoreProperties("study")
     private List<StudyComment> studyComment;
 
+    @Builder.Default
     @OneToMany(mappedBy = "study", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<StudyLike> studyLikes = new ArrayList<>();
-
 
     public void mappingStudyLike(StudyLike studyLike) {
         this.studyLikes.add(studyLike);

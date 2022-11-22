@@ -1,4 +1,4 @@
-package com.team10.preproject.member.controller;
+package com.team10.preproject.global.token.controller;
 
 import com.team10.preproject.global.token.entity.Token;
 import com.team10.preproject.global.token.service.TokenService;
@@ -15,7 +15,7 @@ public class TokenController {
 
     private final TokenService tokenService;
 
-    @PostMapping("api/v1/token/refresh")
+    @PostMapping("/api/v1/token/refresh")
     public String refreshAuth(HttpServletRequest request, HttpServletResponse response) {
 
         String token = request.getHeader("Refresh");
@@ -24,6 +24,7 @@ public class TokenController {
 
             String email = tokenService.getEmail(token);
             Token newToken = tokenService.generateToken(email);
+            response.setStatus(201);
 
             return tokenService.addToken(newToken.getAccessToken(), newToken.getRefreshToken(), response);
         }

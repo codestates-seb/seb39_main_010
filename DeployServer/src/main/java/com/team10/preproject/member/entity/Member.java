@@ -2,7 +2,9 @@ package com.team10.preproject.member.entity;
 
 import com.team10.preproject.answer.entity.AnswerLike;
 import com.team10.preproject.global.audit.Auditable;
+import com.team10.preproject.question.entity.Question;
 import com.team10.preproject.question.entity.QuestionLike;
+import com.team10.preproject.study.entity.Study;
 import com.team10.preproject.study.entity.StudyLike;
 import com.team10.preproject.studycomment.entity.StudyCommentLike;
 import lombok.*;
@@ -53,6 +55,12 @@ public class Member extends Auditable{
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<AnswerLike> answerLikeList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Question> questionList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Study> studyList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<StudyLike> studyLikes = new ArrayList<>();
