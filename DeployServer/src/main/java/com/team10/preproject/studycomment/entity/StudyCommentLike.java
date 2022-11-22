@@ -24,7 +24,7 @@ public class StudyCommentLike {
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "study_id")
+    @JoinColumn(name = "study_comment_id")
     private StudyComment studyComment;
 
     public void mappingMember(Member member) {
@@ -32,7 +32,7 @@ public class StudyCommentLike {
         member.mappingStudyCommentLike(this);
     }
 
-    public void mappingStudy(StudyComment studyComment) {
+    public void mappingStudyComment(StudyComment studyComment) {
         this.studyComment = studyComment;
         studyComment.mappingStudyCommentLike(this);
     }
