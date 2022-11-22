@@ -95,7 +95,6 @@ public class QuestionController {
     }
 
     @DeleteMapping("/{question-id}")
-
     public ResponseEntity questionDelete(@PathVariable("question-id") Long questionId) {
 
         questionService.questionDelete(questionId);

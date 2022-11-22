@@ -138,7 +138,7 @@ public class QuestionService {
 
     // 글 수정
     @Transactional
-    public Question questionUpdate(long questionId,Question requestQuestion) {
+    public Question questionUpdate(Long questionId,Question requestQuestion) {
 
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() ->{

@@ -1,5 +1,6 @@
 package com.team10.preproject.study.dto;
 
+import com.querydsl.core.annotations.QueryProjection;
 import com.team10.preproject.studycomment.entity.DeleteStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class StudyOneCommentResponse {
     private DeleteStatus isDeleted;
     private List<StudyCommentChildrenResponse> children = new ArrayList<>();
 
+    @QueryProjection
     public StudyOneCommentResponse(Long parentId, Long studyCommentId, String comment, String nickname,
                                    int likeCount, boolean userLike, String createdAt, String updatedAt,
                                    DeleteStatus isDeleted) {

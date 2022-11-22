@@ -62,8 +62,50 @@ public class StudyController {
     @GetMapping("/{study-id}")
     public StudyOneResponse studyView(@PathVariable("study-id") Long studyId,
                                       HttpServletRequest request, HttpServletResponse response,
-                                      @Nullable @AuthenticationPrincipal PrincipalDetails principal) {
+                                      @Nullable @AuthenticationPrincipal PrincipalDetails principal,
+                                      @RequestParam(required = false, defaultValue = "studyCommentId",
+                                      value = "orderby") String orderCriteria) {
 
-        return null;
+        studyService.updateViewCount(studyId, request, response);
+        StudyOneResponse studyOneResponse = null;
+        if(principal != null) {
+            studyOneResponse = studyService.studyLoginView(studyId, principal.getMemberId(), orderCriteria);
+        } else {
+            studyOneResponse = studyService.studyView(studyId, orderCriteria);
+        }
+
+        return studyOneResponse;
     }
+
+    @DeleteMapping("/{study-id}")
+    public ResponseEntity studyDelete(@PathVariable("study-id") Long studyId) {
+
+        studyService.studyDelete(studyId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/{study-id}")
+    public ResponseEntity studyUpdate(@PathVariable("study-id") Long studyId,
+                                      @Valid @RequestBody StudyDto.Put requestBody,
+                                      @AuthenticationPrincipal PrincipalDetails principal) {
+
+        requestBody.setMember(principal.getMember());
+        Study study = mapper.studyPutToStudy(requestBody);
+        StudyResponseDto studyResponseDto = mapper.studyToResponseDto(
+                studyService.studyUpdate(studyId, study));
+
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(studyResponseDto), HttpStatus.OK);
+    }
+
+    @PostMapping("/{study-id}/sympathy")
+    public ResponseEntity studyLike(@PathVariable("study-id") Long studyId,
+                                    @AuthenticationPrincipal PrincipalDetails principal) {
+
+        studyService.studyLike(studyId, principal.getMember().getMemberId());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

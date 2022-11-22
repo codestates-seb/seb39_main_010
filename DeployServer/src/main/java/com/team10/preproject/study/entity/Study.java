@@ -3,6 +3,7 @@ package com.team10.preproject.study.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.team10.preproject.global.audit.Auditable;
 import com.team10.preproject.member.entity.Member;
+import com.team10.preproject.studycomment.entity.StudyComment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -46,11 +47,26 @@ public class Study extends Auditable {
 
     @OneToMany(mappedBy = "study", orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("study")
+    private List<StudyComment> studyComment;
+
+    @OneToMany(mappedBy = "study", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<StudyLike> studyLikes = new ArrayList<>();
 
 
     public void mappingStudyLike(StudyLike studyLike) {
         this.studyLikes.add(studyLike);
+    }
+
+    public void changeTitle(String title) {
+        this.title = title;
+    }
+
+    public void changeContent(String content) {
+        this.content = content;
+    }
+
+    public void changeRecruitment(boolean recruitment) {
+        this.recruitment = recruitment;
     }
 
     public void updateLikeCount() {

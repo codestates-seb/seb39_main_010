@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface CustomStudyRepository {
 
-    Optional<StudyOneResponse> findOneStudyById(Long studyId);
+    Optional<StudyOneResponse> findOneStudyById(Long studyId, String orderCriteria);
 }
