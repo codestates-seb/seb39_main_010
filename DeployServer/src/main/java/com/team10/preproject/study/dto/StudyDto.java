@@ -39,6 +39,8 @@ public class StudyDto {
         @NotBlank(message = "내용은 공백이 불가능 합니다.")
         private String content;
 
+        private boolean recruitment;
+
         private Member member;
     }
 }
