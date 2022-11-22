@@ -1,37 +1,39 @@
-package com.team10.preproject.question.entity;
+package com.team10.preproject.study.entity;
 
 import com.team10.preproject.member.entity.Member;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Optional;
 
 @Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class QuestionLike {
+public class StudyLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long questionLikeId;
+    private Long studyLikeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "question_id")
-    private Question question;
+    @JoinColumn(name = "study_id")
+    private Study study;
 
     public void mappingMember(Member member) {
         this.member = member;
-        member.mappingQuestionLike(this);
+        member.mappingStudyLike(this);
     }
 
-    public void mappingQuestion(Question question) {
-        this.question = question;
-        question.mappingQuestionLike(this);
+    public void mappingStudy(Study study) {
+        this.study = study;
+        study.mappingStudyLike(this);
     }
 }

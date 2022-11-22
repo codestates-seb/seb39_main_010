@@ -1,14 +1,11 @@
 package com.team10.preproject.answer.entity;
 
 import com.team10.preproject.member.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -36,7 +33,4 @@ public class AnswerLike {
         this.answer = answer;
         answer.mappingAnswerLike(this);
     }
-
-
-
 }
