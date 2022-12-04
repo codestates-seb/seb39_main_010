@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineSearch } from 'react-icons/ai';
 // import { isPropertySignature } from 'typescript';
@@ -34,16 +34,28 @@ export const SearchContainer = styled.div`
 	}
 `;
 
-const Search: React.FC<{ text: string }> = (props) => {
+const SearchBar: React.FC<{ placeholder: string }> = (props) => {
+	const [keyword, setKeyword] = useState('');
+
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setKeyword(event.target.value);
+	};
+
 	return (
 		<SearchContainer>
 			<form>
 				<div>
 					<AiOutlineSearch size={25} />
 				</div>
-				<input type="text" placeholder={props.text} />
+				<input
+					type="text"
+					placeholder={props.placeholder}
+					onChange={handleChange}
+					value={keyword}
+				/>
 			</form>
 		</SearchContainer>
 	);
 };
-export default Search;
+
+export default SearchBar;

@@ -1,39 +1,46 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Banner from 'components/pages/Question/Banner';
 import styled from 'styled-components';
-import { SearchBar } from 'components/pages';
+import { FilterAndSearchBar } from 'components/pages';
 import QuestionCards from 'components/pages/Question/QuestionCards';
 import apiClient from 'apis/apiClient';
+import { Question } from 'components/pages/Question/QuestionCard';
 
-const Question = () => {
-	const getQuestions = async () => {
+const QuestionPage = () => {
+	const [questionList, setQuestionList] = useState<Question[] | undefined>();
+
+	const getQuestionListApi = async () => {
 		try {
-			const response = await apiClient.get('/api/v1/questions');
+			const response = await await apiClient.get('/api/v1/questions');
 			console.log(response);
+
+			setQuestionList(response.data.content);
+
+			return response;
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
 	useEffect(() => {
-		getQuestions();
+		getQuestionListApi();
 	}, []);
 
 	return (
 		<QuestionContainer>
 			<Banner />
 			<ContentContainer>
-				<SearchBar
+				<FilterAndSearchBar
 					placeholder="궁금한 내용을 찾아보세요."
 					navigate="/interview/question/write"
 				/>
-				<QuestionCards />
+				<QuestionCards questionList={questionList} />
 			</ContentContainer>
 		</QuestionContainer>
 	);
 };
 
-export default Question;
+export default QuestionPage;
 
 const QuestionContainer = styled.div`
 	display: flex;

@@ -2,14 +2,12 @@ import { BasicButton } from 'components/common';
 import React from 'react';
 import styled from 'styled-components';
 import { theme } from 'styles/theme';
+import { ReactComponent as BannerImg } from 'assets/images/banner.svg';
 
 const Banner = () => {
 	return (
 		<BannerContainer>
-			<h1>면접에서 받은 질문 어떻게 답변하셨나요?</h1>
-			<p>취업을 위한 면접 준비 Weply에서 함께 해요.</p>
-			<p>좋은 질문이 있다면 아래 버튼을 클릭하여 작성해주세요!</p>
-			<BasicButton>면접 질문 작성하기</BasicButton>
+			<BannerImg />
 		</BannerContainer>
 	);
 };
@@ -19,7 +17,7 @@ export default Banner;
 const BannerContainer = styled.div`
 	width: 100%;
 	height: 400px;
-	background-color: ${theme.colors.blue100};
+	background-color: ${theme.colors.blueMain};
 	display: flex;
 	justify-content: center;
 	align-items: center;

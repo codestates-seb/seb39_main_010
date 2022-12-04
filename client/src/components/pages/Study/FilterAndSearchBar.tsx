@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PopularSorting, SearchBox } from 'components/common';
+import { PopularSorting, SearchBar } from 'components/common';
 import { BsPencil } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import JobSorting from 'components/common/SelectBox/JobSorting';
@@ -42,12 +42,12 @@ interface IProps {
 	navigate: string;
 }
 
-export const SearchBar = (props: IProps) => {
+export const FilterAndSearchBar = (props: IProps) => {
 	const navigate = useNavigate();
 	return (
 		<SearchBarContainer>
 			<div>
-				<SearchBox text={props.placeholder} />
+				<SearchBar placeholder={props.placeholder} />
 				<JobSorting />
 				<PopularSorting />
 			</div>
@@ -60,4 +60,4 @@ export const SearchBar = (props: IProps) => {
 	);
 };
 
-export default SearchBar;
+export default FilterAndSearchBar;
