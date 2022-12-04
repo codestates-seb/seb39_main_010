@@ -1,6 +1,5 @@
 import { BasicButton, Input, JobSelect } from 'components/common';
 import TextArea from 'components/common/Textarea/Textarea';
-import { ContentsContainer } from 'components/pages/Study/Write/ContentsS';
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { theme } from 'styles/theme';
@@ -61,7 +60,7 @@ const ContentsR = () => {
 
 	const titleRef = useRef<HTMLInputElement>(null);
 	const textRef = useRef<HTMLTextAreaElement>(null);
-	const [categoryId, setCategoryId] = useState<number>();
+	const [, setCategoryId] = useState<number>();
 
 	// function parentFunction(props: unknown) {
 	// 	console.log(props);

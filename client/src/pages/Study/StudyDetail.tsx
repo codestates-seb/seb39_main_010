@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BsChatLeftDots, BsSuitHeart } from 'react-icons/bs';
-import { RiSendPlaneFill } from 'react-icons/ri';
 import Title from 'components/pages/Study/Details/Title';
 import Content from 'components/pages/Study/Details/Content';
 import Comments from 'components/common/Comments/Comments';

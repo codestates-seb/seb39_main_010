@@ -1,5 +1,4 @@
 import axios, { AxiosRequestHeaders } from 'axios';
-import apiClient from './apiClient';
 import { cookie } from 'utils/cookie';
 import { NewQuestionSubmitData } from 'pages/Interveiw/Question/QuestionWrite';
 import {

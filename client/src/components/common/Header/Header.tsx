@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { HeaderContainer, LogoandNav } from './style';
-import { FiUser } from 'react-icons/fi';
-import { idText } from 'typescript';
 import { useRecoilState } from 'recoil';
 import { loginModalAtom, profileModalAtom } from 'recoil/atom';
 import LoginModal from '../LoginModal/LoginModal';
@@ -12,10 +10,8 @@ import { cookie } from 'utils/cookie';
 import ProfileModal from '../ProfileModal/ProfileModal';
 
 const Header = () => {
-	const [tab, setTab] = useState('');
 	const [isLoginModal, setIsLoginMoal] = useRecoilState(loginModalAtom);
 	const [isProfileModal, setIsProfileModal] = useRecoilState(profileModalAtom);
-	const url = useLocation().pathname;
 	const navigate = useNavigate();
 
 	const menus = [

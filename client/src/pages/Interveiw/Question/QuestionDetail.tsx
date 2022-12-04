@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import apiClient, { getQuestionApi } from 'apis/apiClient';
+import { getQuestionApi } from 'apis/apiClient';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { theme } from 'styles/theme';
@@ -11,8 +11,7 @@ import LoadingSpinner from 'components/common/LoadingSpinner/LoadingSpinner';
 import { Question } from 'components/pages/Question/QuestionCard';
 import { useRecoilValue } from 'recoil';
 import { userAtom } from 'recoil/atom';
-import { authApiClient, deleteQuestionApi } from 'apis/authApiClient';
-import { refreshDeleteApi } from 'utils/apiUtilFunctions';
+import { deleteQuestionApi } from 'apis/authApiClient';
 
 const QuestionDetail = () => {
 	const { id } = useParams();

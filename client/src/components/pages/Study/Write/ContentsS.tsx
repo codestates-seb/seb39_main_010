@@ -1,6 +1,6 @@
 import { Input, JobSelect } from 'components/common';
 import TextArea from 'components/common/Textarea/Textarea';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { theme } from 'styles/theme';
 import { Tag } from './Tag';
@@ -41,7 +41,7 @@ const JobandTag = styled.div`
 
 const ContentsS = () => {
 	const [countlength, setCountlength] = useState(0);
-	const [categoryId, setCategoryId] = useState<number>();
+	const [, setCategoryId] = useState<number>();
 
 	const handleonChange = (e: { target: { value: string } }) => {
 		const long = e.target.value;

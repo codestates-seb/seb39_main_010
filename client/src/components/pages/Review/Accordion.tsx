@@ -93,7 +93,6 @@ const CompanyName = styled.div`
 `;
 const Accordion = () => {
 	const parentRef = React.useRef<HTMLDivElement>(null);
-	const childRef = React.useRef<HTMLDivElement>(null);
 
 	return (
 		<AccordionContainer>
