@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { BsChatLeftDots, BsSuitHeart } from 'react-icons/bs';
-import { useParams } from 'react-router-dom';
 
 const ContentContainer = styled.div`
 	display: flex;

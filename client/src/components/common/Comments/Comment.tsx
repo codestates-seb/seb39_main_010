@@ -7,7 +7,6 @@ import { useRecoilValue } from 'recoil';
 import { userAtom } from 'recoil/atom';
 import { authApiClient } from 'apis/authApiClient';
 import { refreshDeleteApi, refreshPutApi } from 'utils/apiUtilFunctions';
-import apiClient from 'apis/apiClient';
 
 const CommentContainer = styled.div`
 	display: flex;
