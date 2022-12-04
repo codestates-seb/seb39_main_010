@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { isPropertySignature } from 'typescript';
+// import { isPropertySignature } from 'typescript';
 
 export const SearchContainer = styled.div`
 	display: flex;

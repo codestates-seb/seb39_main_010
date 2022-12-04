@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Intro } from 'components/common';
 import { Category } from 'components/pages';
@@ -14,7 +14,7 @@ export interface IOptions {
 	name: string;
 }
 const Study = () => {
-	const [data, setData] = useState('initial data');
+	// const [data, setData] = useState('initial data');
 
 	return (
 		<StudyContainer>
