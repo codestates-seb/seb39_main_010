@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { BsChatLeftDots, BsSuitHeart } from 'react-icons/bs';
 import { useParams } from 'react-router-dom';
-import dummy from '../../../../assets/data/dummy.json';
 
 const ContentContainer = styled.div`
 	display: flex;
@@ -33,8 +32,6 @@ const ContentContainer = styled.div`
 `;
 
 const Content = () => {
-	const { id } = useParams();
-
 	return (
 		<ContentContainer>
 			<div>스터디에 관련된 작성자의 자유로운 글 내용 . . .</div>

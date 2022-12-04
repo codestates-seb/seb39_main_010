@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import apiClient from 'apis/apiClient';
 import { refreshHeaders } from 'apis/authApiClient';
 import { changeToken } from 'utils/cookie';
