@@ -6,7 +6,6 @@ import CommentIntro from './CommentIntro';
 import { ReactComponent as AvatarImg } from 'assets/images/avatar.svg';
 import { QuestionComment } from 'components/pages/Question/QuestionCard';
 import { authApiClient } from 'apis/authApiClient';
-import { refreshPostApi } from 'utils/apiUtilFunctions';
 import { useNavigate } from 'react-router-dom';
 import { getQuestionApi } from 'apis/apiClient';
 
@@ -76,17 +75,9 @@ const Comments = ({ comments, id }: Props) => {
 				{ parentId: null, comment }
 			);
 
-			if (response.status === 200) {
-				refreshPostApi(`/api/v1/questions/${id}/answers`, {
-					parentId: null,
-					comment,
-				});
-				setComment('');
-				navigate(`/interview/question/${id}`);
-			}
-
 			setComment('');
 			window.location.reload();
+
 			return response;
 		} catch (error) {
 			console.log(error);
