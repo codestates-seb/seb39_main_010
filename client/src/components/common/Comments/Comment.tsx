@@ -6,7 +6,6 @@ import { QuestionComment } from 'components/pages/Question/QuestionCard';
 import { useRecoilValue } from 'recoil';
 import { userAtom } from 'recoil/atom';
 import { authApiClient } from 'apis/authApiClient';
-import { refreshDeleteApi, refreshPutApi } from 'utils/apiUtilFunctions';
 
 const CommentContainer = styled.div`
 	display: flex;
@@ -77,12 +76,6 @@ const Comment = ({ answer, id }: Props) => {
 				}
 			);
 
-			if (response.status === 200) {
-				refreshPutApi(`/api/v1/questions/${id}/answers/${answer?.answerId}`, {
-					parentId: null,
-					comment: editedComment,
-				});
-			}
 			setIsEdit(!isEdit);
 			window.location.reload();
 
@@ -98,10 +91,6 @@ const Comment = ({ answer, id }: Props) => {
 			const response = await authApiClient.delete(
 				`/api/v1/questions/${id}/answers/${answer?.answerId}`
 			);
-
-			if (response.status === 200) {
-				refreshDeleteApi(`/api/v1/questions/${id}/answers/${answer?.answerId}`);
-			}
 
 			return response;
 		} catch (error) {
