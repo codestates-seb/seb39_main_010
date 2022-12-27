@@ -65,7 +65,6 @@ interface Props {
 
 const Comments = ({ comments, id }: Props) => {
 	const [comment, setComment] = useState<string>('');
-	const navigate = useNavigate();
 
 	const handleCommentClick = async () => {
 		console.log(comment);
