@@ -1,4 +1,4 @@
-export { default as PopularSorting } from './SelectBox/PopularSorting';
+export { default as SortByFilter } from './SelectBox/SortByFilter';
 export { default as JobSelect } from './SelectBox/JobSelect';
 export { default as Header } from './Header/Header';
 export { default as Footer } from './Footer/Footer';
