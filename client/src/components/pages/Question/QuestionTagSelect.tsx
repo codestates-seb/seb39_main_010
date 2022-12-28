@@ -18,22 +18,24 @@ export const questionTagOptions = [
 	{ value: 4, name: '회사지식' },
 	{ value: 5, name: '미래계획' },
 	{ value: 6, name: '상황대처' },
-	{ value: 7, name: '마지막 한마다' },
+	{ value: 7, name: '마지막 한마디' },
 	{ value: 8, name: '기타' },
 ];
 
 const QuestionTagSelect = ({ setState, tag }: Prop) => {
 	const onQuestionTagChange = (event: React.FormEvent<HTMLSelectElement>) => {
-		setState(+event.currentTarget.value);
+		setState(parseInt(event.currentTarget.value) || undefined);
 	};
 
 	return (
 		<SortingContainer>
 			<form onFocus={() => SortingContainer}>
-				<select required onChange={onQuestionTagChange}>
-					<option value="" disabled defaultValue={tag ? tag : ''}>
-						질문 유형 선택
-					</option>
+				<select
+					required
+					onChange={onQuestionTagChange}
+					defaultValue={tag || undefined}
+				>
+					<option value="">질문 유형 선택</option>
 					{questionTagOptions.map((option: questionTag) => {
 						return (
 							<option key={option.value} value={option.value}>
