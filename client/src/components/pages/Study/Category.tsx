@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CardContentAll, CardContentDone, CardContentOn } from './Cards';
-import SearchBar from './FilterAndSearchBar';
+// import SearchBar from './FilterAndSearchBar';
 
 export const CategoryContainer = styled.div`
 	width: 1200px;
@@ -55,10 +55,10 @@ const Category = () => {
 					</div>
 				))}
 			</CategoryContainer>
-			<SearchBar
+			{/* <SearchBar
 				placeholder="관심 스터디를 검색해 보세요!"
-				navigate="/study/write"
-			/>
+				url="/study/write"
+			/> */}
 			<div>{currentpage}</div>
 		</>
 	);

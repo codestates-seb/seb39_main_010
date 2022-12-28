@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import TextArea from 'components/common/Textarea/Textarea';
 import QuestionTagSelect from 'components/pages/Question/QuestionTagSelect';
 import { postQuestionApi } from 'apis/authApiClient';
+import { useNavigate } from 'react-router-dom';
 
 export interface NewQuestion {
 	title: string;
@@ -22,6 +23,7 @@ const QuestionWrite = () => {
 	});
 	const [categoryId, setCategoryId] = useState<number>();
 	const [tagId, setTagId] = useState<number>();
+	const navigate = useNavigate();
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -37,12 +39,7 @@ const QuestionWrite = () => {
 			categoryId,
 			tagId,
 			...question,
-		});
-		console.log({
-			categoryId,
-			tagId,
-			...question,
-		});
+		}).then(() => navigate('/'));
 	};
 
 	return (

@@ -51,7 +51,12 @@ interface Prop {
 	category?: number;
 }
 
-export const jobOptions = [
+export interface JobOption {
+	value: number;
+	name: string;
+}
+
+export const jobOptions: JobOption[] = [
 	{ value: 1, name: '영업/고객상담' },
 	{ value: 2, name: '경영/사무' },
 	{ value: 3, name: '마케팅/광고/홍보' },
@@ -70,16 +75,18 @@ export const jobOptions = [
 
 const JobSelect = ({ setState, category }: Prop) => {
 	const onJobSelectChange = (event: React.FormEvent<HTMLSelectElement>) => {
-		setState(+event.currentTarget.value);
+		setState(parseInt(event.currentTarget.value) || undefined);
 	};
 
 	return (
 		<SortingContainer>
 			<form onFocus={() => SortingContainer}>
-				<select required onChange={onJobSelectChange}>
-					<option value="" disabled defaultValue={category ? category : ''}>
-						직무 카테고리 선택
-					</option>
+				<select
+					required
+					onChange={onJobSelectChange}
+					defaultValue={category || undefined}
+				>
+					<option value="">직무 카테고리 선택</option>
 					{jobOptions.map((option: JobOptions) => {
 						return (
 							<option key={option.value} value={option.value}>

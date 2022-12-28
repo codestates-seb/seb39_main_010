@@ -6,12 +6,14 @@ import { theme } from 'styles/theme';
 import { ReactComponent as AvatarImg } from 'assets/images/avatar.svg';
 import { AiOutlineEye } from 'react-icons/ai';
 import { BiCommentDetail, BiHeart } from 'react-icons/bi';
-import Comments from 'components/common/Comments/Comments';
 import LoadingSpinner from 'components/common/LoadingSpinner/LoadingSpinner';
 import { Question } from 'components/pages/Question/QuestionCard';
 import { useRecoilValue } from 'recoil';
 import { userAtom } from 'recoil/atom';
 import { deleteQuestionApi } from 'apis/authApiClient';
+import CommentIntro from 'components/common/Comments/CommentIntro';
+import QuestionCommentInput from 'components/common/Comments/QuestionCommentInput';
+import Comments from 'components/common/Comments/Comments';
 
 const QuestionDetail = () => {
 	const { id } = useParams();
@@ -19,9 +21,14 @@ const QuestionDetail = () => {
 	const navigate = useNavigate();
 	const user = useRecoilValue(userAtom);
 
+	const confirmDelete = () => {
+		if (window.confirm('정말로 삭제하시겠습니까?')) {
+			deleteQuestionApi(id).then(() => navigate('/'));
+		}
+	};
+
 	useEffect(() => {
 		getQuestionApi(id).then((res) => setData(res.data));
-		console.log(data);
 	}, []);
 
 	if (!data) return <LoadingSpinner />;
@@ -51,14 +58,7 @@ const QuestionDetail = () => {
 								>
 									수정
 								</span>
-								<span
-									onClick={() => {
-										deleteQuestionApi(id);
-										navigate('/');
-									}}
-								>
-									삭제
-								</span>
+								<span onClick={confirmDelete}>삭제</span>
 							</>
 						) : null}
 					</div>
@@ -76,7 +76,23 @@ const QuestionDetail = () => {
 						</span>
 					</LikeContainer>
 				</Contents>
-				<Comments comments={data.answers} id={id} />
+				<CommentIntro
+					title="면접 질문에 대한 여러분의 답변을 들려주세요."
+					content="비방글 혹은 글 내용과 상관 없는 댓글을 작성할 시 삭제될 수 있습니다."
+				/>
+				<QuestionCommentInput
+					getDataApi={getQuestionApi}
+					id={id}
+					type={'questions'}
+					setData={setData}
+				/>
+				<Comments
+					setData={setData}
+					getDataApi={getQuestionApi}
+					type={'questions'}
+					comments={data.answers}
+					id={id}
+				/>
 			</InnerContainer>
 		</QuestionDetailContainer>
 	);

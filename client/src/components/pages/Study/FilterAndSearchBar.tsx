@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { PopularSorting, SearchBar } from 'components/common';
+import { SearchBar, SortByFilter } from 'components/common';
 import { BsPencil } from 'react-icons/bs';
-import { useNavigate } from 'react-router-dom';
-import JobSorting from 'components/common/SelectBox/JobSorting';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Question } from '../Question/QuestionCard';
+import JobFilter from 'components/common/SelectBox/JobFilter';
+import { getFilteredQuestionList } from 'apis/apiClient';
 
 export const SearchBarContainer = styled.div`
 	display: flex;
@@ -39,20 +41,87 @@ export const WriteButton = styled.button`
 
 interface IProps {
 	placeholder: string;
-	navigate: string;
+	url: string;
+	setDataList: React.Dispatch<React.SetStateAction<Question[] | undefined>>;
 }
 
-export const FilterAndSearchBar = (props: IProps) => {
+export interface FilterState {
+	searchType: 'title';
+	keyword: string;
+	orderby: string;
+	category: string;
+}
+
+export const FilterAndSearchBar = ({
+	placeholder,
+	url,
+	setDataList,
+}: IProps) => {
 	const navigate = useNavigate();
+	const [filterState, setFilterState] = useState<FilterState>({
+		searchType: 'title',
+		keyword: '',
+		orderby: '',
+		category: '',
+	});
+	const [, setSearchParams] = useSearchParams();
+
+	useEffect(() => {
+		getFilteredQuestionList(
+			filterState.keyword,
+			filterState.orderby,
+			filterState.category
+		).then((res) => {
+			setDataList(res);
+			if (filterState.orderby && filterState.category) {
+				setSearchParams({
+					searchType: 'title',
+					keyword: filterState.keyword,
+					orderby: filterState.orderby,
+					category: filterState.category,
+				});
+			} else if (!filterState.orderby && filterState.category) {
+				setSearchParams({
+					searchType: 'title',
+					keyword: filterState.keyword,
+					category: filterState.category,
+				});
+			} else if (filterState.orderby && !filterState.category) {
+				setSearchParams({
+					searchType: 'title',
+					keyword: filterState.keyword,
+					orderby: filterState.orderby,
+				});
+			} else {
+				setSearchParams({
+					searchType: 'title',
+					keyword: filterState.keyword,
+				});
+			}
+		});
+	}, [filterState]);
+
 	return (
 		<SearchBarContainer>
 			<div>
-				<SearchBar placeholder={props.placeholder} />
-				<JobSorting />
-				<PopularSorting />
+				<SearchBar
+					filterState={filterState}
+					setFilterState={setFilterState}
+					placeholder={placeholder}
+				/>
+				<JobFilter
+					setDataList={setDataList}
+					filterState={filterState}
+					setFilterState={setFilterState}
+				/>
+				<SortByFilter
+					setDataList={setDataList}
+					filterState={filterState}
+					setFilterState={setFilterState}
+				/>
 			</div>
 
-			<WriteButton onClick={() => navigate(props.navigate)}>
+			<WriteButton onClick={() => navigate(url)}>
 				<BsPencil size={20} />
 				작성하기
 			</WriteButton>

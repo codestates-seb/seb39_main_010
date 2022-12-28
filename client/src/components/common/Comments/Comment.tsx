@@ -5,9 +5,11 @@ import { ReactComponent as AvatarImg } from 'assets/images/avatar.svg';
 import { QuestionComment } from 'components/pages/Question/QuestionCard';
 import { useRecoilValue } from 'recoil';
 import { userAtom } from 'recoil/atom';
-import { authApiClient } from 'apis/authApiClient';
+import { deleteCommentApi, putCommentApi } from 'apis/authApiClient';
+import { DefaultCommentProps } from './Comments';
 
 const CommentContainer = styled.div`
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -56,46 +58,31 @@ const CommentContainer = styled.div`
 	}
 `;
 
-interface Props {
+interface CommentProps extends DefaultCommentProps {
 	answer?: QuestionComment;
-	id?: string;
 }
 
-const Comment = ({ answer, id }: Props) => {
+const Comment = ({ type, answer, id, setData, getDataApi }: CommentProps) => {
 	const user = useRecoilValue(userAtom);
 	const [isEdit, setIsEdit] = useState(false);
 	const [editedComment, setEditedComment] = useState(answer?.comment);
 
-	const putCommentApi = async () => {
-		try {
-			const response = await authApiClient.put(
-				`/api/v1/questions/${id}/answers/${answer?.answerId}`,
-				{
-					parentId: null,
-					comment: editedComment,
-				}
-			);
-
-			setIsEdit(!isEdit);
-			window.location.reload();
-
-			return response;
-		} catch (error) {
-			console.log(error);
-			throw new Error('질문 작성 실패');
-		}
+	const editComment = async () => {
+		putCommentApi(type, editedComment, id, answer?.answerId)
+			.then(() => getDataApi(id))
+			.then((res) => {
+				setData(res.data);
+				setIsEdit(!isEdit);
+			});
 	};
 
-	const deleteCommentApi = async () => {
-		try {
-			const response = await authApiClient.delete(
-				`/api/v1/questions/${id}/answers/${answer?.answerId}`
-			);
-
-			return response;
-		} catch (error) {
-			console.log(error);
-			throw new Error('댓글 삭제 실패');
+	const removeComment = async () => {
+		if (window.confirm('정말 댓글을 삭제하시겠습니까?')) {
+			deleteCommentApi(type, id, answer?.answerId)
+				.then(() => getDataApi(id))
+				.then((res) => {
+					setData(res.data);
+				});
 		}
 	};
 
@@ -132,7 +119,7 @@ const Comment = ({ answer, id }: Props) => {
 									<div className="dot"></div>
 									<span
 										onClick={() => {
-											isEdit ? putCommentApi() : setIsEdit(!isEdit);
+											isEdit ? editComment() : setIsEdit(!isEdit);
 										}}
 									>
 										{isEdit ? '수정 완료' : '수정'}
@@ -140,7 +127,7 @@ const Comment = ({ answer, id }: Props) => {
 									<div className="dot"></div>
 									<span
 										onClick={() => {
-											isEdit ? null : deleteCommentApi();
+											isEdit ? setIsEdit(false) : removeComment();
 										}}
 									>
 										{isEdit ? '수정 취소' : '삭제'}
