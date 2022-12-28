@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { theme } from 'styles/theme';
 
 export const HeaderContainer = styled.div`
+	position: relative;
 	display: flex;
-	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 	padding: 0px 6%;
@@ -12,12 +12,12 @@ export const HeaderContainer = styled.div`
 	width: 100%;
 	height: 88px;
 
-	/* background: #ffffff; */
 	box-shadow: inset 0px -1px 1px rgba(0, 0, 0, 0.1);
 
 	.avatar-svg {
 		width: 50px;
 		height: 50px;
+		cursor: pointer;
 	}
 
 	.login {

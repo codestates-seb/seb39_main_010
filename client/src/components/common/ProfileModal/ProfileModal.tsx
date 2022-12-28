@@ -32,11 +32,9 @@ const ProfileModal = () => {
 export default ProfileModal;
 
 const ProfileModalContainer = styled.div`
-	position: fixed;
-	left: 1795px;
-	top: 60px;
-	width: 100%;
-	height: 100%;
+	position: absolute;
+	right: 6%;
+	top: 75px;
 	z-index: 10;
 `;
 
