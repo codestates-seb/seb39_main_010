@@ -36,6 +36,50 @@ export const loginApi = async (formData: LoginSubmitForm) => {
 	}
 };
 
+// getQuestionList
+export const getQuestionListApi = async () => {
+	try {
+		const response = await apiClient.get('/api/v1/questions');
+
+		return response.data.content;
+	} catch (error) {
+		throw new Error('질문 목록 조회 실패');
+	}
+};
+
+// getFilteredQuestionList
+export const getFilteredQuestionList = async (
+	keyword: string,
+	orderby?: string,
+	category?: string
+) => {
+	try {
+		if (!orderby && category) {
+			const response = await apiClient.get(
+				`/api/v1/questions/search?searchType=title&keyword=${keyword}&category=${category}`
+			);
+			return response.data.content;
+		} else if (!category && orderby) {
+			const response = await apiClient.get(
+				`/api/v1/questions/search?searchType=title&keyword=${keyword}&orderby=${orderby}`
+			);
+			return response.data.content;
+		} else if (orderby && category) {
+			const response = await apiClient.get(
+				`/api/v1/questions/search?searchType=title&keyword=${keyword}&orderby=${orderby}&category=${category}`
+			);
+			return response.data.content;
+		} else {
+			const response = await apiClient.get(
+				`/api/v1/questions/search?searchType=title&keyword=${keyword}`
+			);
+			return response.data.content;
+		}
+	} catch (error) {
+		throw new Error('질문 정렬 실패');
+	}
+};
+
 // getQuestion
 export const getQuestionApi = async (id?: string) => {
 	try {
