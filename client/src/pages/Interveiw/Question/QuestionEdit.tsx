@@ -6,7 +6,7 @@ import QuestionTagSelect, {
 	questionTagOptions,
 } from 'components/pages/Question/QuestionTagSelect';
 import { putQuestionApi } from 'apis/authApiClient';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { NewQuestion, NewQuestionSubmitData } from './QuestionWrite';
 import { getQuestionApi } from 'apis/apiClient';
 import LoadingSpinner from 'components/common/LoadingSpinner/LoadingSpinner';
@@ -24,6 +24,7 @@ const QuestionEdit = () => {
 	});
 	const [categoryId, setCategoryId] = useState<number>();
 	const [tagId, setTagId] = useState<number>();
+	const navigate = useNavigate();
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -42,12 +43,7 @@ const QuestionEdit = () => {
 				...question,
 			},
 			id
-		);
-		console.log({
-			categoryId,
-			tagId,
-			...question,
-		});
+		).then(() => navigate(`/interview/question/${id}`));
 	};
 
 	useEffect(() => {
@@ -57,7 +53,6 @@ const QuestionEdit = () => {
 				title: data.title,
 				content: data.content,
 			});
-			console.log(data);
 			setCategoryId(
 				jobOptions.filter((el) => el.name === data.category)[0].value
 			);

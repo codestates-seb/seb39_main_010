@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineSearch } from 'react-icons/ai';
-// import { isPropertySignature } from 'typescript';
+import { useDebounce } from 'hooks/useDebounce';
+import { FilterState } from 'components/pages/Study/FilterAndSearchBar';
 
 export const SearchContainer = styled.div`
 	display: flex;
@@ -34,12 +35,27 @@ export const SearchContainer = styled.div`
 	}
 `;
 
-const SearchBar: React.FC<{ placeholder: string }> = (props) => {
+interface SearchBarProps {
+	placeholder: string;
+	filterState: FilterState;
+	setFilterState: React.Dispatch<React.SetStateAction<FilterState>>;
+}
+
+const SearchBar = ({
+	placeholder,
+	filterState,
+	setFilterState,
+}: SearchBarProps) => {
 	const [keyword, setKeyword] = useState('');
+	const debouncedKeyword = useDebounce(keyword, 500);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setKeyword(event.target.value);
 	};
+
+	useEffect(() => {
+		setFilterState({ ...filterState, ['keyword']: debouncedKeyword });
+	}, [debouncedKeyword]);
 
 	return (
 		<SearchContainer>
@@ -49,7 +65,7 @@ const SearchBar: React.FC<{ placeholder: string }> = (props) => {
 				</div>
 				<input
 					type="text"
-					placeholder={props.placeholder}
+					placeholder={placeholder}
 					onChange={handleChange}
 					value={keyword}
 				/>
