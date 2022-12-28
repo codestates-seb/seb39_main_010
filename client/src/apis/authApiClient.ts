@@ -102,3 +102,63 @@ export const deleteQuestionApi = async (id?: string) => {
 		throw new Error('글 삭제 실패');
 	}
 };
+
+// postComment
+export const postCommentApi = async (
+	type: string,
+	comment: string,
+	id?: string
+) => {
+	try {
+		const response = await authApiClient.post(`/api/v1/${type}/${id}/answers`, {
+			parentId: null,
+			comment,
+		});
+
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw new Error('댓글 작성 실패');
+	}
+};
+
+// putComment
+export const putCommentApi = async (
+	type: string,
+	comment?: string,
+	id?: string,
+	answerId?: number
+) => {
+	try {
+		const response = await authApiClient.put(
+			`/api/v1/${type}/${id}/answers/${answerId}`,
+			{
+				parentId: null,
+				comment,
+			}
+		);
+
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw new Error('댓글 작성 실패');
+	}
+};
+
+// deleteComment
+export const deleteCommentApi = async (
+	type: string,
+	id?: string,
+	answerId?: number
+) => {
+	try {
+		const response = await authApiClient.delete(
+			`/api/v1/${type}/${id}/answers/${answerId}`
+		);
+
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw new Error('댓글 작성 실패');
+	}
+};
