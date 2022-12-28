@@ -1,11 +1,15 @@
 import React, { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
-import { BsSuitHeart } from 'react-icons/bs';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { ReactComponent as AvatarImg } from 'assets/images/avatar.svg';
 import { QuestionComment } from 'components/pages/Question/QuestionCard';
 import { useRecoilValue } from 'recoil';
 import { userAtom } from 'recoil/atom';
-import { deleteCommentApi, putCommentApi } from 'apis/authApiClient';
+import {
+	deleteCommentApi,
+	postQuestionCommentLikeApi,
+	putCommentApi,
+} from 'apis/authApiClient';
 import { DefaultCommentProps } from './Comments';
 
 const CommentContainer = styled.div`
@@ -86,6 +90,12 @@ const Comment = ({ type, answer, id, setData, getDataApi }: CommentProps) => {
 		}
 	};
 
+	const likeComment = () => {
+		postQuestionCommentLikeApi(id, String(answer?.answerId))
+			.then(() => getDataApi(id))
+			.then((res) => setData(res.data));
+	};
+
 	return (
 		<CommentContainer>
 			{answer?.comment ? (
@@ -106,8 +116,12 @@ const Comment = ({ type, answer, id, setData, getDataApi }: CommentProps) => {
 						<div className="info">
 							<span>{answer.createdAt.slice(0, 19).replace('T', ' ')}</span>
 							<div className="dot"></div>
-							<span>
-								<BsSuitHeart size={15} />
+							<span onClick={likeComment}>
+								{answer.userLike ? (
+									<AiFillHeart size={15} />
+								) : (
+									<AiOutlineHeart size={15} />
+								)}
 								좋아요 {answer.likeCount}
 							</span>
 							<div className="dot"></div>
