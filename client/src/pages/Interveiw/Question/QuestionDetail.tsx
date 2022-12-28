@@ -4,13 +4,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { theme } from 'styles/theme';
 import { ReactComponent as AvatarImg } from 'assets/images/avatar.svg';
-import { AiOutlineEye } from 'react-icons/ai';
-import { BiCommentDetail, BiHeart } from 'react-icons/bi';
+import { AiOutlineEye, AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import { BiCommentDetail } from 'react-icons/bi';
 import LoadingSpinner from 'components/common/LoadingSpinner/LoadingSpinner';
 import { Question } from 'components/pages/Question/QuestionCard';
 import { useRecoilValue } from 'recoil';
 import { userAtom } from 'recoil/atom';
-import { deleteQuestionApi } from 'apis/authApiClient';
+import { deleteQuestionApi, postQuestionLikeApi } from 'apis/authApiClient';
 import CommentIntro from 'components/common/Comments/CommentIntro';
 import QuestionCommentInput from 'components/common/Comments/QuestionCommentInput';
 import Comments from 'components/common/Comments/Comments';
@@ -25,6 +25,12 @@ const QuestionDetail = () => {
 		if (window.confirm('정말로 삭제하시겠습니까?')) {
 			deleteQuestionApi(id).then(() => navigate('/'));
 		}
+	};
+
+	const handleLikeClick = () => {
+		postQuestionLikeApi(id)
+			.then(() => getQuestionApi(id))
+			.then((res) => setData(res.data));
 	};
 
 	useEffect(() => {
@@ -66,8 +72,12 @@ const QuestionDetail = () => {
 				<Contents>
 					<p>{data.content}</p>
 					<LikeContainer>
-						<span>
-							<BiHeart className="svg heart-svg" />
+						<span onClick={handleLikeClick}>
+							{data.userLike ? (
+								<AiFillHeart className="svg heart-svg" />
+							) : (
+								<AiOutlineHeart className="svg heart-svg" />
+							)}
 							{data.likeCount}
 						</span>
 						<span>
