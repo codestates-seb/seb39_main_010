@@ -37,11 +37,11 @@ export const loginApi = async (formData: LoginSubmitForm) => {
 };
 
 // getQuestionList
-export const getQuestionListApi = async () => {
+export const getQuestionListApi = async (page: number) => {
 	try {
-		const response = await apiClient.get('/api/v1/questions');
+		const response = await apiClient.get(`/api/v1/questions?page=${page}`);
 
-		return response.data.content;
+		return response.data;
 	} catch (error) {
 		throw new Error('질문 목록 조회 실패');
 	}
