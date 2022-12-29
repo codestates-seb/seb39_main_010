@@ -30,7 +30,7 @@ export const SortingContainer = styled.div`
 `;
 
 export interface FilterProps {
-	setDataList: React.Dispatch<React.SetStateAction<Question[] | undefined>>;
+	setDataList: React.Dispatch<React.SetStateAction<Question[]>>;
 	filterState: FilterState;
 	setFilterState: React.Dispatch<React.SetStateAction<FilterState>>;
 }
