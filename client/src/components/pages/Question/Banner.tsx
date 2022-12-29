@@ -31,4 +31,8 @@ const BannerContainer = styled.div`
 		height: 52px;
 		margin-top: 50px;
 	}
+
+	svg {
+		width: 100%;
+	}
 `;

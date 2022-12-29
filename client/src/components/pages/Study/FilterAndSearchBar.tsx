@@ -42,7 +42,7 @@ export const WriteButton = styled.button`
 interface IProps {
 	placeholder: string;
 	url: string;
-	setDataList: React.Dispatch<React.SetStateAction<Question[] | undefined>>;
+	setDataList: React.Dispatch<React.SetStateAction<Question[]>>;
 }
 
 export interface FilterState {

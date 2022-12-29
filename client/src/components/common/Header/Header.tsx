@@ -38,36 +38,6 @@ const Header = () => {
 							</li>
 						);
 					})}
-					{/* <li
-						id="question"
-						onClick={() => {
-							navigate('/');
-							getclick;
-						}}
-						className={`${tab ? 'active' : ''}`}
-					>
-						면접 질문
-					</li>
-					<li
-						id="study"
-						onClick={() => {
-							navigate('/study');
-							getclick;
-						}}
-						className={`${tab ? 'active' : ''}`}
-					>
-						스터디모집
-					</li>
-					<li
-						id="review"
-						onClick={() => {
-							navigate('/interview/review');
-							getclick;
-						}}
-						className={`${tab ? 'active' : ''}`}
-					>
-						면접 후기
-					</li> */}
 				</ul>
 			</LogoandNav>
 			{cookie.getItem('refreshToken') ? (

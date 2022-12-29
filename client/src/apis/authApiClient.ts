@@ -103,6 +103,20 @@ export const deleteQuestionApi = async (id?: string) => {
 	}
 };
 
+// postQuestionLike
+export const postQuestionLikeApi = async (id?: string) => {
+	try {
+		const response = await authApiClient.post(
+			`/api/v1/questions/${id}/sympathy`,
+			{}
+		);
+
+		console.log(response);
+	} catch (error) {
+		throw new Error('좋아요 실패');
+	}
+};
+
 // postComment
 export const postCommentApi = async (
 	type: string,
@@ -160,5 +174,21 @@ export const deleteCommentApi = async (
 	} catch (error) {
 		console.log(error);
 		throw new Error('댓글 작성 실패');
+	}
+};
+
+export const postQuestionCommentLikeApi = async (
+	questionId?: string,
+	answerId?: string
+) => {
+	try {
+		const response = await authApiClient.post(
+			`/api/v1/questions/${questionId}/sympathy/${answerId}`,
+			{}
+		);
+
+		console.log(response);
+	} catch (error) {
+		throw new Error('댓글 좋아요 실패');
 	}
 };
