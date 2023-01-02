@@ -1,26 +1,15 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useSetRecoilState } from 'recoil';
-import { profileModalAtom, userAtom } from 'recoil/atom';
 import { cookie } from 'utils/cookie';
 
 const ProfileModal = () => {
-	const setProfileModal = useSetRecoilState(profileModalAtom);
-	const containerRef = useRef<HTMLDivElement>(null);
-	const setUserInfo = useSetRecoilState(userAtom);
-
-	const modalCloseHandler = (event: React.MouseEvent<HTMLDivElement>) => {
-		if (containerRef.current === event.target) setProfileModal(false);
-	};
-
 	return (
-		<ProfileModalContainer ref={containerRef} onClick={modalCloseHandler}>
+		<ProfileModalContainer>
 			<Modal
 				onClick={() => {
-					setUserInfo(null);
 					cookie.removeItem('refreshToken');
-					cookie.removeItem('accessToken');
-					window.location.replace('/');
+					localStorage.removeItem('accessToken');
+					localStorage.removeItem('persistUserAtom');
 				}}
 			>
 				로그아웃
