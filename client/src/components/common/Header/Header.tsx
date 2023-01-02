@@ -1,18 +1,21 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { HeaderContainer, LogoandNav } from './style';
-import { useRecoilState } from 'recoil';
-import { loginModalAtom, profileModalAtom } from 'recoil/atom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { loginModalAtom, loginRequestModalAtom } from 'recoil/atom';
 import LoginModal from '../LoginModal/LoginModal';
 import { ReactComponent as LogoImg } from 'assets/images/logo.svg';
 import { ReactComponent as AvatarImg } from 'assets/images/avatar.svg';
 import { cookie } from 'utils/cookie';
 import ProfileModal from '../ProfileModal/ProfileModal';
+import LoginRequestModal from '../LoginModal/LoginRequestModal';
+import useModal from 'hooks/useModal';
 
 const Header = () => {
 	const [isLoginModal, setIsLoginMoal] = useRecoilState(loginModalAtom);
-	const [isProfileModal, setIsProfileModal] = useRecoilState(profileModalAtom);
+	const isLoginRequestModal = useRecoilValue(loginRequestModalAtom);
 	const navigate = useNavigate();
+	const { isModal, ref, handleModalChange } = useModal();
 
 	const menus = [
 		{ id: 0, menu: '면접 질문', url: '/interview/question' },
@@ -20,12 +23,11 @@ const Header = () => {
 		{ id: 2, menu: '면접 후기', url: '/interview/review' },
 	];
 
-	// const ;
-
 	return (
 		<HeaderContainer>
 			{isLoginModal && <LoginModal />}
-			{isProfileModal && <ProfileModal />}
+			{isLoginRequestModal && <LoginRequestModal />}
+			{isModal && <ProfileModal />}
 			<LogoandNav>
 				<Link to="/">
 					<LogoImg />
@@ -41,10 +43,12 @@ const Header = () => {
 				</ul>
 			</LogoandNav>
 			{cookie.getItem('refreshToken') ? (
-				<AvatarImg
-					className="avatar-svg"
-					onClick={() => setIsProfileModal(!isProfileModal)}
-				/>
+				<div ref={ref}>
+					<AvatarImg
+						className="avatar-svg"
+						onClick={() => handleModalChange()}
+					/>
+				</div>
 			) : (
 				<span className="login" onClick={() => setIsLoginMoal(!isLoginModal)}>
 					로그인

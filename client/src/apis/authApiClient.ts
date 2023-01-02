@@ -1,49 +1,54 @@
-import axios, { AxiosRequestHeaders } from 'axios';
+import axios from 'axios';
 import { cookie } from 'utils/cookie';
 import { NewQuestionSubmitData } from 'pages/Interveiw/Question/QuestionWrite';
 import { EditedQuestionSubmitData } from 'pages/Interveiw/Question/QuestionEdit';
-import apiClient from './apiClient';
 
-export const refreshHeaders: AxiosRequestHeaders = {
-	Authorization: `Bearer ${cookie.getItem('accessToken')}`,
-	Refresh: `${cookie.getItem('refreshToken')}`,
-};
-
-export const headers: AxiosRequestHeaders = {
-	Authorization: `Bearer ${cookie.getItem('accessToken')}`,
-};
-
-// header 추가 필요
 export const authApiClient = axios.create({
 	baseURL: `${process.env.REACT_APP_BASE_URL}`,
-	headers: headers,
 });
 
-const getRefreshToken = async (): Promise<string | void> => {
+const getNewToken = async (): Promise<string | void> => {
 	try {
-		const response = await apiClient.post(
-			'/api/v1/token/refresh',
-			{},
-			{
-				headers: { Refresh: `${cookie.getItem('refreshToken')}` },
-			}
-		);
+		const response = await authApiClient.post('/api/v1/token/refresh', {});
 
 		const accessToken = response.headers.authorization.split(' ')[1];
 		const refreshToken = response.headers.refresh;
 
-		cookie.removeItem('accessToken');
-		cookie.removeItem('refreshToken');
+		localStorage.removeItem('accessToken');
+		localStorage.setItem('accessToken', accessToken);
 
-		cookie.setItem('accessToken', accessToken);
-		cookie.setItem('refreshToken', refreshToken);
+		cookie.removeItem('refreshToken');
+		cookie.setItem('refreshToken', refreshToken, { maxAge: 3600 });
 
 		return accessToken;
 	} catch (e) {
-		cookie.removeItem('accessToken');
+		localStorage.removeItem('persistUserAtom');
+		localStorage.removeItem('accessToken');
 		cookie.removeItem('refreshToken');
 	}
 };
+
+authApiClient.interceptors.request.use(
+	(config) => {
+		const accessToken = localStorage.getItem('accessToken');
+		const refreshToken = cookie.getItem('refreshToken');
+		const { url } = config;
+
+		if (url === '/api/v1/token/refresh' && refreshToken) {
+			config.headers = { Refresh: `${refreshToken}` };
+		} else if (accessToken && refreshToken) {
+			config.headers = {
+				Authorization: `Bearer ${accessToken}`,
+				'Content-Type': 'application/json',
+			};
+		}
+
+		return config;
+	},
+	(err) => {
+		return Promise.reject(err);
+	}
+);
 
 authApiClient.interceptors.response.use(
 	(res) => res,
@@ -53,10 +58,18 @@ authApiClient.interceptors.response.use(
 			response: { status, data },
 		} = err;
 
-		const accessToken = await getRefreshToken();
+		if (
+			config.url === '/api/v1/token/refresh' ||
+			status !== 401 ||
+			config.sent
+		) {
+			return Promise.reject(err);
+		}
 
-		if (!config.sent && status === 401 && data.includes('Expired JWT')) {
-			config.sent = true;
+		config.sent = true;
+		const accessToken = await getNewToken();
+
+		if (accessToken && status === 401 && data.includes('Expired JWT')) {
 			config.headers.Authorization = `Bearer ${accessToken}`;
 		}
 
