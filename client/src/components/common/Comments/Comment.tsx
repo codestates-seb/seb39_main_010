@@ -11,6 +11,7 @@ import {
 	putCommentApi,
 } from 'apis/authApiClient';
 import { DefaultCommentProps } from './Comments';
+import { getUser } from 'utils/user';
 
 const CommentContainer = styled.div`
 	width: 100%;
@@ -67,6 +68,7 @@ interface CommentProps extends DefaultCommentProps {
 }
 
 const Comment = ({ type, answer, id, setData, getDataApi }: CommentProps) => {
+	const isLoggedIn = getUser();
 	const user = useRecoilValue(userAtom);
 	const [isEdit, setIsEdit] = useState(false);
 	const [editedComment, setEditedComment] = useState(answer?.comment);
@@ -91,6 +93,10 @@ const Comment = ({ type, answer, id, setData, getDataApi }: CommentProps) => {
 	};
 
 	const likeComment = () => {
+		if (!isLoggedIn) {
+			window.alert('로그인 후 이용 가능한 서비스입니다.');
+		}
+
 		postQuestionCommentLikeApi(id, String(answer?.answerId))
 			.then(() => getDataApi(id))
 			.then((res) => setData(res.data));

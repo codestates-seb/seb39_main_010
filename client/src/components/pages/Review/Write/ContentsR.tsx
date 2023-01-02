@@ -62,17 +62,9 @@ const ContentsR = () => {
 	const textRef = useRef<HTMLTextAreaElement>(null);
 	const [, setCategoryId] = useState<number>();
 
-	// function parentFunction(props: unknown) {
-	// 	console.log(props);
-	// }
-
 	function handleSubmitClick() {
 		const title = titleRef.current?.value; // 값 잘 받아짐
 		const text = textRef.current?.value; // 값 잘 받아짐
-		console.log({
-			title: title,
-			text: text,
-		});
 
 		return {
 			title: title,

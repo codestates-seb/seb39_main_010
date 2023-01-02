@@ -12,6 +12,7 @@ import {
 import { Mypage } from 'pages/Mypage';
 import { Footer, Header } from 'components/common';
 import QuestionEdit from 'pages/Interveiw/Question/QuestionEdit';
+import PrivateRoute from './PrivateRoute';
 
 const Router = () => {
 	return (
@@ -19,22 +20,29 @@ const Router = () => {
 			<Header />
 			<Routes>
 				<Route path="/" element={<Navigate to="/interview/question" />} />
-				<Route path="/signup" element={<Signup />} />
-				<Route path="/mypage" element={<Mypage />} />
-				<Route path="/profile/:id" element={<div>Profile</div>} />
 				<Route path="/interview">
 					<Route path="question" element={<Question />} />
 					<Route path="question/:id" element={<QuestionDetail />} />
-					<Route path="question/write" element={<QuestionWrite />} />
-					<Route path="question/edit/:id" element={<QuestionEdit />} />
 					<Route path="review" element={<Review />} />
 					<Route path="review/:id" element={<div>ReviewDetail</div>} />
-					<Route path="review/write" element={<ReviewWrite />} />
 				</Route>
 				<Route path="/study">
 					<Route path="" element={<Study />} />
 					<Route path=":id" element={<StudyDetail />} />
-					<Route path="write" element={<StudyWrite />} />
+				</Route>
+				<Route element={<PrivateRoute authentication={true} />}>
+					<Route path="/mypage" element={<Mypage />} />
+					<Route path="/profile/:id" element={<div>Profile</div>} />
+					<Route path="/interview/question/write" element={<QuestionWrite />} />
+					<Route
+						path="/interview/question/edit/:id"
+						element={<QuestionEdit />}
+					/>
+					<Route path="/interview/review/write" element={<ReviewWrite />} />
+					<Route path="/study/write" element={<StudyWrite />} />
+				</Route>
+				<Route element={<PrivateRoute authentication={false} />}>
+					<Route path="/signup" element={<Signup />} />
 				</Route>
 			</Routes>
 			<Footer />

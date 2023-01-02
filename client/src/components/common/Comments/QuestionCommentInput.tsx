@@ -5,6 +5,7 @@ import { RiSendPlaneFill } from 'react-icons/ri';
 import { postCommentApi } from 'apis/authApiClient';
 import { Question } from '../../pages/Question/QuestionCard';
 import { AxiosResponse } from 'axios';
+import { getUser } from 'utils/user';
 
 interface CommentInputProps {
 	id?: string;
@@ -15,6 +16,7 @@ interface CommentInputProps {
 }
 
 const CommentInput = ({ id, type, getDataApi, setData }: CommentInputProps) => {
+	const isLoggedIn = getUser();
 	const [comment, setComment] = useState('');
 
 	const addComment = () => {
@@ -26,12 +28,18 @@ const CommentInput = ({ id, type, getDataApi, setData }: CommentInputProps) => {
 			});
 	};
 
+	const handleFormClick = () => {
+		if (!isLoggedIn) {
+			window.alert('로그인 후 이용 가능한 서비스입니다.');
+		}
+	};
+
 	return (
 		<CommentsContainer>
 			<div className="commentsinput">
 				<AvatarImg className="avatar-svg" />
 				<div>
-					<form>
+					<form onClick={handleFormClick}>
 						<input
 							value={comment}
 							onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -39,6 +47,7 @@ const CommentInput = ({ id, type, getDataApi, setData }: CommentInputProps) => {
 							}
 							type="text"
 							placeholder="댓글을 남겨 보세요"
+							disabled={isLoggedIn ? false : true}
 						/>
 						<RiSendPlaneFill size={25} color="#666666" onClick={addComment} />
 					</form>

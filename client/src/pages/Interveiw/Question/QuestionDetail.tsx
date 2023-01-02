@@ -14,12 +14,14 @@ import { deleteQuestionApi, postQuestionLikeApi } from 'apis/authApiClient';
 import CommentIntro from 'components/common/Comments/CommentIntro';
 import QuestionCommentInput from 'components/common/Comments/QuestionCommentInput';
 import Comments from 'components/common/Comments/Comments';
+import { getUser } from 'utils/user';
 
 const QuestionDetail = () => {
 	const { id } = useParams();
 	const [data, setData] = useState<Question>();
 	const navigate = useNavigate();
 	const user = useRecoilValue(userAtom);
+	const isLoggedIn = getUser();
 
 	const confirmDelete = () => {
 		if (window.confirm('정말로 삭제하시겠습니까?')) {
@@ -28,6 +30,11 @@ const QuestionDetail = () => {
 	};
 
 	const handleLikeClick = () => {
+		if (!isLoggedIn) {
+			window.alert('로그인 후 이용 가능한 서비스입니다.');
+			return;
+		}
+
 		postQuestionLikeApi(id)
 			.then(() => getQuestionApi(id))
 			.then((res) => setData(res.data));
