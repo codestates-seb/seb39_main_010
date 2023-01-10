@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { HeaderContainer, LogoandNav } from './style';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { loginModalAtom, loginRequestModalAtom } from 'recoil/atom';
@@ -14,7 +14,6 @@ import useModal from 'hooks/useModal';
 const Header = () => {
 	const [isLoginModal, setIsLoginMoal] = useRecoilState(loginModalAtom);
 	const isLoginRequestModal = useRecoilValue(loginRequestModalAtom);
-	const navigate = useNavigate();
 	const { isModal, ref, handleModalChange } = useModal();
 
 	const menus = [
@@ -35,8 +34,15 @@ const Header = () => {
 				<ul>
 					{menus.map((menu) => {
 						return (
-							<li key={menu.id} onClick={() => navigate(menu.url)}>
-								{menu.menu}
+							<li key={menu.id}>
+								<NavLink
+									to={menu.url}
+									className={({ isActive }) =>
+										isActive ? 'active' : undefined
+									}
+								>
+									{menu.menu}
+								</NavLink>
 							</li>
 						);
 					})}
