@@ -32,7 +32,7 @@ const Router = () => {
 				</Route>
 				<Route element={<PrivateRoute authentication={true} />}>
 					<Route path="/mypage" element={<Mypage />} />
-					<Route path="/profile/:id" element={<div>Profile</div>} />
+					<Route path="/profile/:id" element={<Mypage />} />
 					<Route path="/interview/question/write" element={<QuestionWrite />} />
 					<Route
 						path="/interview/question/edit/:id"
