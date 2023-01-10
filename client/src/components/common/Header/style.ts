@@ -52,14 +52,18 @@ export const LogoandNav = styled.div`
 		padding: 0px;
 		gap: 30px;
 
-		li:hover {
-			color: #3563e9;
+		a {
+			color: ${theme.colors.gray800};
+		}
+
+		.active {
+			color: ${theme.colors.blueMain};
+			font-weight: 700;
+		}
+
+		a:hover {
 			font-weight: bold;
 			cursor: pointer;
-		}
-		li.active {
-			color: #3563e9;
-			font-weight: bold;
 		}
 	}
 `;
