@@ -4,37 +4,27 @@ import { theme } from 'styles/theme';
 // Introduction start
 export const IntroductionContainer = styled.div`
 	display: flex;
+	flex-direction: column;
+	gap: 30px;
+
 	align-items: center;
-	width: 1200px;
-	height: 205px;
-	margin: 44px 0;
+	width: 800px;
 
 	button {
-		width: 81px;
+		display: flex;
+		width: 120px;
 		height: 45px;
 		padding: 0;
-
 		font-size: 14px;
+		gap: 5px;
 	}
-`;
-
-export const Empty = styled.div`
-	width: 200px;
-`;
-
-export const Profile = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 1000px;
-	height: 170px;
 `;
 
 export const ProfileText = styled.div`
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
-	height: 100%;
+	gap: 25px;
+	width: 100%;
 
 	.nicknamecompany {
 		display: flex;
@@ -44,6 +34,11 @@ export const ProfileText = styled.div`
 		#nickname {
 			font-size: 36px;
 		}
+
+		.buttons {
+			display: flex;
+			gap: 15px;
+		}
 	}
 	#company {
 		display: flex;
@@ -52,18 +47,24 @@ export const ProfileText = styled.div`
 		color: ${theme.colors.gray500}; //gray500
 		span {
 			margin-right: 15px;
+			flex-shrink: 0;
 			:last-child {
 				color: ${theme.colors.gray400}; //gray400
 			}
 		}
 	}
 	.text {
-		width: 752px;
-		height: 79px;
-		padding: 5px 10px;
-
+		padding: 10px 15px;
 		border: 1px solid #ebebeb;
 		border-radius: 15px;
+	}
+
+	input {
+		margin: 0;
+		padding: 10px 15px;
+		border: 1px solid #ebebeb;
+		border-radius: 5px;
+		width: 100%;
 	}
 `;
 export const ProfileImg = styled.div`
@@ -77,5 +78,3 @@ export const ProfileImg = styled.div`
 	background: #d9d9d9;
 	border-radius: 999px;
 `;
-
-// Introduction end
