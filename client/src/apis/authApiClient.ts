@@ -205,3 +205,51 @@ export const postQuestionCommentLikeApi = async (
 		throw new Error('댓글 좋아요 실패');
 	}
 };
+
+// patchProfileInfo
+export const patchCompanyInfo = async (
+	favoriteCompany: string | null,
+	id?: number
+) => {
+	try {
+		const response = await authApiClient.patch(`/api/v1/users/${id}`, {
+			favoriteCompany,
+		});
+
+		return response.data.data;
+	} catch (error) {
+		throw new Error('유저 정보 수정을 실패했습니다.');
+	}
+};
+
+export const patchIntroductionInfo = async (
+	selfIntroductions: string | null,
+	id?: number
+) => {
+	try {
+		const response = await authApiClient.patch(`/api/v1/users/${id}`, {
+			selfIntroductions,
+		});
+
+		return response.data.data;
+	} catch (error) {
+		throw new Error('유저 정보 수정을 실패했습니다.');
+	}
+};
+
+export const patchUserInfo = async (
+	favoriteCompany: string | null,
+	selfIntroductions: string | null,
+	id?: number
+) => {
+	try {
+		const response = await authApiClient.patch(`/api/v1/users/${id}`, {
+			favoriteCompany,
+			selfIntroductions,
+		});
+
+		return response.data.data;
+	} catch (error) {
+		throw new Error('유저 정보 수정을 실패했습니다.');
+	}
+};
