@@ -5,37 +5,26 @@ const apiClient = axios.create({
 	baseURL: `${process.env.REACT_APP_BASE_URL}`,
 });
 
-apiClient.interceptors.response.use(
-	async (res) => res,
-	async (err) => {
-		const {
-			config,
-			response: { status },
-		} = err;
-
-		if (config.url === '/api/v1/users/exists-email' && status === 409) {
-			window.alert('이미 가입된 이메일입니다. 다른 이메일로 가입해주세요.');
-		}
-
-		if (config.url === '/api/v1/users/signup' && status === 409) {
-			window.alert(
-				'이미 존재하는 아이디 또는 닉네임입니다. 다른 아이디 또는 닉네임을 사용해주세요.'
-			);
-		}
-	}
-);
-
 // signup
 export const signupApi = async (formData: SignupSubmitForm) => {
 	try {
 		const response = await apiClient.post('/api/v1/users/signup', formData);
 
 		if (response.status === 201)
-			window.alert(
+			return window.alert(
 				'회원 가입에 성공했습니다. 가입하신 메일 주소로 발송된 메일의 VERIFY 버튼을 클릭해주면 서비스 이용이 가능합니다.'
 			);
 	} catch (error) {
-		throw new Error('회원가입 에러');
+		if (axios.isAxiosError(error)) {
+			const status = error.response?.status;
+			if (status === 409) {
+				throw window.alert(
+					'이미 존재하는 아이디 또는 닉네임입니다. 다른 아이디 또는 닉네임을 사용해주세요.'
+				);
+			}
+		} else {
+			throw new Error('회원가입 에러');
+		}
 	}
 };
 
@@ -48,8 +37,16 @@ export const emailAuthenticationApi = async (email: string) => {
 		if (response.status === 200)
 			return window.alert('이메일 인증에 성공했습니다.');
 	} catch (error) {
-		console.log(error);
-		throw new Error('이메일 인증 에러');
+		if (axios.isAxiosError(error)) {
+			const status = error.response?.status;
+			if (status === 409) {
+				throw window.alert(
+					'이미 가입된 이메일입니다. 다른 이메일로 가입해주세요.'
+				);
+			}
+		} else {
+			throw new Error('이메일 인증 에러');
+		}
 	}
 };
 
