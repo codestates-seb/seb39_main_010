@@ -5,10 +5,13 @@ import { BiBuildings } from 'react-icons/bi';
 import { IntroductionContainer, ProfileImg, ProfileText } from './style';
 import { UserInfo } from 'pages/Mypage/Mypage';
 import {
+	deleteUser,
 	patchCompanyInfo,
 	patchIntroductionInfo,
 	patchUserInfo,
 } from 'apis/authApiClient';
+import { useNavigate } from 'react-router-dom';
+import { cookie } from 'utils/cookie';
 
 interface IntroductionProps {
 	userInfo: UserInfo;
@@ -24,6 +27,7 @@ const Introduction = ({ userInfo, id, setUserInfo }: IntroductionProps) => {
 	const [selfIntroductions, setSelfIntroductions] = useState(
 		userInfo.selfIntroductions || null
 	);
+	const navigate = useNavigate();
 
 	const handleEditButtonClick = () => {
 		setIsEdit(!isEdit);
@@ -72,6 +76,23 @@ const Introduction = ({ userInfo, id, setUserInfo }: IntroductionProps) => {
 		}
 	};
 
+	const handleWithdrawalButtonClick = async (id?: number) => {
+		if (window.confirm('정말로 탈퇴하시겠습니까?')) {
+			deleteUser(id).then(() => {
+				cookie.removeItem('refreshToken');
+				localStorage.removeItem('accessToken');
+				localStorage.removeItem('persistUserAtom');
+
+				window.alert(
+					'회원 탈퇴가 완료되었습니다. 그동안 서비스를 이용해주셔서 감사합니다.'
+				);
+				navigate('/');
+			});
+		}
+
+		return;
+	};
+
 	return (
 		<IntroductionContainer>
 			<ProfileImg>사진</ProfileImg>
@@ -81,16 +102,23 @@ const Introduction = ({ userInfo, id, setUserInfo }: IntroductionProps) => {
 					<div className="buttons">
 						{!isEdit ? (
 							<>
-								<BasicButton>
-									<span>비밀번호 변경</span>
-								</BasicButton>
 								<BasicButton onClick={handleEditButtonClick}>
 									<BsPencil size={15} />
 									<span>수정</span>
 								</BasicButton>
+								<BasicButton
+									mode="login"
+									onClick={() => handleWithdrawalButtonClick(id)}
+								>
+									<span>회원 탈퇴</span>
+								</BasicButton>
 							</>
 						) : (
 							<>
+								<BasicButton onClick={handleUserInfoSubmit}>
+									<BsCheckLg size={15} />
+									<span>수정 완료</span>
+								</BasicButton>
 								<BasicButton
 									onClick={() => {
 										if (window.confirm('수정을 취소하시겠습니까?'))
@@ -99,10 +127,6 @@ const Introduction = ({ userInfo, id, setUserInfo }: IntroductionProps) => {
 								>
 									<BsXLg size={15} />
 									<span>수정 취소</span>
-								</BasicButton>
-								<BasicButton onClick={handleUserInfoSubmit}>
-									<BsCheckLg size={15} />
-									<span>수정 완료</span>
 								</BasicButton>
 							</>
 						)}

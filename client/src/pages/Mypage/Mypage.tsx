@@ -28,7 +28,6 @@ const Mypage = () => {
 
 	useEffect(() => {
 		getUserProfile(user?.memberId).then((res) => setUserInfo(res));
-		console.log(userInfo);
 	}, []);
 
 	if (!userInfo) return <LoadingSpinner />;

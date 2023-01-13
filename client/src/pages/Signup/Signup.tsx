@@ -9,6 +9,7 @@ import { ReactComponent as LogoImg } from 'assets/images/logo.svg';
 import SocialButton from 'components/common/SocialButtons/SocialButtons';
 import { SignupSubmitForm } from 'types';
 import { errorMessage, regex } from 'utils/signupValidation';
+import { useNavigate } from 'react-router-dom';
 
 interface SignupForm extends SignupSubmitForm {
 	passwordConfirm: string;
@@ -21,15 +22,39 @@ const Signup = () => {
 		getValues,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<SignupForm>();
+	} = useForm<SignupForm>({
+		mode: 'onSubmit',
+		reValidateMode: 'onChange',
+		defaultValues: {
+			email: '',
+			username: '',
+			password: '',
+			nickname: '',
+		},
+	});
+	const navigate = useNavigate();
 
 	const onSubmit: SubmitHandler<SignupSubmitForm> = async (data) => {
 		const { email, username, password, nickname } = data;
-		signupApi({ email, username, password, nickname });
+		signupApi({ email, username, password, nickname }).then((res) => {
+			if (res === 201) {
+				window.alert(
+					'회원 가입에 성공했습니다. 가입하신 메일 주소로 발송된 메일의 VERIFY 버튼을 클릭해주면 서비스 이용이 가능합니다.'
+				);
+				navigate('/');
+			}
+		});
 	};
 
 	const handleSocialButtonClick = (type: string) => {
 		window.location.href = `${process.env.REACT_APP_BASE_URL}/oauth2/authorization/${type}?redirect_uri=http://localhost:3000/login/oauth`;
+	};
+
+	const checkEmailDuplicate = (email: string) => {
+		if (!regex.email.test(email)) {
+			return window.alert('이메일 형식을 확인해주세요.');
+		}
+		emailAuthenticationApi(email);
 	};
 
 	return (
@@ -71,8 +96,7 @@ const Signup = () => {
 						className="email-button"
 						type="button"
 						mode={'login'}
-						disabled={!regex.email.test(watch('email'))}
-						onClick={() => emailAuthenticationApi(getValues('email'))}
+						onClick={() => checkEmailDuplicate(getValues('email'))}
 					>
 						이메일 인증하기
 					</BasicButton>
