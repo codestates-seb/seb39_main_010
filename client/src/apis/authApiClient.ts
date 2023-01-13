@@ -119,12 +119,7 @@ export const deleteQuestionApi = async (id?: string) => {
 // postQuestionLike
 export const postQuestionLikeApi = async (id?: string) => {
 	try {
-		const response = await authApiClient.post(
-			`/api/v1/questions/${id}/sympathy`,
-			{}
-		);
-
-		console.log(response);
+		return await authApiClient.post(`/api/v1/questions/${id}/sympathy`, {});
 	} catch (error) {
 		throw new Error('좋아요 실패');
 	}
@@ -195,12 +190,10 @@ export const postQuestionCommentLikeApi = async (
 	answerId?: string
 ) => {
 	try {
-		const response = await authApiClient.post(
+		return await authApiClient.post(
 			`/api/v1/questions/${questionId}/sympathy/${answerId}`,
 			{}
 		);
-
-		console.log(response);
 	} catch (error) {
 		throw new Error('댓글 좋아요 실패');
 	}
@@ -251,5 +244,14 @@ export const patchUserInfo = async (
 		return response.data.data;
 	} catch (error) {
 		throw new Error('유저 정보 수정을 실패했습니다.');
+	}
+};
+
+// deleteUser
+export const deleteUser = async (id?: number) => {
+	try {
+		return await authApiClient.delete(`/api/v1/users/${id}`);
+	} catch (error) {
+		throw new Error('유저 삭제 실패');
 	}
 };
