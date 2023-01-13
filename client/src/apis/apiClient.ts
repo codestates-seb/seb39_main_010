@@ -9,11 +9,7 @@ const apiClient = axios.create({
 export const signupApi = async (formData: SignupSubmitForm) => {
 	try {
 		const response = await apiClient.post('/api/v1/users/signup', formData);
-
-		if (response.status === 201)
-			return window.alert(
-				'회원 가입에 성공했습니다. 가입하신 메일 주소로 발송된 메일의 VERIFY 버튼을 클릭해주면 서비스 이용이 가능합니다.'
-			);
+		return response.status;
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			const status = error.response?.status;
