@@ -21,7 +21,16 @@ const Signup = () => {
 		getValues,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<SignupForm>();
+	} = useForm<SignupForm>({
+		mode: 'onSubmit',
+		reValidateMode: 'onChange',
+		defaultValues: {
+			email: '',
+			username: '',
+			password: '',
+			nickname: '',
+		},
+	});
 
 	const onSubmit: SubmitHandler<SignupSubmitForm> = async (data) => {
 		const { email, username, password, nickname } = data;
@@ -30,6 +39,13 @@ const Signup = () => {
 
 	const handleSocialButtonClick = (type: string) => {
 		window.location.href = `${process.env.REACT_APP_BASE_URL}/oauth2/authorization/${type}?redirect_uri=http://localhost:3000/login/oauth`;
+	};
+
+	const checkEmailDuplicate = (email: string) => {
+		if (!regex.email.test(email)) {
+			return window.alert('이메일 형식을 확인해주세요.');
+		}
+		emailAuthenticationApi(email);
 	};
 
 	return (
@@ -71,8 +87,7 @@ const Signup = () => {
 						className="email-button"
 						type="button"
 						mode={'login'}
-						disabled={!regex.email.test(watch('email'))}
-						onClick={() => emailAuthenticationApi(getValues('email'))}
+						onClick={() => checkEmailDuplicate(getValues('email'))}
 					>
 						이메일 인증하기
 					</BasicButton>
