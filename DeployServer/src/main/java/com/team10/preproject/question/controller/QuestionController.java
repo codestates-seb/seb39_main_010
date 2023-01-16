@@ -43,7 +43,7 @@ public class QuestionController {
         requestBody.setMember(principal.getMember());
         Question question = mapper.questionPostToQuestion(requestBody);
         QuestionResponseDto questionResponseDto
-                = mapper.questionToResponseDto(questionService.questionwrite(question, principal.getMemberId(),
+                = mapper.questionToResponseDto(questionService.questionWrite(question, principal.getMemberId(),
                 requestBody.getCategoryId(), requestBody.getTagId()));
 
         return new ResponseEntity<>(
@@ -95,7 +95,6 @@ public class QuestionController {
     }
 
     @DeleteMapping("/{question-id}")
-
     public ResponseEntity questionDelete(@PathVariable("question-id") Long questionId) {
 
         questionService.questionDelete(questionId);

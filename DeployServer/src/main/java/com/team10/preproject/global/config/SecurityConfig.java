@@ -70,7 +70,7 @@ public class SecurityConfig {
                         "/h2/**")
                 .permitAll()
                 .antMatchers(HttpMethod.GET,"/api/v1/users/**",
-                        "/api/v1/questions/**")
+                        "/api/v1/questions/**", "/api/v1/studies/**")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()

@@ -17,5 +17,5 @@ public interface AnswerLikeRepository extends JpaRepository<AnswerLike, Long> {
 
     @Query(value = "select case when count(a.answer_like_id) = 1 then 'true' else 'false' end " +
             "from answer_like a where member_id = :memberId and answer_id =:answerId", nativeQuery = true)
-    boolean likeView(@Param(value = "answerId") Long questionId, @Param(value = "memberId") Long memberId);
+    boolean likeView(@Param(value = "answerId") Long answerId, @Param(value = "memberId") Long memberId);
 }

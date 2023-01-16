@@ -8,6 +8,10 @@ type RecoilPersist<T> = {
 
 // loginModal
 export const loginModalAtom = atom({ key: 'loginMoalAtom', default: false });
+export const loginRequestModalAtom = atom({
+	key: 'loginRequestModalAtom',
+	default: false,
+});
 
 // user
 export const { persistAtom: persistUserAtom } = recoilPersist({
@@ -19,10 +23,4 @@ export const userAtom = atom({
 	key: 'userAtom',
 	default: null,
 	effects_UNSTABLE: [persistUserAtom],
-});
-
-// profile
-export const profileModalAtom = atom({
-	key: 'profileMoalAtom',
-	default: false,
 });

@@ -1,18 +1,15 @@
 package com.team10.preproject.question.entity;
 
 import com.team10.preproject.member.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Optional;
 
-@Data
+@Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 public class QuestionLike {
 
@@ -27,10 +24,6 @@ public class QuestionLike {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private Question question;
-
-    public static boolean isVotedQuestion(Optional<QuestionLike> optionalQuestionLike) {
-        return optionalQuestionLike.isPresent();
-    }
 
     public void mappingMember(Member member) {
         this.member = member;

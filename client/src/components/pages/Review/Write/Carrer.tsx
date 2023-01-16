@@ -37,8 +37,7 @@ interface Props {
 }
 
 function selectBoxchange(event: React.FormEvent<HTMLSelectElement>) {
-	const value = event.currentTarget.value; // 선택 옵션 잘나옴
-	console.log(value);
+	const value = event.currentTarget.value;
 	return value;
 }
 

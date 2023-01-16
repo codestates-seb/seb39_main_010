@@ -1,55 +1,90 @@
-import React, { useEffect } from 'react';
-import apiClient from 'apis/apiClient';
-import { questionDummy } from 'assets/data/questionDummy'; // 삭제 필요
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { getQuestionApi } from 'apis/apiClient';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { theme } from 'styles/theme';
 import { ReactComponent as AvatarImg } from 'assets/images/avatar.svg';
-import { AiOutlineEye } from 'react-icons/ai';
-import { BiCommentDetail, BiHeart } from 'react-icons/bi';
+import { AiOutlineEye, AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import { BiCommentDetail } from 'react-icons/bi';
+import LoadingSpinner from 'components/common/LoadingSpinner/LoadingSpinner';
+import { Question } from 'components/pages/Question/QuestionCard';
+import { useRecoilValue } from 'recoil';
+import { userAtom } from 'recoil/atom';
+import { deleteQuestionApi, postQuestionLikeApi } from 'apis/authApiClient';
+import CommentIntro from 'components/common/Comments/CommentIntro';
+import QuestionCommentInput from 'components/common/Comments/QuestionCommentInput';
+import Comments from 'components/common/Comments/Comments';
+import { getUser } from 'utils/user';
 
 const QuestionDetail = () => {
 	const { id } = useParams();
-	const data = questionDummy.filter((el) => el.questionId === +id!)[0];
+	const [data, setData] = useState<Question>();
+	const navigate = useNavigate();
+	const user = useRecoilValue(userAtom);
+	const isLoggedIn = getUser();
 
-	const getQuestionDetail = async () => {
-		try {
-			const response = await apiClient.get('/api/v1/questions/1');
-			console.log(response);
-		} catch (error) {
-			console.log(error);
+	const confirmDelete = () => {
+		if (window.confirm('정말로 삭제하시겠습니까?')) {
+			deleteQuestionApi(id).then(() => navigate('/'));
 		}
 	};
 
-	// useEffect(() => {
-	// 	getQuestionDetail();
-	// }, []);
+	const handleLikeClick = () => {
+		if (!isLoggedIn) {
+			window.alert('로그인 후 이용 가능한 서비스입니다.');
+			return;
+		}
 
+		postQuestionLikeApi(id)
+			.then(() => getQuestionApi(id))
+			.then((res) => setData(res.data));
+	};
+
+	useEffect(() => {
+		getQuestionApi(id).then((res) => setData(res.data));
+	}, []);
+
+	if (!data) return <LoadingSpinner />;
 	return (
 		<QuestionDetailContainer>
 			<InnerContainer>
 				<Tags>
 					<span className="category">#{data.category}</span>
-					<span className="tag">#{data.tag[0]}</span>
+					<span className="tag">#{data.tag}</span>
 				</Tags>
 				<h1>{data.title}</h1>
 				<AuthorInfo>
 					<div className="author">
 						<AvatarImg className="avatar-svg" />
 						<span className="nickname">{data.nickname}</span>
-						<span>{data.createdAt}</span>
+						<span>{data.createdAt.slice(0, 19).replace('T', ' ')}</span>
 					</div>
 					<div className="view">
 						<AiOutlineEye className="view-svg" />
 						<span className="view-count">{data.viewCount}</span>
 						<span>신고</span>
+						{user?.nickname === data.nickname ? (
+							<>
+								{' '}
+								<span
+									onClick={() => navigate(`/interview/question/edit/${id}`)}
+								>
+									수정
+								</span>
+								<span onClick={confirmDelete}>삭제</span>
+							</>
+						) : null}
 					</div>
 				</AuthorInfo>
 				<Contents>
 					<p>{data.content}</p>
 					<LikeContainer>
-						<span>
-							<BiHeart className="svg heart-svg" />
+						<span onClick={handleLikeClick}>
+							{data.userLike ? (
+								<AiFillHeart className="svg heart-svg" />
+							) : (
+								<AiOutlineHeart className="svg heart-svg" />
+							)}
 							{data.likeCount}
 						</span>
 						<span>
@@ -58,6 +93,23 @@ const QuestionDetail = () => {
 						</span>
 					</LikeContainer>
 				</Contents>
+				<CommentIntro
+					title="면접 질문에 대한 여러분의 답변을 들려주세요."
+					content="비방글 혹은 글 내용과 상관 없는 댓글을 작성할 시 삭제될 수 있습니다."
+				/>
+				<QuestionCommentInput
+					getDataApi={getQuestionApi}
+					id={id}
+					type={'questions'}
+					setData={setData}
+				/>
+				<Comments
+					setData={setData}
+					getDataApi={getQuestionApi}
+					type={'questions'}
+					comments={data.answers}
+					id={id}
+				/>
 			</InnerContainer>
 		</QuestionDetailContainer>
 	);
@@ -73,13 +125,12 @@ const QuestionDetailContainer = styled.div`
 `;
 
 const InnerContainer = styled.div`
-	max-width: 1200px;
+	width: 1200px;
 	margin-top: 70px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	border: 1px solid crimson;
 
 	& h1 {
 		font-size: 2rem;
@@ -152,7 +203,6 @@ const AuthorInfo = styled.div`
 `;
 
 const Contents = styled.div`
-	border: 1px solid blue;
 	width: 100%;
 	padding: 1rem 18px;
 	display: flex;
