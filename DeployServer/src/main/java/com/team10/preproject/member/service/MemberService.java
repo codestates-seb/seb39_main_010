@@ -194,8 +194,10 @@ public class MemberService {
             verifyExistsNickname(nickname);
             findMember.setNickname(nickname);
         }
-        Optional.ofNullable(member.getPassword())
-                .ifPresent(findMember::setPassword);
+        Optional.ofNullable(accountData.password)
+            .ifPresent {
+                accountData.password = bCryptPasswordEncoder.encode(it)
+            }
         Optional.ofNullable(member.getPicture())
                 .ifPresent(findMember::setPicture);
         Optional.ofNullable(member.getFavoriteCompany())
