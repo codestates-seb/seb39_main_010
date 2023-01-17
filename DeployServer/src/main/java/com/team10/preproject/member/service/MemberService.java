@@ -208,6 +208,12 @@ public class MemberService {
         return memberRepository.save(findMember);
     }
 
+    public Boolean checkCurrentPassword(String password, Long memberId){
+        Member member = findMember(memberId);
+        if(!Objects.equals(password, member.getPassword())) throw new BusinessLogicException(ExceptionCode.INVALID_MEMBER_AUTHENTICATION);
+        return null;
+    }
+
     public Page<Member> findMembers(int page, int size) {
 
         return memberRepository.findAll(PageRequest.of(page, size,
