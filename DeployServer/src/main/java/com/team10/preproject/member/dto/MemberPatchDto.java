@@ -28,6 +28,8 @@ public class MemberPatchDto {
             message = "Password Must be 8 to 20 Characters and a Combination of UpperCase Letters and LowerCase Letters and Special Characters.")
     private final String password;
 
+    private final String currentPassword;
+
     @Length(max = 2000)
     private final String picture;
 
@@ -37,11 +39,12 @@ public class MemberPatchDto {
     @Length(max = 200)
     private final String selfIntroductions;
 
-    public MemberPatchDto(String username, String nickname, String email, String password, String picture, String favoriteCompany, String selfIntroductions) {
+    public MemberPatchDto(String username, String nickname, String email, String password, String currentPassword, String picture, String favoriteCompany, String selfIntroductions) {
         this.username = username;
         this.nickname = nickname;
         this.email = email;
         this.password = password;
+        this.currentPassword = currentPassword;
         this.picture = picture;
         this.favoriteCompany = favoriteCompany;
         this.selfIntroductions = selfIntroductions;
