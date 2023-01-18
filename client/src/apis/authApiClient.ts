@@ -58,6 +58,10 @@ authApiClient.interceptors.response.use(
 			response: { status, data },
 		} = err;
 
+		if (status === 404) {
+			window.location.href = '/404';
+		}
+
 		if (
 			config.url === '/api/v1/token/refresh' ||
 			status !== 401 ||
