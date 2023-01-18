@@ -5,6 +5,7 @@ import { EditedQuestionSubmitData } from 'pages/Interveiw/Question/QuestionEdit'
 
 export const authApiClient = axios.create({
 	baseURL: `${process.env.REACT_APP_BASE_URL}`,
+	timeout: 1000,
 });
 
 const getNewToken = async (): Promise<string | void> => {
