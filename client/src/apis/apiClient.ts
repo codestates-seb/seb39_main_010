@@ -5,6 +5,21 @@ const apiClient = axios.create({
 	baseURL: `${process.env.REACT_APP_BASE_URL}`,
 });
 
+apiClient.interceptors.response.use(
+	(res) => res,
+	async (err) => {
+		const {
+			response: { status },
+		} = err;
+
+		if (status === 404) {
+			window.location.href = '/404';
+		}
+
+		return Promise.reject(err);
+	}
+);
+
 // signup
 export const signupApi = async (formData: SignupSubmitForm) => {
 	try {

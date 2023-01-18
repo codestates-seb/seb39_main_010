@@ -13,12 +13,14 @@ import { Mypage } from 'pages/Mypage';
 import { Footer, Header } from 'components/common';
 import QuestionEdit from 'pages/Interveiw/Question/QuestionEdit';
 import PrivateRoute from './PrivateRoute';
+import NotFound from 'pages/NotFound/NotFound';
 
 const Router = () => {
 	return (
 		<React.Fragment>
 			<Header />
 			<Routes>
+				<Route path="/*" element={<NotFound />} />
 				<Route path="/" element={<Navigate to="/interview/question" />} />
 				<Route path="/interview">
 					<Route path="question" element={<Question />} />
