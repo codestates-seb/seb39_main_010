@@ -16,43 +16,45 @@
 - 직군 별 **면접 예상 질문과 답변**을 주고 받을 수 있습니다.
 - 답변에 또 다른 댓글을 달아 **의견**을 공유해 주세요!
 
-### 면접 후기
-- **실제 면접 후기**를 남겨 예비 지원자들에게 도움을 줄 수 있습니다.
-- 더 궁금한 내용이 있다면 **댓글**을 달아 질문해 주세요!
-
-### 스터디 참여
-- **같은 목표**를 향해 나아갈 스터디에 참여할 수 있습니다.
-- 원하는 스터디가 없으신가요? **새로운 스터디**를 만들어 보세요!
 
 <br/>
 
 ## 💡 프로젝트 주요 기능
-> **회원가입**
+#### 회원가입
 ![weply-signup](https://user-images.githubusercontent.com/102157884/194744948-6220f76d-c4a6-4d9c-947a-0d33b461bdaa.gif)
+<br/>
 
-> **로그인**
-![weply-login](https://user-images.githubusercontent.com/102157884/194744984-ec74f1c3-a5b9-4bbd-804a-42bc93fdeedb.gif)
+#### 로그인
+![weply-login](https://user-images.githubusercontent.com/90498108/216810121-6b2fe8c1-1ff8-4801-8bce-ce3c29260cbc.gif)
+<br/>
 
-> **상세페이지 및 글 좋아요**
-![weply-questionDetail](https://user-images.githubusercontent.com/102157884/194744994-98ac1b0a-066c-4df6-88ad-b6c06c33ef00.gif)
+#### 면접 예상 질문 등록, 조회, 수정, 삭제
+![weply-crud](https://user-images.githubusercontent.com/90498108/216810943-3dd459b0-eee2-4c7a-be9c-efe30b77fc3d.gif)
+<br/>
 
-> **게시물 등록**
-![weply-write](https://user-images.githubusercontent.com/102157884/194745029-339194bc-1092-401a-9eec-c6def7579da7.gif)
+#### 면접 예상 질문 좋아요
+![weply-like](https://user-images.githubusercontent.com/90498108/216811124-9be7c07d-5a39-47e8-884f-356187071c0b.gif)
+<br/>
 
-> **게시물 수정**
-![weply-edit](https://user-images.githubusercontent.com/102157884/194745042-522dd75a-755c-438a-bc13-18c2fe9efd9b.gif)
+#### 면접 예상 질문 댓글 등록, 조회, 수정, 삭제
+![weply-comment-crud](https://user-images.githubusercontent.com/90498108/216811215-f28dd16d-59e2-4127-9b78-818fd2d543d1.gif)
+<br/>
 
-> **게시물 삭제**
-![weply-delete](https://user-images.githubusercontent.com/102157884/194747840-ac0e8017-733f-468f-8b02-ea7ec015b849.gif)
+#### 면접 예상 질문 댓글 좋아요
+![weply-comment-like](https://user-images.githubusercontent.com/90498108/216811293-1f6bd1e5-615e-486a-8318-b4bcf1da5850.gif)
+<br/>
 
-> **댓글 작성**
-![weply-comment](https://user-images.githubusercontent.com/102157884/194747845-135af3f4-7179-4694-8ce9-31f1ad29400a.gif)
+#### 면접 예상 질문 목록 무한스크롤
+![weply-infiniteScroll](https://user-images.githubusercontent.com/90498108/216811474-b95310c4-4df4-4b5a-b46d-4dfddb187f4a.gif)
+<br/>
 
-> **댓글 수정**
-![weply-comment-edit](https://user-images.githubusercontent.com/102157884/194747875-a44bc1fe-28af-45c1-b0b7-6baeac0e48ec.gif)
+#### 면접 예상 질문 목록 직군별 필터 
+![weply-jobFilter](https://user-images.githubusercontent.com/90498108/216811464-27db469c-9557-4bd7-8d01-5e66fa4fb37e.gif)
+<br/>
 
-> **로그아웃**
-![weply-logout](https://user-images.githubusercontent.com/102157884/194747886-bec4aaa2-7b6a-4c96-8bad-ab28f5b03041.gif)
+#### 면접 예상 질문 목록 검색
+![weply-search](https://user-images.githubusercontent.com/90498108/216811490-1ec924f2-f1ce-41f2-a559-8ed69e9a4ae0.gif)
+<br/>
 
 <br/>
 
