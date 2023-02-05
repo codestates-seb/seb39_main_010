@@ -97,7 +97,7 @@ const QuestionEdit = () => {
 					name="content"
 					onChange={handleChange}
 				/>
-				<BasicButton onClick={handleSubmit}>등록하기</BasicButton>
+				<BasicButton onClick={handleSubmit}>수정하기</BasicButton>
 			</InnerContainer>
 		</WriteContainer>
 	);
