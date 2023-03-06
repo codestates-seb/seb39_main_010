@@ -81,9 +81,30 @@ const LoginModal = () => {
 				<hr />
 				<span>간편로그인</span>
 				<SocialButtons>
-					<SocialButton mode="naver" />
-					<SocialButton mode="kakao" />
-					<SocialButton mode="google" />
+					<SocialButton
+						mode="naver"
+						onClick={() =>
+							window.alert(
+								'현재 간편로그인 기능은 이용이 불가합니다. 서비스 이용에 불편을 드려 죄송합니다.'
+							)
+						}
+					/>
+					<SocialButton
+						mode="kakao"
+						onClick={() =>
+							window.alert(
+								'현재 간편로그인 기능은 이용이 불가합니다. 서비스 이용에 불편을 드려 죄송합니다.'
+							)
+						}
+					/>
+					<SocialButton
+						mode="google"
+						onClick={() =>
+							window.alert(
+								'현재 간편로그인 기능은 이용이 불가합니다. 서비스 이용에 불편을 드려 죄송합니다.'
+							)
+						}
+					/>
 				</SocialButtons>
 			</SubContainer>
 		</LoginModalFrame>

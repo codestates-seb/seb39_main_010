@@ -121,7 +121,6 @@ export const getQuestionApi = async (id?: string) => {
 	try {
 		return await apiClient.get(`/api/v1/questions/${id}`);
 	} catch (error) {
-		console.log(error);
 		throw new Error('글 조회 실패');
 	}
 };
