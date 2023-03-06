@@ -20,6 +20,11 @@ const ProfileModal = () => {
 					cookie.removeItem('refreshToken');
 					localStorage.removeItem('accessToken');
 					localStorage.removeItem('persistUserAtom');
+
+					navigate('/');
+					return window.alert(
+						'정상적으로 로그아웃되어 메인 페이지로 이동합니다.'
+					);
 				}}
 			>
 				로그아웃
