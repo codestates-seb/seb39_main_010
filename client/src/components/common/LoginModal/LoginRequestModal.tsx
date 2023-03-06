@@ -47,7 +47,7 @@ const MessageContainer = styled.div`
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-	font-size: 24px;
+	font-size: 20px;
 	width: 100%;
 	gap: 12px;
 `;
@@ -57,4 +57,9 @@ const ButtonContainer = styled.div`
 	justify-content: center;
 	width: 100%;
 	gap: 24px;
+
+	button {
+		font-size: 18px;
+		height: 48px;
+	}
 `;
