@@ -18,6 +18,11 @@ export const IntroductionContainer = styled.div`
 		font-size: 14px;
 		gap: 5px;
 	}
+
+	> svg {
+		width: 170px;
+		height: 170px;
+	}
 `;
 
 export const ProfileText = styled.div`
@@ -66,15 +71,4 @@ export const ProfileText = styled.div`
 		border-radius: 5px;
 		width: 100%;
 	}
-`;
-export const ProfileImg = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
-	width: 170px;
-	height: 170px;
-
-	background: #d9d9d9;
-	border-radius: 999px;
 `;

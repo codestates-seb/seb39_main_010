@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BasicButton } from 'components/common';
 import { BsPencil, BsXLg, BsCheckLg } from 'react-icons/bs';
 import { BiBuildings } from 'react-icons/bi';
-import { IntroductionContainer, ProfileImg, ProfileText } from './style';
+import { IntroductionContainer, ProfileText } from './style';
 import { UserInfo } from 'pages/Mypage/Mypage';
 import {
 	deleteUser,
@@ -12,6 +12,7 @@ import {
 } from 'apis/authApiClient';
 import { useNavigate } from 'react-router-dom';
 import { cookie } from 'utils/cookie';
+import { ReactComponent as AvatarImg } from 'assets/images/avatar.svg';
 
 interface IntroductionProps {
 	userInfo: UserInfo;
@@ -95,7 +96,7 @@ const Introduction = ({ userInfo, id, setUserInfo }: IntroductionProps) => {
 
 	return (
 		<IntroductionContainer>
-			<ProfileImg>사진</ProfileImg>
+			<AvatarImg />
 			<ProfileText>
 				<div className="nicknamecompany">
 					<div id="nickname">{userInfo.nickname}</div>
