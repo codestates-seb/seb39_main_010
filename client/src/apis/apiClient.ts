@@ -12,9 +12,12 @@ apiClient.interceptors.response.use(
 		const {
 			response: { status },
 		} = err;
-
 		if (status === 404) {
 			window.location.href = '/404';
+		}
+
+		if (err.code === 'ERR_NETWORK') {
+			window.location.href = '/error';
 		}
 
 		return Promise.reject(err);
