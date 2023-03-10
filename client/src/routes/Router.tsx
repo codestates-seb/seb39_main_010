@@ -14,6 +14,7 @@ import { Footer, Header } from 'components/common';
 import QuestionEdit from 'pages/Interveiw/Question/QuestionEdit';
 import PrivateRoute from './PrivateRoute';
 import NotFound from 'pages/NotFound/NotFound';
+import NetworkError from 'pages/NetworkError/NetworkError';
 
 const Router = () => {
 	return (
@@ -21,6 +22,7 @@ const Router = () => {
 			<Header />
 			<Routes>
 				<Route path="/*" element={<NotFound />} />
+				<Route path="/error" element={<NetworkError />} />
 				<Route path="/" element={<Navigate to="/interview/question" />} />
 				<Route path="/interview">
 					<Route path="question" element={<Question />} />
