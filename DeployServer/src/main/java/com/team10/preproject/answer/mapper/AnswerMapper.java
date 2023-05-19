@@ -1,6 +1,7 @@
 package com.team10.preproject.answer.mapper;
 
 
+import com.team10.preproject.answer.dto.AnswerListResponseDto;
 import com.team10.preproject.answer.dto.AnswerPutDto;
 import com.team10.preproject.answer.dto.AnswerResponseDto;
 import com.team10.preproject.answer.entity.Answer;
@@ -13,4 +14,5 @@ public interface AnswerMapper {
     AnswerResponseDto answerResponseToDto(Answer answer);
     Answer answerPostToAnswer(Answer answer);
     Answer answerPutToAnswer(AnswerPutDto answerPutDto);
+    AnswerListResponseDto answerListResponseToDto(Answer answer);
 }

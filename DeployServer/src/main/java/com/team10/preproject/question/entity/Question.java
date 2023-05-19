@@ -15,7 +15,6 @@ import java.util.List;
 
 @Builder
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -54,7 +53,6 @@ public class Question extends Auditable {
 
     @OneToMany(mappedBy = "question", orphanRemoval = true, fetch = FetchType.LAZY) // mappedBy - FK가 아니고 컬럼 생성 X
     @JsonIgnoreProperties("question") // 무한 참조 방지
-//    @OrderBy("id desc")
     private List<Answer> answer;
 
     @Builder.Default
@@ -92,6 +90,4 @@ public class Question extends Auditable {
     public void changeContent(String content) {
         this.content = content;
     }
-
-    public void userliked(boolean userLike){ this.userLike = userLike; }
 }

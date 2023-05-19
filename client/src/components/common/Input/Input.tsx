@@ -1,13 +1,6 @@
 import React, { HTMLInputTypeAttribute, InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-// TODO: 추후 최종적으로 필요없으면 style props 관련 주석 삭제 필요
-// interface StyleProps {
-// 	width?: string;
-// 	height?: string;
-// 	marginBottom?: string;
-// }
-
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	type?: HTMLInputTypeAttribute;
 	placeholder: string;
@@ -16,7 +9,6 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	label?: string;
 	errorMessage?: string;
-	// style?: StyleProps;
 }
 
 const Input = ({

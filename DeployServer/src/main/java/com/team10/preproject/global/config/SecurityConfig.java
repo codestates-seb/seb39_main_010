@@ -62,7 +62,7 @@ public class SecurityConfig {
                         "/api/v1/users/signup",
                         "/api/v1/users/verification",
                         "/api/v1/users/forgot-password",
-                        "/token/**",
+                        "/api/v1/token/**",
                         "/api/v1/users/exists-username",
                         "/api/v1/users/exists-email",
                         "/api/v1/users/exists-nickname",
@@ -70,7 +70,7 @@ public class SecurityConfig {
                         "/h2/**")
                 .permitAll()
                 .antMatchers(HttpMethod.GET,"/api/v1/users/**",
-                        "/api/v1/questions/**")
+                        "/api/v1/questions/**", "/api/v1/studies/**")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()

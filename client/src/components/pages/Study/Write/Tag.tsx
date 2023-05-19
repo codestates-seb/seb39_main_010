@@ -72,7 +72,6 @@ export const TagsInput = styled.div`
 `;
 
 export const Tag = () => {
-	// const selectedTags = (tags) => console.log(tags);
 	const initialTags = ['임시태그'];
 
 	const [tags, setTags] = useState(initialTags);
@@ -84,7 +83,6 @@ export const Tag = () => {
 		const filtered = tags.filter((el) => el === event.currentTarget.value);
 		if (event.currentTarget.value !== '' && filtered.length === 0) {
 			setTags([...tags, event.currentTarget.value]);
-			// selectedTags([...tags, event.target.value]);
 			event.currentTarget.value = '';
 		}
 	};

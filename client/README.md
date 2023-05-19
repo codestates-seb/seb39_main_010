@@ -1,6 +1,7 @@
 # Required secret
 
 S3_CLIENT_BUCKET_NAME
+EC2_ELASTIC_IP
 
 # Getting Started with Create React App
 

@@ -113,6 +113,7 @@ public class MemberController {
                                       @Valid @RequestBody MemberDto.Patch requestBody) {
 
         memberService.checkOwnerShip(request, memberId);
+        if(requestBody.getCurrentPassword()!=null) memberService.checkCurrentPassword(requestBody.getCurrentPassword(), memberId);
         requestBody.setMemberId(memberId);
         Member member =
                 memberService.updateMember(mapper.memberPatchToMember(requestBody));

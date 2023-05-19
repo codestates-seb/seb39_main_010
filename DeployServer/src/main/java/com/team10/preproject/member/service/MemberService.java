@@ -195,7 +195,7 @@ public class MemberService {
             findMember.setNickname(nickname);
         }
         Optional.ofNullable(member.getPassword())
-                .ifPresent(findMember::setPassword);
+                .ifPresent(it-> findMember.setPassword(bCryptPasswordEncoder.encode(it)));
         Optional.ofNullable(member.getPicture())
                 .ifPresent(findMember::setPicture);
         Optional.ofNullable(member.getFavoriteCompany())
@@ -206,6 +206,12 @@ public class MemberService {
 //                .ifPresent(memberStatus -> findMember.setMemberStatus(memberStatus));
 
         return memberRepository.save(findMember);
+    }
+
+    public Boolean checkCurrentPassword(String password, Long memberId){
+        Member member = findMember(memberId);
+        if(!Objects.equals(password, member.getPassword())) throw new BusinessLogicException(ExceptionCode.INVALID_MEMBER_AUTHENTICATION);
+        return null;
     }
 
     public Page<Member> findMembers(int page, int size) {
@@ -236,7 +242,8 @@ public class MemberService {
 
     public void checkOwnerShip(HttpServletRequest request, Long memberId) {
 
-        String jwtToken = request.getHeader("Refresh");
+        String jwtHeader = request.getHeader("Authorization");
+        String jwtToken = jwtHeader.replace("Bearer ", "");
         String email = JWT.require(Algorithm.HMAC512("cos_jwt_token")).build().verify(jwtToken).getClaim("email").asString();
         Member member = memberRepository.findByEmail(email);
         if(!Objects.equals(member.getMemberId(), memberId)) {

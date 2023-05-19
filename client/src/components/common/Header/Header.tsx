@@ -1,71 +1,65 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { HeaderContainer, LogoandNav, MypageImg } from './style';
-import { FiUser } from 'react-icons/fi';
-import { idText } from 'typescript';
-import { useRecoilState } from 'recoil';
-import { loginModalAtom } from 'recoil/atom';
+import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { HeaderContainer, LogoandNav } from './style';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { loginModalAtom, loginRequestModalAtom } from 'recoil/atom';
 import LoginModal from '../LoginModal/LoginModal';
 import { ReactComponent as LogoImg } from 'assets/images/logo.svg';
+import { ReactComponent as AvatarImg } from 'assets/images/avatar.svg';
+import { cookie } from 'utils/cookie';
+import ProfileModal from '../ProfileModal/ProfileModal';
+import LoginRequestModal from '../LoginModal/LoginRequestModal';
+import useModal from 'hooks/useModal';
 
 const Header = () => {
-	const [tab, setTab] = useState('');
 	const [isLoginModal, setIsLoginMoal] = useRecoilState(loginModalAtom);
+	const isLoginRequestModal = useRecoilValue(loginRequestModalAtom);
+	const { isModal, ref, handleModalChange } = useModal();
 
-	const navigate = useNavigate();
-	const getclick = (e: React.FormEvent) => {
-		setTab(e.currentTarget.id);
-		console.log(tab, '나야');
-	};
+	const menus = [
+		{ id: 0, menu: '면접 질문', url: '/interview/question' },
+		{ id: 1, menu: '스터디모집', url: '/study' },
+		{ id: 2, menu: '면접 후기', url: '/interview/review' },
+	];
+
 	return (
 		<HeaderContainer>
 			{isLoginModal && <LoginModal />}
+			{isLoginRequestModal && <LoginRequestModal />}
+			{isModal && <ProfileModal />}
 			<LogoandNav>
 				<Link to="/">
 					<LogoImg />
 				</Link>
 				<ul>
-					<li
-						id="question"
-						onClick={() => {
-							navigate('/');
-							getclick;
-						}}
-						className={`${tab ? 'active' : ''}`}
-					>
-						면접 질문
-					</li>
-					<li
-						id="study"
-						onClick={() => {
-							navigate('/study');
-							getclick;
-						}}
-						className={`${tab ? 'active' : ''}`}
-					>
-						스터디모집
-					</li>
-					<li
-						id="review"
-						onClick={() => {
-							navigate('/interview/review');
-							getclick;
-						}}
-						className={`${tab ? 'active' : ''}`}
-					>
-						면접 후기
-					</li>
-					<li onClick={() => setIsLoginMoal(!isLoginModal)}>로그인</li>
+					{menus.map((menu) => {
+						return (
+							<li key={menu.id}>
+								<NavLink
+									to={menu.url}
+									className={({ isActive }) =>
+										isActive ? 'active' : undefined
+									}
+								>
+									{menu.menu}
+								</NavLink>
+							</li>
+						);
+					})}
 				</ul>
 			</LogoandNav>
-
-			<MypageImg
-				onClick={() => {
-					navigate('/mypage');
-				}}
-			>
-				<FiUser size={35} />
-			</MypageImg>
+			{cookie.getItem('refreshToken') ? (
+				<div ref={ref}>
+					<AvatarImg
+						className="avatar-svg"
+						onClick={() => handleModalChange()}
+					/>
+				</div>
+			) : (
+				<span className="login" onClick={() => setIsLoginMoal(!isLoginModal)}>
+					로그인
+				</span>
+			)}
 		</HeaderContainer>
 	);
 };

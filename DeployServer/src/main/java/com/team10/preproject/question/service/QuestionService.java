@@ -56,12 +56,11 @@ public class QuestionService {
 
     // 글 작성
     @Transactional
-    public Question questionwrite(Question question, Long memberId, Long categoryId, Long tagId) {
+    public Question questionWrite(Question question, Long memberId, Long categoryId, Long tagId) {
 
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> {
-                    return new IllegalArgumentException("글 작성 실패 : 없는 사용자 입니다.");
-                });
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> {
+            return new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
+        });
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() ->{
                     return new IllegalArgumentException("글 작성 실패 : 없는 카테고리 입니다.");
@@ -98,9 +97,9 @@ public class QuestionService {
 
     // 글 상세보기
     @Transactional
-    public QuestionOneResponse questionView(Long questionId) {
+    public QuestionOneResponse questionView(Long questionId, String orderCriteria) {
 
-        QuestionOneResponse questionOneResponse = questionRepository.findOneQuestionById(questionId)
+        QuestionOneResponse questionOneResponse = questionRepository.findOneQuestionById(questionId, orderCriteria)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NoSuchElementException));
 
         Long memberId = null;
@@ -110,9 +109,9 @@ public class QuestionService {
     }
 
     @Transactional
-    public QuestionOneResponse questionloginView(Long questionId, Long memberId) {
+    public QuestionOneResponse questionloginView(Long questionId, Long memberId, String orderCriteria) {
 
-        QuestionOneResponse questionOneResponse = questionRepository.findOneQuestionById(questionId)
+        QuestionOneResponse questionOneResponse = questionRepository.findOneQuestionById(questionId, orderCriteria)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NoSuchElementException));
 
         if(questionLikeRepository.likeView(questionId,memberId)){
@@ -139,7 +138,7 @@ public class QuestionService {
 
     // 글 수정
     @Transactional
-    public Question questionUpdate(long questionId,Question requestQuestion) {
+    public Question questionUpdate(Long questionId,Question requestQuestion) {
 
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() ->{
@@ -211,10 +210,9 @@ public class QuestionService {
                 .orElseThrow(() ->{
                     return new IllegalArgumentException("글 찾기 실패 : 해당 글을 찾을 수 없습니다.");
                 });
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() ->{
-                    return new IllegalArgumentException("해당 유저는 없는 유저입니다.");
-                });
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> {
+            return new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
+        });
 
         Optional<QuestionLike> byQuestionAndMember = questionLikeRepository.findByQuestionAndMember(question, member);
 
@@ -234,26 +232,14 @@ public class QuestionService {
                     questionLikeRepository.save(questionLike);
                 }
         );
-
     }
 
-    public Page<Question> questionSearchTitle(String title, Pageable pageable) {
+    public Page<Question> memberQuestionList(Long memberId, Pageable pageable) {
 
-        return questionRepository.findByTitleContaining(title, pageable);
-    }
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> {
+            return new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
+        });
 
-    public Page<Question> questionSearchTitleContent(String title, String content, Pageable pageable) {
-
-        return questionRepository.findByTitleContainingOrContentContaining(title , content, pageable);
-    }
-
-    public Page<Question> questionSearchContent(String content, Pageable pageable) {
-
-        return questionRepository.findByContentContaining(content, pageable);
-    }
-
-    public List<QuestionResponseDto> questionSearchWriter(String writer, Pageable pageable) {
-
-        return  questionRepository.findWriterQuestion(writer, pageable);
+        return questionRepository.findByQuestionAndMember(member.getMemberId(), pageable);
     }
 }

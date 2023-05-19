@@ -11,8 +11,7 @@ import java.util.Optional;
 
 public interface CustomQuestionRepository {
 
-    Optional<QuestionOneResponse> findOneQuestionById(Long QuestionId);
-    List<QuestionResponseDto> findWriterQuestion(String keyWord, Pageable pageable);
+    Optional<QuestionOneResponse> findOneQuestionById(Long QuestionId, String orderCriteria);
     List<QuestionResponseDto> findCategoryQuestion(String category, String searchType,
                                         String keyword, Pageable pageable);
 }

@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { theme } from 'styles/theme';
 
 export const HeaderContainer = styled.div`
+	position: relative;
 	display: flex;
-	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 	padding: 0px 6%;
@@ -11,8 +12,22 @@ export const HeaderContainer = styled.div`
 	width: 100%;
 	height: 88px;
 
-	/* background: #ffffff; */
 	box-shadow: inset 0px -1px 1px rgba(0, 0, 0, 0.1);
+
+	.avatar-svg {
+		width: 50px;
+		height: 50px;
+		cursor: pointer;
+	}
+
+	.login {
+		color: ${theme.colors.gray700};
+		font-weight: 600;
+	}
+
+	.login:hover {
+		cursor: pointer;
+	}
 `;
 export const LogoandNav = styled.div`
 	display: flex;
@@ -37,24 +52,18 @@ export const LogoandNav = styled.div`
 		padding: 0px;
 		gap: 30px;
 
-		li:hover {
-			color: #3563e9;
+		a {
+			color: ${theme.colors.gray800};
+		}
+
+		.active {
+			color: ${theme.colors.blueMain};
+			font-weight: 700;
+		}
+
+		a:hover {
 			font-weight: bold;
 			cursor: pointer;
 		}
-		li.active {
-			color: #3563e9;
-			font-weight: bold;
-		}
 	}
-`;
-export const MypageImg = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 50px;
-	height: 50px;
-
-	background: #f5f5f5; //gray500
-	border-radius: 30px;
 `;

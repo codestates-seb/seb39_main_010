@@ -3,14 +3,20 @@ package com.team10.preproject.answer.service;
 
 import com.team10.preproject.answer.dto.AnswerCreateRequestDto;
 import com.team10.preproject.answer.dto.AnswerDto;
+import com.team10.preproject.answer.dto.AnswerListResponseDto;
 import com.team10.preproject.answer.entity.Answer;
 import com.team10.preproject.answer.entity.AnswerLike;
 import com.team10.preproject.answer.entity.DeleteStatus;
 import com.team10.preproject.answer.repository.AnswerLikeRepository;
 import com.team10.preproject.answer.repository.AnswerRepository;
+import com.team10.preproject.global.exception.BusinessLogicException;
+import com.team10.preproject.global.exception.ExceptionCode;
 import com.team10.preproject.member.entity.Member;
 import com.team10.preproject.member.repository.MemberRepository;
 import com.team10.preproject.question.repository.QuestionRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -119,6 +125,14 @@ public class AnswerService {
                     answerLikeRepository.save(answerLike);
                 }
         );
+    }
 
+    public Page<AnswerListResponseDto> memberAnswerList(Long memberId, Pageable pageable) {
+
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> {
+            return new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
+        });
+
+        return new PageImpl<>(answerRepository.findAnswerMember(member.getMemberId(), pageable));
     }
 }

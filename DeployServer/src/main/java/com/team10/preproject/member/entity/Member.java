@@ -2,7 +2,11 @@ package com.team10.preproject.member.entity;
 
 import com.team10.preproject.answer.entity.AnswerLike;
 import com.team10.preproject.global.audit.Auditable;
+import com.team10.preproject.question.entity.Question;
 import com.team10.preproject.question.entity.QuestionLike;
+import com.team10.preproject.study.entity.Study;
+import com.team10.preproject.study.entity.StudyLike;
+import com.team10.preproject.studycomment.entity.StudyCommentLike;
 import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -51,6 +55,18 @@ public class Member extends Auditable{
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<AnswerLike> answerLikeList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Question> questionList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Study> studyList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<StudyLike> studyLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<StudyCommentLike> studyCommentLikes = new ArrayList<>();
 
 //    @Enumerated(value = EnumType.STRING)
 //    @Column(length = 20, nullable = false)
@@ -125,6 +141,12 @@ public class Member extends Auditable{
     }
 
     public void mappingAnswerLike(AnswerLike answerLike) { this.answerLikeList.add(answerLike); }
+
+    public void mappingStudyLike(StudyLike studyLike) { this.studyLikes.add(studyLike); }
+
+    public void mappingStudyCommentLike(StudyCommentLike studyCommentLike) {
+        this.studyCommentLikes.add(studyCommentLike);
+    }
 
 //    public enum  MemberStatus {
 //        MEMBER_ACTIVE("활동중"),
