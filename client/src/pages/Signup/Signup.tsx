@@ -88,9 +88,12 @@ const Signup = () => {
 						type="email"
 						{...register('email', {
 							required: true,
-							pattern: regex.email,
+							pattern: {
+								value: regex.email,
+								message: errorMessage.email,
+							},
 						})}
-						errorMessage={errors.email && errorMessage.email}
+						errorMessage={errors.email && errors.email.message}
 					/>
 					<BasicButton
 						className="email-button"
@@ -105,9 +108,12 @@ const Signup = () => {
 						label="아이디"
 						{...register('username', {
 							required: true,
-							pattern: regex.username,
+							pattern: {
+								value: regex.username,
+								message: errorMessage.username,
+							},
 						})}
-						errorMessage={errors.username && errorMessage.username}
+						errorMessage={errors.username && errors.username.message}
 					/>
 					<AuthInput
 						placeholder="8~20자 이내, 영문 대소문자, 숫자, 특수문자"
@@ -115,9 +121,14 @@ const Signup = () => {
 						type="password"
 						{...register('password', {
 							required: true,
-							pattern: regex.password,
+							min: 8,
+							max: 20,
+							pattern: {
+								value: regex.password,
+								message: errorMessage.password,
+							},
 						})}
-						errorMessage={errors.password && errorMessage.password}
+						errorMessage={errors.password && errors.password.message}
 					/>
 					<AuthInput
 						placeholder="비밀번호 확인"
@@ -125,14 +136,11 @@ const Signup = () => {
 						type="password"
 						{...register('passwordConfirm', {
 							required: true,
-							validate: (value: string) => {
-								if (watch('password') !== value) {
-									return '비밀번호가 일치하지 않습니다.';
-								}
-							},
+							validate: (value) =>
+								value === watch('password') || '비밀번호가 일치하지 않습니다.',
 						})}
 						errorMessage={
-							errors.passwordConfirm && errorMessage.passwordConfirm
+							errors.passwordConfirm && errors.passwordConfirm.message
 						}
 					/>
 					<AuthInput
@@ -140,9 +148,12 @@ const Signup = () => {
 						label="닉네임"
 						{...register('nickname', {
 							required: true,
-							pattern: regex.nickname,
+							pattern: {
+								value: regex.nickname,
+								message: errorMessage.nickname,
+							},
 						})}
-						errorMessage={errors.nickname && errorMessage.nickname}
+						errorMessage={errors.nickname && errors.nickname.message}
 					/>
 					<BasicButton>가입하기</BasicButton>
 				</SignupForm>
