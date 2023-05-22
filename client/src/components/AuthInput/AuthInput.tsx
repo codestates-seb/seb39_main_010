@@ -6,7 +6,6 @@ interface AuthInputProps extends InputProps {
 	type?: HTMLInputTypeAttribute;
 	placeholder: string;
 	name?: string;
-	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	label?: string;
 	errorMessage?: string;
 	mode?: 'signup' | 'login';
@@ -38,7 +37,6 @@ const AuthInput = React.forwardRef<HTMLInputElement, AuthInputProps>(
 			type = 'text',
 			placeholder,
 			name,
-			onChange,
 			label,
 			errorMessage,
 			mode = 'signup',
@@ -55,7 +53,6 @@ const AuthInput = React.forwardRef<HTMLInputElement, AuthInputProps>(
 					type={type}
 					placeholder={placeholder}
 					name={name}
-					onChange={onChange}
 					mode={mode}
 					bgColor={bgColor}
 					border={border}
