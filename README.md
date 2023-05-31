@@ -76,7 +76,8 @@
 <br/>
 
 #### 회원 탈퇴
-![weply-withdrawal](https://user-images.githubusercontent.com/90498108/216818615-aa4a8a38-dfde-462f-a061-becbc4aceb1c.gif)
+![weply-withdrawal](https://github.com/codestates-seb/seb39_main_010/assets/90498108/8bfddca5-3f89-402f-afdf-b36d818eda03)
+
 <br/>
 <br/>
 
