@@ -4,8 +4,8 @@
 <p align="center"><img src="https://user-images.githubusercontent.com/102157884/193828178-ba70057d-5fcf-48ae-820e-16d1f42f8452.svg"></p>
 
 > *면접 정보를 나눠요! Weply!*
-- 개발기간: 2022.09.07 ~ 
-- [배포 링크](http://weply.s3-website.ap-northeast-2.amazonaws.com)
+- 개발기간: 2022.09 ~ 2022.10
+- *(서버 비용의 문제로 배포 중단하였습니다.)*
 
 <br/>
 
